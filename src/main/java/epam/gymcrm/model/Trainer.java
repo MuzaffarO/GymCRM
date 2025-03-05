@@ -1,22 +1,35 @@
 package epam.gymcrm.model;
 
-
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@NoArgsConstructor
+import java.util.List;
+import java.util.Set;
+
+@Entity
+@Getter
+@Setter
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class Trainer extends User {
-    private TrainingType specialization;
+@NoArgsConstructor
+public class Trainer {
 
-    public Trainer(String firstName, String lastName, String username, String password, boolean isActive, TrainingType specialization) {
-        super(firstName, lastName, username, password, isActive);
-        this.specialization = specialization;
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Integer id;
+
+    @ManyToOne
+    private TrainingType specializationType;
+
+    @OneToOne
+    private User user;
+
+    @ManyToMany(mappedBy = "trainers", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    private Set<Trainee> trainees;
+
+    @OneToMany(mappedBy = "trainer", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Training> trainingList;
+
 }
-

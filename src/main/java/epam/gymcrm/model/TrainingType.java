@@ -1,12 +1,23 @@
 package epam.gymcrm.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+import java.util.List;
+
+@Entity
+@Getter
+@Setter
 public class TrainingType {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Integer id;
+
+    @Column(unique = true, nullable = false)
     private String trainingTypeName;
+
+    @OneToMany(mappedBy = "trainingType")
+    private List<Training> trainings;
 }
