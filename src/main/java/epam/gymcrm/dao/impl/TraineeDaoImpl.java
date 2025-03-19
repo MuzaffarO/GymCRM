@@ -1,6 +1,7 @@
 package epam.gymcrm.dao.impl;
 
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import epam.gymcrm.dao.TraineeDao;
@@ -39,15 +40,23 @@ public class TraineeDaoImpl extends AbstractCrudImpl<Trainee, Integer> implement
 
     @Override
     public Optional<Trainee> findByUserUsername(String username) {
-        log.info("Find by username {}", username);
+        log.info("Finding Trainee by username: {}", username);
         return TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {
-            TypedQuery<Trainee> query = entityManager.createQuery(
-                    "SELECT t FROM Trainee t where t.user.username = :username", Trainee.class);
-
-            query.setParameter("username", username);
-            return Optional.ofNullable(query.getSingleResult());
+            try {
+                return Optional.ofNullable(
+                        entityManager.createQuery(
+                                        "SELECT t FROM Trainee t WHERE t.user.username = :username", Trainee.class)
+                                .setParameter("username", username)
+                                .setMaxResults(1)
+                                .getSingleResult()
+                );
+            } catch (NoResultException e) {
+                log.warn("No Trainee found for username: {}", username);
+                return Optional.empty();
+            }
         });
     }
+
 
     @Override
     public List<Training> getTraineeTrainingsByUsername(String username) {

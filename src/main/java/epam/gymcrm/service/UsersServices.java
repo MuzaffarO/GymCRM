@@ -12,11 +12,11 @@ public interface UsersServices {
 
     Optional<User> findByUsername(String username);
 
-    void changePassword(String username, String newPassword, String currentPassword);
-
     ResponseEntity<CredentialsInfoResponseDto> registerTrainer(TrainerRegisterDto trainerRegisterDto);
 
     ResponseEntity<CredentialsInfoResponseDto> registerTrainee(TraineeRegisterDto traineeRegisterDto);
 
     ResponseEntity<Void> login(String username, String password);
+
+    ResponseEntity<Void> changeLogin(String username, String oldPassword, String newPassword);
 }

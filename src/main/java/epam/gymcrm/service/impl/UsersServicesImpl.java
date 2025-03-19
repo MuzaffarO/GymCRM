@@ -48,15 +48,6 @@ public class UsersServicesImpl implements UsersServices {
     }
 
     @Override
-    public void changePassword(String username, String newPassword, String currentPassword) {
-        try {
-            userDao.changePassword(username, newPassword, currentPassword);
-        } catch (DataAccessException e) {
-            throw new DatabaseException(e.getMessage());
-        }
-    }
-
-    @Override
     public ResponseEntity<CredentialsInfoResponseDto> registerTrainer(TrainerRegisterDto trainerRegisterDto) {
         TrainingType specialization = trainingTypeDao.findByName(trainerRegisterDto.getSpecialization().getTrainingTypeName())
                 .orElseThrow(() -> new DatabaseException("Specialization not found"));
@@ -95,6 +86,18 @@ public class UsersServicesImpl implements UsersServices {
         authServices.authenticate(username, password);
         return ResponseEntity.ok().build();
     }
+
+    @Override
+    public ResponseEntity<Void> changeLogin(String username, String oldPassword, String newPassword) {
+        authServices.authenticate(username, oldPassword);
+        try {
+            userDao.changePassword(username, newPassword);
+        } catch (DataAccessException e) {
+            throw new DatabaseException(e.getMessage());
+        }
+        return ResponseEntity.ok().build();
+    }
+
 
     private User createUser(String firstName, String lastName) {
         String generatedUsername = credentialGenerator.generateUsername(firstName, lastName);

@@ -43,15 +43,13 @@ public class UserDaoImpl extends AbstractCrudImpl<User, Integer> implements User
 
 
     @Override
-    public void changePassword(String username, String newPassword, String oldPassword) {
+    public void changePassword(String username, String newPassword) {
         TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {
-            TypedQuery<User> query = entityManager.createQuery(
-                    "UPDATE User u SET u.password = :newPassword WHERE u.username = :username", User.class);
-
-            query.setParameter("username", username);
-            query.setParameter("newPassword", newPassword);
-
-            query.executeUpdate();
+            entityManager.createQuery(
+                            "UPDATE User u SET u.password = :newPassword WHERE u.username = :username")
+                    .setParameter("username", username)
+                    .setParameter("newPassword", newPassword)
+                    .executeUpdate();
         });
     }
 

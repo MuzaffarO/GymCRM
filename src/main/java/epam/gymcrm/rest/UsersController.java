@@ -27,9 +27,17 @@ public class UsersController {
     }
 
     @GetMapping("/login")
-    public ResponseEntity<Void> login( @RequestParam(name = "username") String username,
-                                       @RequestParam(name = "password") String password) {
+    public ResponseEntity<Void> login(@RequestParam(name = "username") String username,
+                                      @RequestParam(name = "password") String password) {
         return usersServices.login(username, password);
     }
+
+    @PutMapping("/change-login")
+    public ResponseEntity<Void> changeLogin(@RequestParam(name = "username") String username,
+                                            @RequestParam(name = "oldPassword") String oldPassword,
+                                            @RequestParam(name = "newPassword") String newPassword) {
+        return usersServices.changeLogin(username, oldPassword, newPassword);
+    }
+
 
 }

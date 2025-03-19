@@ -3,15 +3,21 @@ package epam.gymcrm.service.impl;
 import epam.gymcrm.dao.TraineeDao;
 import epam.gymcrm.dto.TraineeDto;
 import epam.gymcrm.dto.TrainingDto;
+import epam.gymcrm.dto.response.TraineeProfileResponseDto;
+import epam.gymcrm.dto.response.TrainerResponseDto;
+import epam.gymcrm.dto.response.TrainingTypeResponseDto;
 import epam.gymcrm.exceptions.DatabaseException;
+import epam.gymcrm.exceptions.UserNotFoundException;
 import epam.gymcrm.model.Trainee;
 import epam.gymcrm.service.TraineeServices;
 import epam.gymcrm.service.mapper.TraineeMapper;
 import epam.gymcrm.service.mapper.TrainingMapper;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TraineeServicesImpl extends AbstractCrudServicesImpl<Trainee, TraineeDto, Integer> implements TraineeServices {
@@ -44,4 +50,30 @@ public class TraineeServicesImpl extends AbstractCrudServicesImpl<Trainee, Train
             throw new DatabaseException(e.getMessage());
         }
     }
+
+    @Override
+    public ResponseEntity<TraineeProfileResponseDto> getByUsername(String username) {
+        Trainee trainee = traineeDao.findByUserUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("Trainee not found for username: " + username));
+
+        return ResponseEntity.ok(new TraineeProfileResponseDto(
+                trainee.getUser().getFirstName(),
+                trainee.getUser().getLastName(),
+                trainee.getDateOfBirth(),
+                trainee.getAddress(),
+                trainee.getUser().isActive(),
+                trainee.getTrainers().stream()
+                        .map(trainer -> new TrainerResponseDto(
+                                trainer.getUser().getUsername(),
+                                trainer.getUser().getFirstName(),
+                                trainer.getUser().getLastName(),
+                                Optional.ofNullable(trainer.getSpecializationType())
+                                        .map(specialization -> new TrainingTypeResponseDto(specialization.getTrainingTypeName()))
+                                        .orElse(null)
+                        ))
+                        .toList()
+        ));
+    }
+
+
 }
