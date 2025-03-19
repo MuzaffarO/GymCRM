@@ -1,13 +1,12 @@
 package epam.gymcrm.rest;
 
+import epam.gymcrm.dto.request.UpdateTraineeDto;
 import epam.gymcrm.dto.response.TraineeProfileResponseDto;
+import epam.gymcrm.dto.response.UpdateTraineeProfileResponseDto;
 import epam.gymcrm.service.TraineeServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/trainees")
@@ -20,4 +19,14 @@ public class TraineeController {
         return traineeServices.getByUsername(username);
     }
 
+    @PutMapping("/update-profile")
+    public ResponseEntity<UpdateTraineeProfileResponseDto> updateProfile(@RequestBody UpdateTraineeDto updateTraineeDto) {
+        return traineeServices.updateProfile(updateTraineeDto);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteByUsername(@RequestParam("username") String username) {
+        traineeServices.deleteByUsername(username);
+        return ResponseEntity.ok().build();
+    }
 }

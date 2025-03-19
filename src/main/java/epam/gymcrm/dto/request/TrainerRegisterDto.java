@@ -1,4 +1,4 @@
-package epam.gymcrm.dto.register;
+package epam.gymcrm.dto.request;
 
 import epam.gymcrm.dto.TrainingTypeDto;
 import jakarta.validation.Valid;

@@ -1,7 +1,7 @@
 package epam.gymcrm.rest;
 
-import epam.gymcrm.dto.register.TraineeRegisterDto;
-import epam.gymcrm.dto.register.TrainerRegisterDto;
+import epam.gymcrm.dto.request.TraineeRegisterDto;
+import epam.gymcrm.dto.request.TrainerRegisterDto;
 import epam.gymcrm.dto.response.CredentialsInfoResponseDto;
 import epam.gymcrm.service.UsersServices;
 import jakarta.validation.Valid;

@@ -5,8 +5,8 @@ import epam.gymcrm.dao.TrainerDao;
 import epam.gymcrm.dao.TrainingTypeDao;
 import epam.gymcrm.dao.UserDao;
 import epam.gymcrm.dao.datasource.CredentialGenerator;
-import epam.gymcrm.dto.register.TraineeRegisterDto;
-import epam.gymcrm.dto.register.TrainerRegisterDto;
+import epam.gymcrm.dto.request.TraineeRegisterDto;
+import epam.gymcrm.dto.request.TrainerRegisterDto;
 import epam.gymcrm.dto.response.CredentialsInfoResponseDto;
 import epam.gymcrm.exceptions.DatabaseException;
 import epam.gymcrm.model.Trainee;
@@ -19,7 +19,6 @@ import epam.gymcrm.service.mapper.TrainingTypeMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
