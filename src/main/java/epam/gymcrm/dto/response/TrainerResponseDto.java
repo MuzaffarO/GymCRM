@@ -4,6 +4,6 @@ public record TrainerResponseDto(
         String username,
         String firstName,
         String lastName,
-        TrainingTypeResponseDto specialization
+        SpecializationNameDto specialization
 
 ) { }

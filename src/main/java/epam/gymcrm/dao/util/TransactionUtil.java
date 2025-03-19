@@ -18,6 +18,7 @@ public class TransactionUtil {
             function.beforeTransactionCompletion();
             result = function.apply(entityManager);
 
+            entityManager.flush();
             txn.commit();
         } catch (Throwable e) {
             if (txn != null && txn.isActive()) {

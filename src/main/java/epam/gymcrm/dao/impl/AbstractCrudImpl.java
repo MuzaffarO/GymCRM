@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Optional;
+
 @Component
 public abstract class AbstractCrudImpl<T, ID extends Serializable> implements CRUDDao<T, ID> {
 
@@ -42,9 +43,12 @@ public abstract class AbstractCrudImpl<T, ID extends Serializable> implements CR
     @Override
     public Optional<T> update(T entity) {
         return Optional.ofNullable(TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {
-            return entityManager.merge(entity);
+            T mergedEntity = entityManager.merge(entity);
+            entityManager.flush();
+            return mergedEntity;
         }));
     }
+
 
     @Override
     public boolean delete(ID id) {

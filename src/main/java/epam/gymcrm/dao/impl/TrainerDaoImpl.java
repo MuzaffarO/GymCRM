@@ -1,6 +1,7 @@
 package epam.gymcrm.dao.impl;
 
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import epam.gymcrm.dao.TrainerDao;
 import epam.gymcrm.dao.util.TransactionUtil;
@@ -42,13 +43,18 @@ public class TrainerDaoImpl extends AbstractCrudImpl<Trainer, Integer> implement
     public Optional<Trainer> findByUserUsername(String username) {
         log.info("Find by username: {}", username);
         return TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {
-            TypedQuery<Trainer> query = entityManager.createQuery(
-                    "SELECT t FROM Trainer t where t.user.username = :username", Trainer.class);
-
-            query.setParameter("username", username);
-            return Optional.ofNullable(query.getSingleResult());
+            try {
+                TypedQuery<Trainer> query = entityManager.createQuery(
+                        "SELECT t FROM Trainer t WHERE t.user.username = :username", Trainer.class);
+                query.setParameter("username", username);
+                return Optional.ofNullable(query.getSingleResult());
+            } catch (NoResultException ex) {
+                log.warn("No Trainer found for username: {}", username);
+                return Optional.empty();
+            }
         });
     }
+
 
     @Override
     public List<Trainer> findNotAssignedTrainers() {

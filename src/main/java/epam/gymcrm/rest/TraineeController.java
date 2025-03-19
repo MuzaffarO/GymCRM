@@ -1,6 +1,6 @@
 package epam.gymcrm.rest;
 
-import epam.gymcrm.dto.request.UpdateTraineeDto;
+import epam.gymcrm.dto.request.UpdateTraineeProfileRequestDto;
 import epam.gymcrm.dto.response.TraineeProfileResponseDto;
 import epam.gymcrm.dto.response.UpdateTraineeProfileResponseDto;
 import epam.gymcrm.service.TraineeServices;
@@ -20,8 +20,8 @@ public class TraineeController {
     }
 
     @PutMapping("/update-profile")
-    public ResponseEntity<UpdateTraineeProfileResponseDto> updateProfile(@RequestBody UpdateTraineeDto updateTraineeDto) {
-        return traineeServices.updateProfile(updateTraineeDto);
+    public ResponseEntity<UpdateTraineeProfileResponseDto> updateProfile(@RequestBody UpdateTraineeProfileRequestDto updateTraineeProfileRequestDto) {
+        return traineeServices.updateProfile(updateTraineeProfileRequestDto);
     }
 
     @DeleteMapping("/delete")

@@ -3,10 +3,10 @@ package epam.gymcrm.service.impl;
 import epam.gymcrm.dao.TraineeDao;
 import epam.gymcrm.dto.TraineeDto;
 import epam.gymcrm.dto.TrainingDto;
-import epam.gymcrm.dto.request.UpdateTraineeDto;
+import epam.gymcrm.dto.request.UpdateTraineeProfileRequestDto;
 import epam.gymcrm.dto.response.TraineeProfileResponseDto;
 import epam.gymcrm.dto.response.TrainerResponseDto;
-import epam.gymcrm.dto.response.TrainingTypeResponseDto;
+import epam.gymcrm.dto.response.SpecializationNameDto;
 import epam.gymcrm.dto.response.UpdateTraineeProfileResponseDto;
 import epam.gymcrm.exceptions.DatabaseException;
 import epam.gymcrm.exceptions.UserNotFoundException;
@@ -54,11 +54,16 @@ public class TraineeServicesImpl extends AbstractCrudServicesImpl<Trainee, Train
     }
 
     @Override
-    public ResponseEntity<UpdateTraineeProfileResponseDto> updateProfile(UpdateTraineeDto updateTraineeDto) {
-        Trainee trainee = getTraineeByUsername(updateTraineeDto.getUsername());
-        updateTraineeDetails(trainee, updateTraineeDto);
+    public ResponseEntity<UpdateTraineeProfileResponseDto> updateProfile(UpdateTraineeProfileRequestDto updateTraineeProfileRequestDto) {
+        Trainee trainee = getTraineeByUsername(updateTraineeProfileRequestDto.getUsername());
+        updateTraineeDetails(trainee, updateTraineeProfileRequestDto);
         traineeDao.update(trainee);
         return ResponseEntity.ok(mapToUpdateProfileResponse(trainee));
+    }
+
+    private Trainee getTraineeByUsername(String username) {
+        return traineeDao.findByUserUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("Trainee not found for username: " + username));
     }
 
     @Override
@@ -72,20 +77,15 @@ public class TraineeServicesImpl extends AbstractCrudServicesImpl<Trainee, Train
         return ResponseEntity.ok().build();
     }
 
-    private Trainee getTraineeByUsername(String username) {
-        return traineeDao.findByUserUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("Trainee not found for username: " + username));
-    }
-
-    private void updateTraineeDetails(Trainee trainee, UpdateTraineeDto updateTraineeDto) {
+    private void updateTraineeDetails(Trainee trainee, UpdateTraineeProfileRequestDto updateTraineeProfileRequestDto) {
         User user = trainee.getUser();
 
-        user.setFirstName(Optional.ofNullable(updateTraineeDto.getFirstName()).orElse(user.getFirstName()));
-        user.setLastName(Optional.ofNullable(updateTraineeDto.getLastName()).orElse(user.getLastName()));
-        user.setActive(updateTraineeDto.getIsActive());
+        user.setFirstName(Optional.ofNullable(updateTraineeProfileRequestDto.getFirstName()).orElse(user.getFirstName()));
+        user.setLastName(Optional.ofNullable(updateTraineeProfileRequestDto.getLastName()).orElse(user.getLastName()));
+        user.setActive(updateTraineeProfileRequestDto.getIsActive());
 
-        trainee.setAddress(Optional.ofNullable(updateTraineeDto.getAddress()).orElse(trainee.getAddress()));
-        trainee.setDateOfBirth(Optional.ofNullable(updateTraineeDto.getDateOfBirth()).orElse(trainee.getDateOfBirth()));
+        trainee.setAddress(Optional.ofNullable(updateTraineeProfileRequestDto.getAddress()).orElse(trainee.getAddress()));
+        trainee.setDateOfBirth(Optional.ofNullable(updateTraineeProfileRequestDto.getDateOfBirth()).orElse(trainee.getDateOfBirth()));
     }
 
 
@@ -119,7 +119,7 @@ public class TraineeServicesImpl extends AbstractCrudServicesImpl<Trainee, Train
                         trainer.getUser().getFirstName(),
                         trainer.getUser().getLastName(),
                         Optional.ofNullable(trainer.getSpecializationType())
-                                .map(specialization -> new TrainingTypeResponseDto(specialization.getTrainingTypeName()))
+                                .map(specialization -> new SpecializationNameDto(specialization.getTrainingTypeName()))
                                 .orElse(null)
                 ))
                 .toList();

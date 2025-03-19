@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateTraineeDto {
+public class UpdateTraineeProfileRequestDto {
     @NotBlank(message = "Username cannot be blank")
     private String username;
 

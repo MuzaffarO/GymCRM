@@ -2,7 +2,7 @@ package epam.gymcrm.service;
 
 import epam.gymcrm.dto.TraineeDto;
 import epam.gymcrm.dto.TrainingDto;
-import epam.gymcrm.dto.request.UpdateTraineeDto;
+import epam.gymcrm.dto.request.UpdateTraineeProfileRequestDto;
 import epam.gymcrm.dto.response.TraineeProfileResponseDto;
 import epam.gymcrm.dto.response.UpdateTraineeProfileResponseDto;
 import org.springframework.http.ResponseEntity;
@@ -17,5 +17,5 @@ public interface TraineeServices extends CRUDServices<TraineeDto, Integer> {
 
     ResponseEntity<TraineeProfileResponseDto> getByUsername(String username);
 
-    ResponseEntity<UpdateTraineeProfileResponseDto> updateProfile(UpdateTraineeDto updateTraineeDto);
+    ResponseEntity<UpdateTraineeProfileResponseDto> updateProfile(UpdateTraineeProfileRequestDto updateTraineeDto);
 }

@@ -27,17 +27,6 @@ public class TraineeDaoImpl extends AbstractCrudImpl<Trainee, Integer> implement
     }
 
 
-//    @Override
-//    public void deleteByUsername(String username) {
-//        TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {
-//            Query query = entityManager.createQuery(
-//                    "DELETE FROM Trainee t WHERE t.user.username = :username");
-//
-//            query.setParameter("username", username);
-//            query.executeUpdate();
-//        });
-//    }
-
     @Override
     public void deleteByUsername(String username) {
         TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {

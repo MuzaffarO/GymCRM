@@ -20,13 +20,14 @@ public class Trainer {
     @ManyToOne()
     private TrainingType specializationType;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
     @ManyToMany(mappedBy = "trainers", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Set<Trainee> trainees;
 
-    @OneToMany(mappedBy = "trainer", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "trainer", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Training> trainingList;
+
 
 }
