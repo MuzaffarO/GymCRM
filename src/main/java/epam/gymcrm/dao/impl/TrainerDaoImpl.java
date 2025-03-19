@@ -57,9 +57,16 @@ public class TrainerDaoImpl extends AbstractCrudImpl<Trainer, Integer> implement
 
 
     @Override
-    public List<Trainer> findNotAssignedTrainers() {
+    public List<Trainer> findNotAssignedActiveTrainers(String username) {
         return TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {
-            return entityManager.createQuery("SELECT t from Trainer t where t.user.isActive = true AND t.trainees IS EMPTY", Trainer.class).getResultList();
+            return entityManager.createQuery(
+                            "SELECT t FROM Trainer t " +
+                                    "WHERE t.user.isActive = true " +
+                                    "AND t NOT IN (SELECT tt FROM Trainee tr JOIN tr.trainers tt WHERE tr.user.username = :username)",
+                            Trainer.class)
+                    .setParameter("username", username)
+                    .getResultList();
         });
     }
+
 }

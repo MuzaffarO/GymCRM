@@ -9,9 +9,11 @@ import epam.gymcrm.exceptions.DatabaseException;
 import epam.gymcrm.exceptions.UserNotFoundException;
 import epam.gymcrm.model.Trainer;
 import epam.gymcrm.model.User;
+import epam.gymcrm.service.TraineeServices;
 import epam.gymcrm.service.TrainerServices;
 import epam.gymcrm.service.mapper.TrainerMapper;
 import epam.gymcrm.service.mapper.TrainingMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -24,11 +26,13 @@ public class TrainerServicesImpl extends AbstractCrudServicesImpl<Trainer, Train
 
     private final TrainerDao trainerDao;
     private final TrainingMapper trainingMapper;
+    private final TraineeServices traineeServices;
 
-    public TrainerServicesImpl(TrainerDao trainerDao, TrainerMapper mapper, TrainingMapper trainingMapper) {
+    public TrainerServicesImpl(TrainerDao trainerDao, TrainerMapper mapper, TrainingMapper trainingMapper, TraineeServices traineeServices, TraineeServices traineeServices1) {
         super(trainerDao, mapper);
         this.trainerDao = trainerDao;
         this.trainingMapper = trainingMapper;
+        this.traineeServices = traineeServices1;
     }
 
     @Override
@@ -55,6 +59,25 @@ public class TrainerServicesImpl extends AbstractCrudServicesImpl<Trainer, Train
         updateTrainerDetails(trainer, requestDto);
         trainerDao.update(trainer);
         return ResponseEntity.ok(mapToUpdateProfileResponse(trainer));
+    }
+
+    @Override
+    public ResponseEntity<List<TrainerResponseDto>> getNotAssignedActiveTrainers(String username) {
+        traineeServices.getByUsername(username); // checking if such trainee exists!
+
+        try {
+            List<TrainerResponseDto> responseDtoList = trainerDao.findNotAssignedActiveTrainers(username)
+                    .stream()
+                    .map(trainer -> new TrainerResponseDto(
+                            trainer.getUser().getUsername(),
+                            trainer.getUser().getFirstName(),
+                            trainer.getUser().getLastName(),
+                            new SpecializationNameDto(trainer.getSpecializationType().getTrainingTypeName())
+                    )).toList();
+            return ResponseEntity.ok(responseDtoList);
+        } catch (DataAccessException e) {
+            throw new DatabaseException("Error while getting the data!");
+        }
     }
 
     private Trainer getTrainerByUsername(String username) {
