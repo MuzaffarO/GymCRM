@@ -25,10 +25,13 @@ public class AppConfig {
     public EntityManagerFactory entityManagerFactory() {
         return Persistence.createEntityManagerFactory("GYM");
     }
+
     @Bean
     public PlatformTransactionManager transactionManager() {
         return new JpaTransactionManager();
     }
+
+    // this is for showing jsp pages right
     @Bean
     public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();

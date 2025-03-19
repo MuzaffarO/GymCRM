@@ -1,7 +1,5 @@
 package epam.gymcrm.dao.impl;
 
-import epam.gymcrm.dao.util.AuthenticationUtil;
-import epam.gymcrm.exceptions.InvalidUsernameOrPasswordException;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
@@ -21,24 +19,15 @@ import java.util.Optional;
 public class TraineeDaoImpl extends AbstractCrudImpl<Trainee, Integer> implements TraineeDao {
 
     @Autowired
-    private AuthenticationUtil authenticationUtil;
-
-    @Autowired
     private EntityManagerFactory entityManagerFactory;
 
     public TraineeDaoImpl() {
         super(Trainee.class);
     }
 
-    private void authenticate(String username, String password) {
-        if (!authenticationUtil.authenticate(username, password)) {
-            throw new InvalidUsernameOrPasswordException("Invalid username or password");
-        }
-    }
 
     @Override
-    public void deleteByUsername(String username, String password) {
-        authenticate(username, password);
+    public void deleteByUsername(String username) {
         TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {
             Query query = entityManager.createQuery(
                     "DELETE FROM Trainee t WHERE t.user.username = :username");
@@ -49,8 +38,7 @@ public class TraineeDaoImpl extends AbstractCrudImpl<Trainee, Integer> implement
     }
 
     @Override
-    public Optional<Trainee> findByUserUsername(String username, String password) {
-        authenticate(username, password);
+    public Optional<Trainee> findByUserUsername(String username) {
         log.info("Find by username {}", username);
         return TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {
             TypedQuery<Trainee> query = entityManager.createQuery(
@@ -62,8 +50,7 @@ public class TraineeDaoImpl extends AbstractCrudImpl<Trainee, Integer> implement
     }
 
     @Override
-    public List<Training> getTraineeTrainingsByUsername(String username, String password) {
-        authenticate(username, password);
+    public List<Training> getTraineeTrainingsByUsername(String username) {
         return TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {
             String queryString = "SELECT t FROM Training t JOIN t.trainee usr WHERE usr.user.username = :username";
 

@@ -1,7 +1,5 @@
 package epam.gymcrm.dao.impl;
 
-import epam.gymcrm.dao.util.AuthenticationUtil;
-import epam.gymcrm.exceptions.InvalidUsernameOrPasswordException;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.TypedQuery;
 import epam.gymcrm.dao.TrainerDao;
@@ -22,22 +20,13 @@ public class TrainerDaoImpl extends AbstractCrudImpl<Trainer, Integer> implement
     @Autowired
     private EntityManagerFactory entityManagerFactory;
 
-    @Autowired
-    private AuthenticationUtil authenticationUtil;
-
     public TrainerDaoImpl() {
         super(Trainer.class);
     }
 
-    private void authenticate(String username, String password) {
-        if (!authenticationUtil.authenticate(username, password)) {
-            throw new InvalidUsernameOrPasswordException("Invalid username or password");
-        }
-    }
 
     @Override
-    public List<Training> getTrainerTrainingsByUsername(String username, String password) {
-        authenticate(username, password);
+    public List<Training> getTrainerTrainingsByUsername(String username) {
         log.info("Get trainer trainings by username: {}", username);
         return TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {
             String queryString = "SELECT t FROM Training t JOIN t.trainer usr WHERE usr.user.username = :username";
@@ -50,8 +39,7 @@ public class TrainerDaoImpl extends AbstractCrudImpl<Trainer, Integer> implement
     }
 
     @Override
-    public Optional<Trainer> findByUserUsername(String username, String password) {
-        authenticationUtil.authenticate(username, password);
+    public Optional<Trainer> findByUserUsername(String username) {
         log.info("Find by username: {}", username);
         return TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {
             TypedQuery<Trainer> query = entityManager.createQuery(
@@ -63,8 +51,7 @@ public class TrainerDaoImpl extends AbstractCrudImpl<Trainer, Integer> implement
     }
 
     @Override
-    public List<Trainer> findNotAssignedTrainers(String username, String password) {
-        authenticate(username, password);
+    public List<Trainer> findNotAssignedTrainers() {
         return TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {
             return entityManager.createQuery("SELECT t from Trainer t where t.user.isActive = true AND t.trainees IS EMPTY", Trainer.class).getResultList();
         });

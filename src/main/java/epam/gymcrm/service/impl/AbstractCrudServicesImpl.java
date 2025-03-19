@@ -32,9 +32,9 @@ public abstract class AbstractCrudServicesImpl<T, D, ID> implements CRUDServices
     }
 
     @Override
-    public D getById(ID id, String username, String password) {
+    public D getById(ID id) {
         try {
-            T entity = crudDao.findById(id, username, password)
+            T entity = crudDao.findById(id)
                     .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
             return mapper.toDto(entity);
         } catch (DataAccessException e) {
@@ -43,10 +43,10 @@ public abstract class AbstractCrudServicesImpl<T, D, ID> implements CRUDServices
     }
 
     @Override
-    public D update(D dto, String username, String password) {
+    public D update(D dto) {
         try {
             T entityToUpdate = mapper.toEntity(dto);
-            T updatedEntity = crudDao.update(entityToUpdate, username, password)
+            T updatedEntity = crudDao.update(entityToUpdate)
                     .orElseThrow(() -> new UnexpectedException("Unexpected error occurred while updating data"));
             return mapper.toDto(updatedEntity);
         } catch (DataAccessException e) {
@@ -55,9 +55,9 @@ public abstract class AbstractCrudServicesImpl<T, D, ID> implements CRUDServices
     }
 
     @Override
-    public boolean delete(ID id, String username, String password) {
+    public boolean delete(ID id) {
         try {
-            return crudDao.delete(id, username, password);
+            return crudDao.delete(id);
         } catch (DataAccessException e) {
             throw new DatabaseException(e.getMessage());
         }

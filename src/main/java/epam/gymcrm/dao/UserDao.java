@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface UserDao extends CRUDDao<User, Integer> {
 
-    Optional<User> findByUsername(String username, String password);
+    Optional<User> findByUsername(String username);
 
     void changePassword(String username, String newPassword, String oldPassword);
 

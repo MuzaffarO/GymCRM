@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public interface TraineeDao extends CRUDDao<Trainee, Integer> {
 
-    void deleteByUsername(String username, String password);
+    void deleteByUsername(String username);
 
-    Optional<Trainee> findByUserUsername(String username, String password);
+    Optional<Trainee> findByUserUsername(String username);
 
-    List<Training> getTraineeTrainingsByUsername(String username, String password);
+    List<Training> getTraineeTrainingsByUsername(String username);
 }

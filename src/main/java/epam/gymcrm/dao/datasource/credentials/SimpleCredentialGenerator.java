@@ -1,4 +1,4 @@
-package epam.gymcrm.dao.datasource.credential.impl;
+package epam.gymcrm.dao.datasource.credentials;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;

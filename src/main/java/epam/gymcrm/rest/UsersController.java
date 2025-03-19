@@ -1,8 +1,8 @@
 package epam.gymcrm.rest;
 
-import epam.gymcrm.dto.TrainerDto;
+import epam.gymcrm.dto.register.TraineeRegisterDto;
 import epam.gymcrm.dto.register.TrainerRegisterDto;
-import epam.gymcrm.dto.response.CredentialsInfoDto;
+import epam.gymcrm.dto.response.CredentialsInfoResponseDto;
 import epam.gymcrm.service.UsersServices;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,15 +16,20 @@ public class UsersController {
 
     private final UsersServices usersServices;
 
-    @PostMapping("trainer/register")
-    public ResponseEntity<CredentialsInfoDto> registerTrainer(@Valid @RequestBody TrainerRegisterDto trainerRegisterDto) {
+    @PostMapping("/trainer/register")
+    public ResponseEntity<CredentialsInfoResponseDto> registerTrainer(@Valid @RequestBody TrainerRegisterDto trainerRegisterDto) {
         return usersServices.registerTrainer(trainerRegisterDto);
     }
 
+    @PostMapping("/trainee/register")
+    public ResponseEntity<CredentialsInfoResponseDto> registerTrainee(@Valid @RequestBody TraineeRegisterDto traineeRegisterDto) {
+        return usersServices.registerTrainee(traineeRegisterDto);
+    }
 
-//    @PostMapping("trainee/register")
-//    public ResponseEntity<CredentialsInfoDto> registerTrainee(@Valid @RequestBody ) {
-//        return usersServices.registerTrainee();
-//    }
+    @GetMapping("/login")
+    public ResponseEntity<Void> login( @RequestParam(name = "username") String username,
+                                       @RequestParam(name = "password") String password) {
+        return usersServices.login(username, password);
+    }
 
 }

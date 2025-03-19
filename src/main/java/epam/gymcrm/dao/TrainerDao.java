@@ -8,10 +8,10 @@ import java.util.Optional;
 
 public interface TrainerDao extends CRUDDao<Trainer, Integer> {
 
-    List<Training> getTrainerTrainingsByUsername(String username, String password);
+    List<Training> getTrainerTrainingsByUsername(String username);
 
-    Optional<Trainer> findByUserUsername(String username, String password);
+    Optional<Trainer> findByUserUsername(String username);
 
-    List<Trainer> findNotAssignedTrainers(String username, String password);
+    List<Trainer> findNotAssignedTrainers();
 
 }

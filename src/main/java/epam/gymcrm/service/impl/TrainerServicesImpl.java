@@ -26,9 +26,9 @@ public class TrainerServicesImpl extends AbstractCrudServicesImpl<Trainer, Train
     }
 
     @Override
-    public List<TrainingDto> getTrainerTrainingsByUsername(String username, String password) {
+    public List<TrainingDto> getTrainerTrainingsByUsername(String username) {
         try {
-            return trainerDao.getTrainerTrainingsByUsername(username, password).stream()
+            return trainerDao.getTrainerTrainingsByUsername(username).stream()
                     .map(trainingMapper::toDto)
                     .toList();
         } catch (DataAccessException e) {

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface TrainerServices extends CRUDServices<TrainerDto, Integer> {
 
-    List<TrainingDto> getTrainerTrainingsByUsername(String username, String password);
+    List<TrainingDto> getTrainerTrainingsByUsername(String username);
 }

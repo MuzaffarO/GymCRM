@@ -45,7 +45,7 @@ public class TransactionUtil {
             throw e;
         } finally {
             if (entityManager.isOpen()) {
-                entityManager.close(); // Ensure entityManager is closed only after transaction completes
+                entityManager.close();
             }
         }
         return result;

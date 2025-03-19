@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CredentialsInfoDto {
+public class CredentialsInfoResponseDto {
     private String username;
     private String password;
 }

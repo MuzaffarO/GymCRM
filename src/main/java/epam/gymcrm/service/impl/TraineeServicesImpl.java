@@ -26,18 +26,18 @@ public class TraineeServicesImpl extends AbstractCrudServicesImpl<Trainee, Train
     }
 
     @Override
-    public void deleteByUsername(String username, String password) {
+    public void deleteByUsername(String username) {
         try {
-            traineeDao.deleteByUsername(username, password);
+            traineeDao.deleteByUsername(username);
         } catch (DataAccessException e) {
             throw new DatabaseException(e.getMessage());
         }
     }
 
     @Override
-    public List<TrainingDto> getTraineeTrainingsByUsername(String username, String password) {
+    public List<TrainingDto> getTraineeTrainingsByUsername(String username) {
         try {
-            return traineeDao.getTraineeTrainingsByUsername(username, password).stream()
+            return traineeDao.getTraineeTrainingsByUsername(username).stream()
                     .map(trainingMapper::toDto)
                     .toList();
         } catch (DataAccessException e) {

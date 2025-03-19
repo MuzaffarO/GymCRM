@@ -1,7 +1,5 @@
 package epam.gymcrm.dao.impl;
 
-import epam.gymcrm.dao.util.AuthenticationUtil;
-import epam.gymcrm.exceptions.InvalidUsernameOrPasswordException;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
@@ -22,22 +20,13 @@ public class UserDaoImpl extends AbstractCrudImpl<User, Integer> implements User
     @Autowired
     private EntityManagerFactory entityManagerFactory;
 
-    @Autowired
-    private AuthenticationUtil authenticationUtil;
-
     public UserDaoImpl() {
         super(User.class);
     }
 
-    private void authenticate(String username, String password) {
-        if (!authenticationUtil.authenticate(username, password)) {
-            throw new InvalidUsernameOrPasswordException("Invalid username or password");
-        }
-    }
 
     @Override
-    public Optional<User> findByUsername(String username, String password) {
-        authenticate(username, password);
+    public Optional<User> findByUsername(String username) {
         return TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {
             TypedQuery<User> query = entityManager.createQuery(
                     "SELECT u FROM User u WHERE u.username = :username", User.class);
@@ -47,14 +36,14 @@ public class UserDaoImpl extends AbstractCrudImpl<User, Integer> implements User
             try {
                 return Optional.ofNullable(query.getSingleResult());
             } catch (NoResultException ex) {
-                throw new UserNotFoundException("User with username " + username + " not found");
+                return Optional.empty();
             }
         });
     }
 
+
     @Override
     public void changePassword(String username, String newPassword, String oldPassword) {
-        authenticate(username, oldPassword);
         TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {
             TypedQuery<User> query = entityManager.createQuery(
                     "UPDATE User u SET u.password = :newPassword WHERE u.username = :username", User.class);
@@ -68,7 +57,6 @@ public class UserDaoImpl extends AbstractCrudImpl<User, Integer> implements User
 
     @Override
     public void updateIsActive(String username, boolean isActive, String password) {
-        authenticate(username, password);
         TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {
             TypedQuery<User> query = entityManager.createQuery(
                     "UPDATE User u SET u.isActive = :isActive WHERE u.username = :username", User.class);
