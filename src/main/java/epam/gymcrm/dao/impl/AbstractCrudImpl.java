@@ -50,6 +50,7 @@ public abstract class AbstractCrudImpl<T, ID extends Serializable> implements CR
     }
 
 
+
     @Override
     public boolean delete(ID id) {
         return TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {

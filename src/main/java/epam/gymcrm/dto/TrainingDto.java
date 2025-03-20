@@ -19,5 +19,5 @@ public class TrainingDto {
     private String trainingName;
     private TrainingTypeDto trainingType;
     private Date trainingDate;
-    private Number trainingDuration;
+    private Double trainingDuration;
 }

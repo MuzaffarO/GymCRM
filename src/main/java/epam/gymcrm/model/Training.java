@@ -35,5 +35,5 @@ public class Training {
     private Date trainingDate;
 
     @Column(nullable = false)
-    private Number trainingDuration;
+    private Double trainingDuration;
 }

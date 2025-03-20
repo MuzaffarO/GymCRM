@@ -3,11 +3,10 @@ package epam.gymcrm.service.impl;
 import epam.gymcrm.dao.TraineeDao;
 import epam.gymcrm.dto.TraineeDto;
 import epam.gymcrm.dto.TrainingDto;
+import epam.gymcrm.dto.request.TraineeTrainingsRequestDto;
 import epam.gymcrm.dto.request.UpdateTraineeProfileRequestDto;
-import epam.gymcrm.dto.response.TraineeProfileResponseDto;
-import epam.gymcrm.dto.response.TrainerResponseDto;
-import epam.gymcrm.dto.response.SpecializationNameDto;
-import epam.gymcrm.dto.response.UpdateTraineeProfileResponseDto;
+import epam.gymcrm.dto.request.UpdateTraineeTrainerListRequestDto;
+import epam.gymcrm.dto.response.*;
 import epam.gymcrm.exceptions.DatabaseException;
 import epam.gymcrm.exceptions.UserNotFoundException;
 import epam.gymcrm.model.Trainee;
@@ -20,8 +19,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TraineeServicesImpl extends AbstractCrudServicesImpl<Trainee, TraineeDto, Integer> implements TraineeServices {
@@ -60,6 +58,31 @@ public class TraineeServicesImpl extends AbstractCrudServicesImpl<Trainee, Train
         traineeDao.update(trainee);
         return ResponseEntity.ok(mapToUpdateProfileResponse(trainee));
     }
+
+
+    // NEED TO IMPLEMENT THIS METHOD // ISSUE WITH MERGE
+    @Override
+    public ResponseEntity<TrainerResponseDto> updateTraineeTrainersList(UpdateTraineeTrainerListRequestDto updateTraineeTrainerListDto) {
+        Trainee trainee = getTraineeByUsername(updateTraineeTrainerListDto.getUsername());
+
+        List<Trainer> newTrainers = traineeDao.findAllTrainersByUsernameList(updateTraineeTrainerListDto.getTrainersList());
+
+        trainee.getTrainers().clear();
+        trainee.getTrainers().addAll(newTrainers);
+
+        traineeDao.update(trainee);
+
+        return ResponseEntity.ok(new TrainerResponseDto(
+                trainee.getUser().getUsername(),
+                trainee.getUser().getFirstName(),
+                trainee.getUser().getLastName(),
+                trainee.getTrainers().stream()
+                        .findFirst().flatMap(trainer -> Optional.ofNullable(trainer.getSpecializationType())
+                                .map(specialization -> new SpecializationNameDto(specialization.getTrainingTypeName())))
+                        .orElse(null)
+        ));
+    }
+
 
     private Trainee getTraineeByUsername(String username) {
         return traineeDao.findByUserUsername(username)

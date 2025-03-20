@@ -1,5 +1,7 @@
 package epam.gymcrm.dao.impl;
 
+import epam.gymcrm.dto.request.TrainerUsernameRequestDto;
+import epam.gymcrm.model.Trainer;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
@@ -72,4 +74,24 @@ public class TraineeDaoImpl extends AbstractCrudImpl<Trainee, Integer> implement
             return query.getResultList();
         });
     }
+
+    @Override
+    public List<Trainer> findAllTrainersByUsernameList(List<TrainerUsernameRequestDto> trainers) {
+        return TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {
+            TypedQuery<Trainer> query = entityManager.createQuery(
+                    "SELECT t FROM Trainer t WHERE t.user.username IN :usernames", Trainer.class);
+            query.setParameter("usernames", trainers.stream().map(TrainerUsernameRequestDto::getUsername).toList());
+            return query.getResultList();
+        });
+    }
+
+    @Override
+    public Trainee merge(Trainee trainee) {
+        return TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {
+            return entityManager.merge(trainee); // Attach trainee to active persistence context
+        });
+    }
+
+
 }
+
