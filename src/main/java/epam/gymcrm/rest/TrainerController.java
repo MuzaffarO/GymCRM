@@ -9,6 +9,7 @@ import epam.gymcrm.dto.response.TrainerTrainingsListResponseDto;
 import epam.gymcrm.dto.response.UpdateTrainerProfileResponseDto;
 import epam.gymcrm.service.TrainerServices;
 import epam.gymcrm.service.TrainingServices;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class TrainerController {
     }
 
     @PutMapping("/update-profile")
-    public ResponseEntity<UpdateTrainerProfileResponseDto> updateProfile(@RequestBody UpdateTrainerProfileRequestDto updateTrainerProfileRequestDto) {
+    public ResponseEntity<UpdateTrainerProfileResponseDto> updateProfile(@RequestBody @Valid UpdateTrainerProfileRequestDto updateTrainerProfileRequestDto) {
         return trainerServices.updateProfile(updateTrainerProfileRequestDto);
     }
 
@@ -39,12 +40,12 @@ public class TrainerController {
     }
 
     @GetMapping("/trainings-list")
-    public ResponseEntity<List<TrainerTrainingsListResponseDto>> getTrainerTrainings(@RequestBody TrainerTrainingsRequestDto trainerTrainingsRequestDto) {
+    public ResponseEntity<List<TrainerTrainingsListResponseDto>> getTrainerTrainings(@RequestBody @Valid TrainerTrainingsRequestDto trainerTrainingsRequestDto) {
         return trainingServices.getTrainerTrainings(trainerTrainingsRequestDto);
     }
 
     @PatchMapping("/change-status")
-    public ResponseEntity<Void> changeStatus(@RequestBody ActivateDeactivateRequestDto statusDto){
+    public ResponseEntity<Void> changeStatus(@RequestBody @Valid ActivateDeactivateRequestDto statusDto){
         return trainerServices.changeStatus(statusDto);
     }
 

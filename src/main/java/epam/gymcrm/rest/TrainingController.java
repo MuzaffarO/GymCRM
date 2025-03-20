@@ -2,6 +2,7 @@ package epam.gymcrm.rest;
 
 import epam.gymcrm.dto.request.TrainingRegisterDto;
 import epam.gymcrm.service.TrainingServices;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TrainingController {
     private final TrainingServices trainingServices;
     @PostMapping("/create")
-    public ResponseEntity<Void> createTraining(@RequestBody TrainingRegisterDto trainingRegisterDto) {
+    public ResponseEntity<Void> createTraining(@RequestBody @Valid TrainingRegisterDto trainingRegisterDto) {
         return trainingServices.createTraining(trainingRegisterDto);
     }
 }
