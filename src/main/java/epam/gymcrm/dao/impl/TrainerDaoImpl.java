@@ -1,5 +1,7 @@
 package epam.gymcrm.dao.impl;
 
+import epam.gymcrm.model.Trainee;
+import epam.gymcrm.model.User;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
@@ -7,10 +9,13 @@ import epam.gymcrm.dao.TrainerDao;
 import epam.gymcrm.dao.util.TransactionUtil;
 import epam.gymcrm.model.Trainer;
 import epam.gymcrm.model.Training;
+import jakarta.persistence.criteria.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,5 +73,39 @@ public class TrainerDaoImpl extends AbstractCrudImpl<Trainer, Integer> implement
                     .getResultList();
         });
     }
+
+    @Override
+    public List<Training> findTrainerTrainingsByFilters(String username, Date startDate, Date endDate, String traineeName) {
+        return TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Training> query = cb.createQuery(Training.class);
+            Root<Training> root = query.from(Training.class);
+
+            List<Predicate> predicates = new ArrayList<>();
+
+            // Mandatory filter (trainer's username)
+            Join<Training, Trainer> trainerJoin = root.join("trainer");
+            Join<Trainer, User> trainerUserJoin = trainerJoin.join("user");
+            predicates.add(cb.equal(trainerUserJoin.get("username"), username));
+
+            // Optional filters
+            if (startDate != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("trainingDate"), startDate));
+            }
+            if (endDate != null) {
+                predicates.add(cb.lessThanOrEqualTo(root.get("trainingDate"), endDate));
+            }
+            if (traineeName != null && !traineeName.isEmpty()) {
+                Join<Training, Trainee> traineeJoin = root.join("trainee");
+                Join<Trainee, User> traineeUserJoin = traineeJoin.join("user");
+                predicates.add(cb.equal(traineeUserJoin.get("firstName"), traineeName));
+            }
+
+            query.select(root).where(predicates.toArray(new Predicate[0]));
+
+            return entityManager.createQuery(query).getResultList();
+        });
+    }
+
 
 }

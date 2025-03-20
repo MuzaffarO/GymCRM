@@ -1,5 +1,6 @@
 package epam.gymcrm.rest;
 
+import epam.gymcrm.dto.request.ActivateDeactivateRequestDto;
 import epam.gymcrm.dto.request.TraineeTrainingsRequestDto;
 import epam.gymcrm.dto.request.UpdateTraineeProfileRequestDto;
 import epam.gymcrm.dto.request.UpdateTraineeTrainerListRequestDto;
@@ -47,9 +48,12 @@ public class TraineeController {
 
     @GetMapping("/trainings-list")
     public ResponseEntity<List<TraineeTrainingsListResponseDto>> getTrainingsList(@RequestBody TraineeTrainingsRequestDto trainingsRequestDto) {
-        return trainingServices.getTrainingsList(trainingsRequestDto);
+        return trainingServices.getTraineeTrainings(trainingsRequestDto);
     }
 
-
+    @PatchMapping("/change-status")
+    public ResponseEntity<Void> changeStatus(@RequestBody ActivateDeactivateRequestDto statusDto){
+        return traineeServices.changeStatus(statusDto);
+    }
 
 }

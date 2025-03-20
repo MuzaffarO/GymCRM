@@ -2,9 +2,12 @@ package epam.gymcrm.service;
 
 import epam.gymcrm.dto.TrainerDto;
 import epam.gymcrm.dto.TrainingDto;
+import epam.gymcrm.dto.request.ActivateDeactivateRequestDto;
+import epam.gymcrm.dto.request.TrainerTrainingsRequestDto;
 import epam.gymcrm.dto.request.UpdateTrainerProfileRequestDto;
 import epam.gymcrm.dto.response.TrainerProfileResponseDto;
 import epam.gymcrm.dto.response.TrainerResponseDto;
+import epam.gymcrm.dto.response.TrainerTrainingsListResponseDto;
 import epam.gymcrm.dto.response.UpdateTrainerProfileResponseDto;
 import org.springframework.http.ResponseEntity;
 
@@ -19,4 +22,6 @@ public interface TrainerServices extends CRUDServices<TrainerDto, Integer> {
     ResponseEntity<UpdateTrainerProfileResponseDto> updateProfile(UpdateTrainerProfileRequestDto updateTrainerProfileDto);
 
     ResponseEntity<List<TrainerResponseDto>> getNotAssignedActiveTrainers(String username);
+
+    ResponseEntity<Void> changeStatus(ActivateDeactivateRequestDto statusDto);
 }

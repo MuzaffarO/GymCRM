@@ -2,6 +2,7 @@ package epam.gymcrm.service;
 
 import epam.gymcrm.dto.TraineeDto;
 import epam.gymcrm.dto.TrainingDto;
+import epam.gymcrm.dto.request.ActivateDeactivateRequestDto;
 import epam.gymcrm.dto.request.TraineeTrainingsRequestDto;
 import epam.gymcrm.dto.request.UpdateTraineeProfileRequestDto;
 import epam.gymcrm.dto.request.UpdateTraineeTrainerListRequestDto;
@@ -25,4 +26,5 @@ public interface TraineeServices extends CRUDServices<TraineeDto, Integer> {
 
     ResponseEntity<TrainerResponseDto> updateTraineeTrainersList(UpdateTraineeTrainerListRequestDto updateTraineeTrainerListDto);
 
+    ResponseEntity<Void> changeStatus(ActivateDeactivateRequestDto statusDto);
 }

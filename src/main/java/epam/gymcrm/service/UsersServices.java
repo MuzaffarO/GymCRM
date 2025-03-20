@@ -1,5 +1,6 @@
 package epam.gymcrm.service;
 
+import epam.gymcrm.dto.request.ActivateDeactivateRequestDto;
 import epam.gymcrm.dto.request.TraineeRegisterDto;
 import epam.gymcrm.dto.request.TrainerRegisterDto;
 import epam.gymcrm.dto.response.CredentialsInfoResponseDto;
@@ -19,4 +20,5 @@ public interface UsersServices {
     ResponseEntity<Void> login(String username, String password);
 
     ResponseEntity<Void> changeLogin(String username, String oldPassword, String newPassword);
+
 }

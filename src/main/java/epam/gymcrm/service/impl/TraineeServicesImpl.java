@@ -3,6 +3,7 @@ package epam.gymcrm.service.impl;
 import epam.gymcrm.dao.TraineeDao;
 import epam.gymcrm.dto.TraineeDto;
 import epam.gymcrm.dto.TrainingDto;
+import epam.gymcrm.dto.request.ActivateDeactivateRequestDto;
 import epam.gymcrm.dto.request.TraineeTrainingsRequestDto;
 import epam.gymcrm.dto.request.UpdateTraineeProfileRequestDto;
 import epam.gymcrm.dto.request.UpdateTraineeTrainerListRequestDto;
@@ -81,6 +82,17 @@ public class TraineeServicesImpl extends AbstractCrudServicesImpl<Trainee, Train
                                 .map(specialization -> new SpecializationNameDto(specialization.getTrainingTypeName())))
                         .orElse(null)
         ));
+    }
+
+    @Override
+    public ResponseEntity<Void> changeStatus(ActivateDeactivateRequestDto statusDto) {
+        Trainee trainee = getTraineeByUsername(statusDto.getUsername());
+
+        trainee.getUser().setActive(statusDto.getIsActive());
+
+        traineeDao.update(trainee);
+
+        return ResponseEntity.ok().build();
     }
 
 

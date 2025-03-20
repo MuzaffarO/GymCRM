@@ -3,10 +3,12 @@ package epam.gymcrm.service.impl;
 import epam.gymcrm.dao.TrainerDao;
 import epam.gymcrm.dto.TrainerDto;
 import epam.gymcrm.dto.TrainingDto;
+import epam.gymcrm.dto.request.ActivateDeactivateRequestDto;
 import epam.gymcrm.dto.request.UpdateTrainerProfileRequestDto;
 import epam.gymcrm.dto.response.*;
 import epam.gymcrm.exceptions.DatabaseException;
 import epam.gymcrm.exceptions.UserNotFoundException;
+import epam.gymcrm.model.Trainee;
 import epam.gymcrm.model.Trainer;
 import epam.gymcrm.model.User;
 import epam.gymcrm.service.TraineeServices;
@@ -78,6 +80,17 @@ public class TrainerServicesImpl extends AbstractCrudServicesImpl<Trainer, Train
         } catch (DataAccessException e) {
             throw new DatabaseException("Error while getting the data!");
         }
+    }
+
+    @Override
+    public ResponseEntity<Void> changeStatus(ActivateDeactivateRequestDto statusDto) {
+        Trainer trainer = getTrainerByUsername(statusDto.getUsername());
+
+        trainer.getUser().setActive(statusDto.getIsActive());
+
+        trainerDao.update(trainer);
+
+        return ResponseEntity.ok().build();
     }
 
     private Trainer getTrainerByUsername(String username) {
