@@ -4,6 +4,6 @@ import epam.gymcrm.exceptions.InvalidUsernameOrPasswordException;
 
 public interface AuthServices {
 
-    void authenticate(String username, String password) throws InvalidUsernameOrPasswordException;
+    boolean authenticate(String username, String password) throws InvalidUsernameOrPasswordException;
 
 }

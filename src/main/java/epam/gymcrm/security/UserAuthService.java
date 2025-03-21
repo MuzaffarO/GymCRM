@@ -14,13 +14,14 @@ public class UserAuthService implements AuthServices {
     private final UserDao userDao;
 
     @Override
-    public void authenticate(String username, String password) {
+    public boolean authenticate(String username, String password) {
         User user = userDao.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User with username '" + username + "' not found"));
 
         if (!user.getPassword().equals(password)) {
             throw new InvalidUsernameOrPasswordException("Incorrect password!");
         }
+        return true;
     }
 
 }

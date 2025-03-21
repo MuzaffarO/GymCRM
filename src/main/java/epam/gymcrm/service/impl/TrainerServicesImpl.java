@@ -1,5 +1,6 @@
 package epam.gymcrm.service.impl;
 
+import epam.gymcrm.dao.TraineeDao;
 import epam.gymcrm.dao.TrainerDao;
 import epam.gymcrm.dto.TrainerDto;
 import epam.gymcrm.dto.TrainingDto;
@@ -28,13 +29,13 @@ public class TrainerServicesImpl extends AbstractCrudServicesImpl<Trainer, Train
 
     private final TrainerDao trainerDao;
     private final TrainingMapper trainingMapper;
-    private final TraineeServices traineeServices;
+    private final TraineeDao traineeDao;
 
-    public TrainerServicesImpl(TrainerDao trainerDao, TrainerMapper mapper, TrainingMapper trainingMapper, TraineeServices traineeServices, TraineeServices traineeServices1) {
+    public TrainerServicesImpl(TrainerDao trainerDao, TrainerMapper mapper, TrainingMapper trainingMapper, TraineeDao traineeDao) {
         super(trainerDao, mapper);
         this.trainerDao = trainerDao;
         this.trainingMapper = trainingMapper;
-        this.traineeServices = traineeServices1;
+        this.traineeDao = traineeDao;
     }
 
     @Override
@@ -65,7 +66,7 @@ public class TrainerServicesImpl extends AbstractCrudServicesImpl<Trainer, Train
 
     @Override
     public ResponseEntity<List<TrainerResponseDto>> getNotAssignedActiveTrainers(String username) {
-        traineeServices.getByUsername(username); // checking if such trainee exists!
+        trainerDao.findByUserUsername(username); // checking if such trainee exists!
 
         try {
             List<TrainerResponseDto> responseDtoList = trainerDao.findNotAssignedActiveTrainers(username)
@@ -86,12 +87,16 @@ public class TrainerServicesImpl extends AbstractCrudServicesImpl<Trainer, Train
     public ResponseEntity<Void> changeStatus(ActivateDeactivateRequestDto statusDto) {
         Trainer trainer = getTrainerByUsername(statusDto.getUsername());
 
-        trainer.getUser().setActive(statusDto.getIsActive());
-
-        trainerDao.update(trainer);
+        try {
+            trainer.getUser().setActive(statusDto.getIsActive());
+            trainerDao.update(trainer);
+        } catch (DataAccessException e) {
+            throw new DatabaseException("Error while updating trainer status");
+        }
 
         return ResponseEntity.ok().build();
     }
+
 
     private Trainer getTrainerByUsername(String username) {
         return trainerDao.findByUserUsername(username)

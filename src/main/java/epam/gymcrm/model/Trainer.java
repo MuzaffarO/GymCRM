@@ -24,7 +24,7 @@ public class Trainer {
     private User user;
 
     @ManyToMany(mappedBy = "trainers", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    private Set<Trainee> trainees;
+    private List<Trainee> trainees;
 
     @OneToMany(mappedBy = "trainer", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Training> trainingList;

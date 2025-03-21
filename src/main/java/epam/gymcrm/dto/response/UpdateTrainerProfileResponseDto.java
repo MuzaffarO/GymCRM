@@ -1,7 +1,8 @@
 package epam.gymcrm.dto.response;
 
-import java.util.List;
+import lombok.Getter;
 
+import java.util.List;
 public record UpdateTrainerProfileResponseDto (
         String username,
         String firstName,

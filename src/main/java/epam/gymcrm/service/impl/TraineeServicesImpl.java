@@ -88,16 +88,18 @@ public class TraineeServicesImpl extends AbstractCrudServicesImpl<Trainee, Train
     public ResponseEntity<Void> changeStatus(ActivateDeactivateRequestDto statusDto) {
         Trainee trainee = getTraineeByUsername(statusDto.getUsername());
 
-        if (trainee.getUser().isActive() == statusDto.getIsActive()) {
-            return ResponseEntity.ok().build();
+        try {
+            if (trainee.getUser().isActive() != statusDto.getIsActive()) {
+                trainee.getUser().setActive(statusDto.getIsActive());
+                traineeDao.update(trainee);
+            }
+        } catch (DataAccessException e) {
+            throw new DatabaseException("Error while updating trainee status");
         }
-
-        trainee.getUser().setActive(statusDto.getIsActive());
-
-        traineeDao.update(trainee);
 
         return ResponseEntity.ok().build();
     }
+
 
 
     private Trainee getTraineeByUsername(String username) {

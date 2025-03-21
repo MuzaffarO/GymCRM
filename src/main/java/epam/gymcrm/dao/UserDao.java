@@ -8,7 +8,7 @@ public interface UserDao extends CRUDDao<User, Integer> {
 
     Optional<User> findByUsername(String username);
 
-    void changePassword(String username, String newPassword);
+    boolean changePassword(String username, String newPassword);
 
     void updateIsActive(String username, boolean isActive, String password);
 }
