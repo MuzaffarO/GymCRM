@@ -5,7 +5,6 @@ import epam.gymcrm.dao.TrainerDao;
 import epam.gymcrm.dao.TrainingTypeDao;
 import epam.gymcrm.dao.UserDao;
 import epam.gymcrm.dao.datasource.CredentialGenerator;
-import epam.gymcrm.dto.request.ActivateDeactivateRequestDto;
 import epam.gymcrm.dto.request.TraineeRegisterDto;
 import epam.gymcrm.dto.request.TrainerRegisterDto;
 import epam.gymcrm.dto.response.CredentialsInfoResponseDto;
