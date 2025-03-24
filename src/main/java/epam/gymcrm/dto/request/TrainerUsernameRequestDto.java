@@ -1,5 +1,6 @@
 package epam.gymcrm.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Getter
@@ -8,5 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 @Data
 public class TrainerUsernameRequestDto {
+    @NotBlank
     private String username;
 }

@@ -1,5 +1,7 @@
 package epam.gymcrm.dao;
 
+import epam.gymcrm.model.Trainee;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Optional;
@@ -15,4 +17,5 @@ public interface CRUDDao<T, ID> {
     boolean delete(ID id);
 
     Collection<T> findAll();
+    public void flush();
 }

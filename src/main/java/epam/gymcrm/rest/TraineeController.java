@@ -40,8 +40,6 @@ public class TraineeController {
         return ResponseEntity.ok().build();
     }
 
-    // NEED TO FIX THIS METHOD
-
     @PutMapping("/update-trainers-list")
     public  ResponseEntity<TrainerResponseDto> updateTraineeTrainersList(@RequestBody @Valid UpdateTraineeTrainerListRequestDto updateTraineeTrainerListDto) {
         return traineeServices.updateTraineeTrainersList(updateTraineeTrainerListDto);

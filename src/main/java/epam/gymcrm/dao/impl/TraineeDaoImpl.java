@@ -2,10 +2,7 @@ package epam.gymcrm.dao.impl;
 
 import epam.gymcrm.dto.request.TrainerUsernameRequestDto;
 import epam.gymcrm.model.Trainer;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 import epam.gymcrm.dao.TraineeDao;
 import epam.gymcrm.dao.util.TransactionUtil;
 import epam.gymcrm.model.Trainee;
@@ -85,13 +82,31 @@ public class TraineeDaoImpl extends AbstractCrudImpl<Trainee, Integer> implement
         });
     }
 
-    @Override
-    public Trainee merge(Trainee trainee) {
-        return TransactionUtil.executeInTransaction(entityManagerFactory, entityManager -> {
-            return entityManager.merge(trainee); // Attach trainee to active persistence context
-        });
-    }
+    public void updateTraineeAndFlushWithTrainers(String traineeUsername, List<String> trainerUsernames) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        try {
+            em.getTransaction().begin();
 
+            Trainee trainee = em.createQuery("SELECT t FROM Trainee t JOIN FETCH t.trainers WHERE t.user.username = :username", Trainee.class)
+                    .setParameter("username", traineeUsername)
+                    .getSingleResult();
+
+            List<Trainer> newTrainers = em.createQuery("SELECT t FROM Trainer t WHERE t.user.username IN :usernames", Trainer.class)
+                    .setParameter("usernames", trainerUsernames)
+                    .getResultList();
+
+            trainee.setTrainers(newTrainers);
+
+            em.flush();
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new RuntimeException("Failed to update and flush trainee", e);
+        } finally {
+            em.close();
+        }
+    }
 
 }
 

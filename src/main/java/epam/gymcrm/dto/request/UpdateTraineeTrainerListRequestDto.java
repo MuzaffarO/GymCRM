@@ -1,6 +1,8 @@
 package epam.gymcrm.dto.request;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.util.List;
@@ -14,6 +16,7 @@ public class UpdateTraineeTrainerListRequestDto {
     @NotBlank
     private String username;
 
-    @NotBlank
-    private List<TrainerUsernameRequestDto> trainersList;
+    @NotEmpty
+    @Valid
+    private List<@Valid TrainerUsernameRequestDto> trainersList;
 }

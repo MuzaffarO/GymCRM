@@ -17,6 +17,5 @@ public interface TraineeDao extends CRUDDao<Trainee, Integer> {
 
     List<Training> getTraineeTrainingsByUsername(String username);
     List<Trainer> findAllTrainersByUsernameList(List<TrainerUsernameRequestDto> trainers);
-
-    Trainee merge(Trainee trainee);
+    public void updateTraineeAndFlushWithTrainers(String traineeUsername, List<String> trainerUsernames);
 }

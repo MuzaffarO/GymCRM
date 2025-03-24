@@ -1,6 +1,8 @@
 package epam.gymcrm.dao.impl;
 
 
+import epam.gymcrm.model.Trainee;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import epam.gymcrm.dao.CRUDDao;
 import epam.gymcrm.dao.util.TransactionUtil;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -71,4 +74,20 @@ public abstract class AbstractCrudImpl<T, ID extends Serializable> implements CR
             return entityManager.createQuery(query, entityType).getResultList();
         });
     }
+
+    public void flush() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.flush(); // flush pending changes to the database
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw new RuntimeException("Failed to flush EntityManager", e);
+        } finally {
+            entityManager.close();
+        }
+    }
+
+
 }

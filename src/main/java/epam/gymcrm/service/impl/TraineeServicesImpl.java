@@ -4,6 +4,7 @@ import epam.gymcrm.dao.TraineeDao;
 import epam.gymcrm.dto.TraineeDto;
 import epam.gymcrm.dto.TrainingDto;
 import epam.gymcrm.dto.request.ActivateDeactivateRequestDto;
+import epam.gymcrm.dto.request.TrainerUsernameRequestDto;
 import epam.gymcrm.dto.request.UpdateTraineeProfileRequestDto;
 import epam.gymcrm.dto.request.UpdateTraineeTrainerListRequestDto;
 import epam.gymcrm.dto.response.*;
@@ -15,12 +16,14 @@ import epam.gymcrm.model.User;
 import epam.gymcrm.service.TraineeServices;
 import epam.gymcrm.service.mapper.TraineeMapper;
 import epam.gymcrm.service.mapper.TrainingMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Slf4j
 @Service
 public class TraineeServicesImpl extends AbstractCrudServicesImpl<Trainee, TraineeDto, Integer> implements TraineeServices {
 
@@ -60,17 +63,14 @@ public class TraineeServicesImpl extends AbstractCrudServicesImpl<Trainee, Train
     }
 
 
-    // NEED TO IMPLEMENT THIS METHOD // ISSUE WITH MERGE
     @Override
     public ResponseEntity<TrainerResponseDto> updateTraineeTrainersList(UpdateTraineeTrainerListRequestDto updateTraineeTrainerListDto) {
         Trainee trainee = getTraineeByUsername(updateTraineeTrainerListDto.getUsername());
 
-        List<Trainer> newTrainers = traineeDao.findAllTrainersByUsernameList(updateTraineeTrainerListDto.getTrainersList());
-
-        trainee.getTrainers().clear();
-        trainee.getTrainers().addAll(newTrainers);
-
-        traineeDao.update(trainee);
+        List<String> trainerUsernames = updateTraineeTrainerListDto.getTrainersList().stream()
+                .map(TrainerUsernameRequestDto::getUsername)
+                .toList();
+        traineeDao.updateTraineeAndFlushWithTrainers(updateTraineeTrainerListDto.getUsername(), trainerUsernames);
 
         return ResponseEntity.ok(new TrainerResponseDto(
                 trainee.getUser().getUsername(),
