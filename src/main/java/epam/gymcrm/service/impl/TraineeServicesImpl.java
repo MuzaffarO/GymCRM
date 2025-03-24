@@ -100,7 +100,6 @@ public class TraineeServicesImpl extends AbstractCrudServicesImpl<Trainee, Train
     }
 
 
-
     private Trainee getTraineeByUsername(String username) {
         return traineeDao.findByUserUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("Trainee not found for username: " + username));
