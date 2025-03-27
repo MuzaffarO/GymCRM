@@ -1,12 +1,12 @@
 package epam.gymcrm.rest;
 
 import epam.gymcrm.dto.TrainingTypeDto;
+import epam.gymcrm.model.TrainingType;
 import epam.gymcrm.service.TrainingTypeServices;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,5 +20,10 @@ public class TrainingTypeController {
     @GetMapping
     public ResponseEntity<List<TrainingTypeDto>> getTrainingType() {
         return trainingTypeServices.getTrainingType();
+    }
+
+    @PostMapping
+    public ResponseEntity<TrainingType> createTrainingType(@NotEmpty @RequestParam String name) {
+        return trainingTypeServices.createTrainingType(name);
     }
 }

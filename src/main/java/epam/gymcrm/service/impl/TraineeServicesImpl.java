@@ -1,6 +1,5 @@
 package epam.gymcrm.service.impl;
 
-import epam.gymcrm.dao.TraineeDao;
 import epam.gymcrm.dto.TraineeDto;
 import epam.gymcrm.dto.TrainingDto;
 import epam.gymcrm.dto.request.ActivateDeactivateRequestDto;
@@ -13,36 +12,36 @@ import epam.gymcrm.exceptions.UserNotFoundException;
 import epam.gymcrm.model.Trainee;
 import epam.gymcrm.model.Trainer;
 import epam.gymcrm.model.User;
+import epam.gymcrm.repository.TraineeRepository;
+import epam.gymcrm.repository.TrainerRepository;
 import epam.gymcrm.service.TraineeServices;
 import epam.gymcrm.service.mapper.TraineeMapper;
 import epam.gymcrm.service.mapper.TrainingMapper;
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
-@Slf4j
 @Service
-public class TraineeServicesImpl extends AbstractCrudServicesImpl<Trainee, TraineeDto, Integer> implements TraineeServices {
+@RequiredArgsConstructor
+public class TraineeServicesImpl implements TraineeServices {
 
-    private final TraineeDao traineeDao;
+    private final TraineeRepository traineeRepository;
+    private final TrainerRepository trainerRepository;
     private final TrainingMapper trainingMapper;
-
-    public TraineeServicesImpl(TraineeDao traineeDao, TraineeMapper mapper, TrainingMapper trainingMapper) {
-        super(traineeDao, mapper);
-        this.traineeDao = traineeDao;
-        this.trainingMapper = trainingMapper;
-    }
+    private final TraineeMapper traineeMapper;
 
     @Override
     public List<TrainingDto> getTraineeTrainingsByUsername(String username) {
         try {
-            return traineeDao.getTraineeTrainingsByUsername(username)
-                    .stream()
-                    .map(trainingMapper::toDto)
-                    .toList();
+            return traineeRepository.findByUserUsername(username)
+                    .map(trainee -> trainee.getTrainings().stream()
+                            .map(trainingMapper::toDto)
+                            .toList())
+                    .orElseThrow(() -> new UserNotFoundException("Trainee not found with username: " + username));
         } catch (DataAccessException e) {
             throw new DatabaseException("Error fetching trainings for username: " + username);
         }
@@ -58,30 +57,30 @@ public class TraineeServicesImpl extends AbstractCrudServicesImpl<Trainee, Train
     public ResponseEntity<UpdateTraineeProfileResponseDto> updateProfile(UpdateTraineeProfileRequestDto updateTraineeProfileRequestDto) {
         Trainee trainee = getTraineeByUsername(updateTraineeProfileRequestDto.getUsername());
         updateTraineeDetails(trainee, updateTraineeProfileRequestDto);
-        traineeDao.update(trainee);
+        traineeRepository.save(trainee);
         return ResponseEntity.ok(mapToUpdateProfileResponse(trainee));
     }
 
-
-    @Override
-    public ResponseEntity<TrainerResponseDto> updateTraineeTrainersList(UpdateTraineeTrainerListRequestDto updateTraineeTrainerListDto) {
-        Trainee trainee = getTraineeByUsername(updateTraineeTrainerListDto.getUsername());
-
-        List<String> trainerUsernames = updateTraineeTrainerListDto.getTrainersList().stream()
-                .map(TrainerUsernameRequestDto::getUsername)
-                .toList();
-        traineeDao.updateTraineeAndFlushWithTrainers(updateTraineeTrainerListDto.getUsername(), trainerUsernames);
-
-        return ResponseEntity.ok(new TrainerResponseDto(
-                trainee.getUser().getUsername(),
-                trainee.getUser().getFirstName(),
-                trainee.getUser().getLastName(),
-                trainee.getTrainers().stream()
-                        .findFirst().flatMap(trainer -> Optional.ofNullable(trainer.getSpecializationType())
-                                .map(specialization -> new SpecializationNameDto(specialization.getTrainingTypeName())))
-                        .orElse(null)
-        ));
-    }
+//    @Override
+//    public ResponseEntity<TrainerResponseDto> updateTraineeTrainersList(UpdateTraineeTrainerListRequestDto updateTraineeTrainerListDto) {
+//        Trainee trainee = getTraineeByUsername(updateTraineeTrainerListDto.getUsername());
+//
+//        List<String> trainerUsernames = updateTraineeTrainerListDto.getTrainersList().stream()
+//                .map(TrainerUsernameRequestDto::getUsername)
+//                .toList();
+//        updateTraineeTrainersList(trainee, trainerUsernames);
+//
+//        return ResponseEntity.ok(new TrainerResponseDto(
+//                trainee.getUser().getUsername(),
+//                trainee.getUser().getFirstName(),
+//                trainee.getUser().getLastName(),
+//                Optional.ofNullable(trainee.getTrainers().stream()
+//                                .findFirst()
+//                                .flatMap(trainer -> Optional.ofNullable(trainer.getSpecializationType())
+//                                        .map(specialization -> new SpecializationNameDto(specialization.getTrainingTypeName()))))
+//                        .orElse(null)
+//        ));
+//    }
 
     @Override
     public ResponseEntity<Void> changeStatus(ActivateDeactivateRequestDto statusDto) {
@@ -90,7 +89,7 @@ public class TraineeServicesImpl extends AbstractCrudServicesImpl<Trainee, Train
         try {
             if (trainee.getUser().isActive() != statusDto.getIsActive()) {
                 trainee.getUser().setActive(statusDto.getIsActive());
-                traineeDao.update(trainee);
+                traineeRepository.save(trainee);
             }
         } catch (DataAccessException e) {
             throw new DatabaseException("Error while updating trainee status");
@@ -99,21 +98,21 @@ public class TraineeServicesImpl extends AbstractCrudServicesImpl<Trainee, Train
         return ResponseEntity.ok().build();
     }
 
-
-    private Trainee getTraineeByUsername(String username) {
-        return traineeDao.findByUserUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("Trainee not found for username: " + username));
-    }
-
     @Override
     public ResponseEntity<Void> deleteByUsername(String username) {
-        getTraineeByUsername(username); // this is to check if the trainee exists or not
+        Trainee trainee = getTraineeByUsername(username);
         try {
-            traineeDao.deleteByUsername(username);
+            traineeRepository.delete(trainee);
         } catch (DataAccessException e) {
             throw new DatabaseException("Error deleting trainee with username: " + username);
         }
         return ResponseEntity.ok().build();
+    }
+
+
+    private Trainee getTraineeByUsername(String username) {
+        return traineeRepository.findByUserUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("Trainee not found for username: " + username));
     }
 
     private void updateTraineeDetails(Trainee trainee, UpdateTraineeProfileRequestDto updateTraineeProfileRequestDto) {
@@ -126,7 +125,6 @@ public class TraineeServicesImpl extends AbstractCrudServicesImpl<Trainee, Train
         trainee.setAddress(Optional.ofNullable(updateTraineeProfileRequestDto.getAddress()).orElse(trainee.getAddress()));
         trainee.setDateOfBirth(Optional.ofNullable(updateTraineeProfileRequestDto.getDateOfBirth()).orElse(trainee.getDateOfBirth()));
     }
-
 
     private TraineeProfileResponseDto mapToProfileResponse(Trainee trainee) {
         return new TraineeProfileResponseDto(
@@ -163,4 +161,10 @@ public class TraineeServicesImpl extends AbstractCrudServicesImpl<Trainee, Train
                 ))
                 .toList();
     }
+
+//    private void updateTraineeTrainersList(Trainee trainee, List<String> trainerUsernames) {
+//        List<Trainer> trainers = trainerRepository.findAllByUserUsernameIn(trainerUsernames);
+//        trainee.setTrainers(trainers);
+//        traineeRepository.save(trainee);
+//    }
 }

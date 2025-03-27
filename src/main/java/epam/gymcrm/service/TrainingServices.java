@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface TrainingServices extends CRUDServices<TrainingDto, Integer> {
+public interface TrainingServices {
     ResponseEntity<List<TraineeTrainingsListResponseDto>> getTraineeTrainings(TraineeTrainingsRequestDto trainingsRequestDto);
     ResponseEntity<List<TrainerTrainingsListResponseDto>> getTrainerTrainings(TrainerTrainingsRequestDto trainerTrainingsRequestDto);
 

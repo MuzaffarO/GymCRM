@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface TraineeServices extends CRUDServices<TraineeDto, Integer> {
+public interface TraineeServices{
 
     ResponseEntity<Void> deleteByUsername(String username);
 
@@ -24,7 +24,7 @@ public interface TraineeServices extends CRUDServices<TraineeDto, Integer> {
 
     ResponseEntity<UpdateTraineeProfileResponseDto> updateProfile(UpdateTraineeProfileRequestDto updateTraineeDto);
 
-    ResponseEntity<TrainerResponseDto> updateTraineeTrainersList(UpdateTraineeTrainerListRequestDto updateTraineeTrainerListDto);
+//    ResponseEntity<TrainerResponseDto> updateTraineeTrainersList(UpdateTraineeTrainerListRequestDto updateTraineeTrainerListDto);
 
     ResponseEntity<Void> changeStatus(ActivateDeactivateRequestDto statusDto);
 }

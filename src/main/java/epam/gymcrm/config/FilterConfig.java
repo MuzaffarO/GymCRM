@@ -1,16 +1,17 @@
 package epam.gymcrm.config;
 
-import jakarta.servlet.FilterRegistration;
-import jakarta.servlet.ServletContext;
-import jakarta.servlet.ServletException;
-import org.springframework.web.WebApplicationInitializer;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-public class FilterConfig implements WebApplicationInitializer {
+@Configuration
+public class FilterConfig {
 
-    @Override
-    public void onStartup(ServletContext servletContext) throws ServletException {
-        // Register Logging Filter
-        FilterRegistration.Dynamic loggingFilter = servletContext.addFilter("LoggingFilter", LoggingFilter.class);
-        loggingFilter.addMappingForUrlPatterns(null, false, "/*");
+    @Bean
+    public FilterRegistrationBean<LoggingFilter> loggingFilter() {
+        FilterRegistrationBean<LoggingFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new LoggingFilter());
+        registrationBean.addUrlPatterns("/*");
+        return registrationBean;
     }
 }

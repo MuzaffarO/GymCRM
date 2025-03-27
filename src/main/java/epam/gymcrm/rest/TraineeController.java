@@ -40,10 +40,10 @@ public class TraineeController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/update-trainers-list")
-    public  ResponseEntity<TrainerResponseDto> updateTraineeTrainersList(@RequestBody @Valid UpdateTraineeTrainerListRequestDto updateTraineeTrainerListDto) {
-        return traineeServices.updateTraineeTrainersList(updateTraineeTrainerListDto);
-    }
+//    @PutMapping("/update-trainers-list")
+//    public  ResponseEntity<TrainerResponseDto> updateTraineeTrainersList(@RequestBody @Valid UpdateTraineeTrainerListRequestDto updateTraineeTrainerListDto) {
+//        return traineeServices.updateTraineeTrainersList(updateTraineeTrainerListDto);
+//    }
 
     @GetMapping("/trainings-list")
     public ResponseEntity<List<TraineeTrainingsListResponseDto>> getTrainingsList(@RequestBody @Valid TraineeTrainingsRequestDto trainingsRequestDto) {

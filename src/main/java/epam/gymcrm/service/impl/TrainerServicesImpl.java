@@ -1,20 +1,16 @@
 package epam.gymcrm.service.impl;
 
-import epam.gymcrm.dao.TraineeDao;
-import epam.gymcrm.dao.TrainerDao;
-import epam.gymcrm.dto.TrainerDto;
 import epam.gymcrm.dto.TrainingDto;
 import epam.gymcrm.dto.request.ActivateDeactivateRequestDto;
 import epam.gymcrm.dto.request.UpdateTrainerProfileRequestDto;
 import epam.gymcrm.dto.response.*;
 import epam.gymcrm.exceptions.DatabaseException;
 import epam.gymcrm.exceptions.UserNotFoundException;
-import epam.gymcrm.model.Trainee;
 import epam.gymcrm.model.Trainer;
 import epam.gymcrm.model.User;
-import epam.gymcrm.service.TraineeServices;
+import epam.gymcrm.repository.TrainerRepository;
+import epam.gymcrm.repository.TraineeRepository;
 import epam.gymcrm.service.TrainerServices;
-import epam.gymcrm.service.mapper.TrainerMapper;
 import epam.gymcrm.service.mapper.TrainingMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
@@ -25,23 +21,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TrainerServicesImpl extends AbstractCrudServicesImpl<Trainer, TrainerDto, Integer> implements TrainerServices {
+@RequiredArgsConstructor
+public class TrainerServicesImpl implements TrainerServices {
 
-    private final TrainerDao trainerDao;
+    private final TrainerRepository trainerRepository;
     private final TrainingMapper trainingMapper;
-    private final TraineeDao traineeDao;
-
-    public TrainerServicesImpl(TrainerDao trainerDao, TrainerMapper mapper, TrainingMapper trainingMapper, TraineeDao traineeDao) {
-        super(trainerDao, mapper);
-        this.trainerDao = trainerDao;
-        this.trainingMapper = trainingMapper;
-        this.traineeDao = traineeDao;
-    }
+    private final TraineeRepository traineeRepository;
 
     @Override
     public List<TrainingDto> getTrainerTrainingsByUsername(String username) {
         try {
-            return trainerDao.getTrainerTrainingsByUsername(username)
+            return trainerRepository.getTrainerTrainingsByUsername(username)
                     .stream()
                     .map(trainingMapper::toDto)
                     .toList();
@@ -60,23 +50,24 @@ public class TrainerServicesImpl extends AbstractCrudServicesImpl<Trainer, Train
     public ResponseEntity<UpdateTrainerProfileResponseDto> updateProfile(UpdateTrainerProfileRequestDto requestDto) {
         Trainer trainer = getTrainerByUsername(requestDto.getUsername());
         updateTrainerDetails(trainer, requestDto);
-        trainerDao.update(trainer);
+        trainerRepository.save(trainer);  // Using repository to save
         return ResponseEntity.ok(mapToUpdateProfileResponse(trainer));
     }
 
     @Override
     public ResponseEntity<List<TrainerResponseDto>> getNotAssignedActiveTrainers(String username) {
-        trainerDao.findByUserUsername(username); // checking if such trainee exists!
+        traineeRepository.findByUserUsername(username).orElseThrow(() -> new UserNotFoundException("Trainee not found"));
 
         try {
-            List<TrainerResponseDto> responseDtoList = trainerDao.findNotAssignedActiveTrainers(username)
+            List<TrainerResponseDto> responseDtoList = trainerRepository.findNotAssignedActiveTrainers(username)
                     .stream()
                     .map(trainer -> new TrainerResponseDto(
                             trainer.getUser().getUsername(),
                             trainer.getUser().getFirstName(),
                             trainer.getUser().getLastName(),
                             new SpecializationNameDto(trainer.getSpecializationType().getTrainingTypeName())
-                    )).toList();
+                    ))
+                    .toList();
             return ResponseEntity.ok(responseDtoList);
         } catch (DataAccessException e) {
             throw new DatabaseException("Error while getting the data!");
@@ -89,7 +80,7 @@ public class TrainerServicesImpl extends AbstractCrudServicesImpl<Trainer, Train
 
         try {
             trainer.getUser().setActive(statusDto.getIsActive());
-            trainerDao.update(trainer);
+            trainerRepository.save(trainer);  // Using repository to update
         } catch (DataAccessException e) {
             throw new DatabaseException("Error while updating trainer status");
         }
@@ -97,9 +88,8 @@ public class TrainerServicesImpl extends AbstractCrudServicesImpl<Trainer, Train
         return ResponseEntity.ok().build();
     }
 
-
     private Trainer getTrainerByUsername(String username) {
-        return trainerDao.findByUserUsername(username)
+        return trainerRepository.findByUserUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("Trainer not found for username: " + username));
     }
 

@@ -9,7 +9,7 @@ public record TraineeProfileResponseDto(
 
         String firstName,
         String lastName,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
         Date dateOfBirth,
         String address,
         boolean isActive,

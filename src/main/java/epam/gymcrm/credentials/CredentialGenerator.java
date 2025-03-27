@@ -1,4 +1,4 @@
-package epam.gymcrm.dao.datasource;
+package epam.gymcrm.credentials;
 
 public interface CredentialGenerator {
 

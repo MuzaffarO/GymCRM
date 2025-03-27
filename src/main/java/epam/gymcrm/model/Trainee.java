@@ -5,14 +5,12 @@ import lombok.*;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
-@Entity
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
 public class Trainee {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

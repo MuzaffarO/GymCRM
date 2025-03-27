@@ -1,10 +1,5 @@
 package epam.gymcrm.service.impl;
 
-import epam.gymcrm.dao.TraineeDao;
-import epam.gymcrm.dao.TrainerDao;
-import epam.gymcrm.dao.TrainingDao;
-import epam.gymcrm.dao.TrainingTypeDao;
-import epam.gymcrm.dto.TrainingDto;
 import epam.gymcrm.dto.request.TraineeTrainingsRequestDto;
 import epam.gymcrm.dto.request.TrainerTrainingsRequestDto;
 import epam.gymcrm.dto.request.TrainingRegisterDto;
@@ -16,8 +11,12 @@ import epam.gymcrm.model.Trainee;
 import epam.gymcrm.model.Trainer;
 import epam.gymcrm.model.Training;
 import epam.gymcrm.model.TrainingType;
-import epam.gymcrm.service.TraineeServices;
-import epam.gymcrm.service.TrainerServices;
+import epam.gymcrm.repository.TrainingRepository;
+import epam.gymcrm.repository.TrainerRepository;
+import epam.gymcrm.repository.TraineeRepository;
+import epam.gymcrm.repository.TrainingTypeRepository;
+import epam.gymcrm.repository.specifications.TrainerSpecification;
+import epam.gymcrm.repository.specifications.TrainingSpecification;
 import epam.gymcrm.service.TrainingServices;
 import epam.gymcrm.service.mapper.TrainingMapper;
 import org.springframework.http.ResponseEntity;
@@ -26,33 +25,31 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+public class TrainingServicesImpl implements TrainingServices {
 
-public class TrainingServicesImpl extends AbstractCrudServicesImpl<Training, TrainingDto, Integer> implements TrainingServices {
-
-    private final TrainingDao trainingDao;
+    private final TrainingRepository trainingRepository;
     private final TrainingMapper trainingMapper;
-    private final TrainerDao trainerDao;
-    private final TraineeDao traineeDao;
-    private final TrainingTypeDao trainingTypeDao;
+    private final TrainerRepository trainerRepository;
+    private final TraineeRepository traineeRepository;
+    private final TrainingTypeRepository trainingTypeRepository;
 
-    public TrainingServicesImpl(TrainingDao trainingDao, TrainingMapper mapper, TrainerDao trainerDao, TraineeDao traineeDao, TrainingTypeDao trainingTypeDao) {
-        super(trainingDao, mapper);
-        this.trainingDao = trainingDao;
-        this.trainingMapper = mapper;
-        this.trainerDao = trainerDao;
-        this.traineeDao = traineeDao;
-        this.trainingTypeDao = trainingTypeDao;
+    public TrainingServicesImpl(TrainingRepository trainingRepository, TrainingMapper trainingMapper, TrainerRepository trainerRepository, TraineeRepository traineeRepository, TrainingTypeRepository trainingTypeRepository) {
+        this.trainingRepository = trainingRepository;
+        this.trainingMapper = trainingMapper;
+        this.trainerRepository = trainerRepository;
+        this.traineeRepository = traineeRepository;
+        this.trainingTypeRepository = trainingTypeRepository;
     }
 
     @Override
     public ResponseEntity<Void> createTraining(TrainingRegisterDto trainingRegisterDto) {
-        Trainee trainee = traineeDao.findByUserUsername(trainingRegisterDto.getTraineeUsername())
+        Trainee trainee = traineeRepository.findByUserUsername(trainingRegisterDto.getTraineeUsername())
                 .orElseThrow(() -> new UserNotFoundException("Trainee not found with username: " + trainingRegisterDto.getTraineeUsername()));
 
-        Trainer trainer = trainerDao.findByUserUsername(trainingRegisterDto.getTrainerUsername())
+        Trainer trainer = trainerRepository.findByUserUsername(trainingRegisterDto.getTrainerUsername())
                 .orElseThrow(() -> new UserNotFoundException("Trainer not found with username: " + trainingRegisterDto.getTrainerUsername()));
 
-        TrainingType trainingType = trainingTypeDao.findByName(trainingRegisterDto.getTrainingName())
+        TrainingType trainingType = trainingTypeRepository.findByTrainingTypeName(trainingRegisterDto.getTrainingName())
                 .orElseThrow(() -> new DatabaseException("Training type not found: " + trainingRegisterDto.getTrainingName()));
 
         Training training = new Training();
@@ -63,21 +60,21 @@ public class TrainingServicesImpl extends AbstractCrudServicesImpl<Training, Tra
         training.setTrainingDate(trainingRegisterDto.getTrainingDate());
         training.setTrainingDuration(trainingRegisterDto.getTrainingDuration());
 
-        trainingDao.save(training);
+        trainingRepository.save(training);
 
         return ResponseEntity.ok().build();
     }
 
     @Override
     public ResponseEntity<List<TraineeTrainingsListResponseDto>> getTraineeTrainings(TraineeTrainingsRequestDto trainingsRequestDto) {
-        traineeDao.getTraineeTrainingsByUsername(trainingsRequestDto.getUsername());
-
-        List<Training> trainings = trainingDao.findTraineeTrainingsByFilters(
-                trainingsRequestDto.getUsername(),
-                trainingsRequestDto.getPeriodFrom(),
-                trainingsRequestDto.getPeriodTo(),
-                trainingsRequestDto.getTrainerName(),
-                trainingsRequestDto.getTrainingType()
+        List<Training> trainings = trainingRepository.findAll(
+                TrainingSpecification.findTraineeTrainingsByFilters(
+                        trainingsRequestDto.getUsername(),
+                        trainingsRequestDto.getPeriodFrom(),
+                        trainingsRequestDto.getPeriodTo(),
+                        trainingsRequestDto.getTrainerName(),
+                        trainingsRequestDto.getTrainingType()
+                )
         );
 
         return ResponseEntity.ok(trainings.stream()
@@ -93,13 +90,13 @@ public class TrainingServicesImpl extends AbstractCrudServicesImpl<Training, Tra
 
     @Override
     public ResponseEntity<List<TrainerTrainingsListResponseDto>> getTrainerTrainings(TrainerTrainingsRequestDto trainerTrainingsRequestDto) {
-        trainerDao.findByUserUsername(trainerTrainingsRequestDto.getUsername());
-
-        List<Training> trainings = trainerDao.findTrainerTrainingsByFilters(
-                trainerTrainingsRequestDto.getUsername(),
-                trainerTrainingsRequestDto.getPeriodFrom(),
-                trainerTrainingsRequestDto.getPeriodTo(),
-                trainerTrainingsRequestDto.getTraineeName()
+        List<Training> trainings = trainingRepository.findAll(
+                TrainerSpecification.findTrainerTrainingsByFilters(
+                        trainerTrainingsRequestDto.getUsername(),
+                        trainerTrainingsRequestDto.getPeriodFrom(),
+                        trainerTrainingsRequestDto.getPeriodTo(),
+                        trainerTrainingsRequestDto.getTraineeName()
+                )
         );
 
         List<TrainerTrainingsListResponseDto> responseList = trainings.stream()

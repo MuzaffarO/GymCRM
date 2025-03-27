@@ -41,7 +41,7 @@ public class LoggingFilter implements Filter {
             logger.error("Transaction ID: {} | Error: {}", transactionId, e.getMessage(), e);
             throw e;
         } finally {
-            MDC.clear(); // Clear MDC after request completes
+            MDC.clear();
         }
     }
 

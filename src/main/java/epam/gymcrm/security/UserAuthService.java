@@ -1,9 +1,9 @@
 package epam.gymcrm.security;
 
-import epam.gymcrm.dao.UserDao;
 import epam.gymcrm.exceptions.InvalidUsernameOrPasswordException;
 import epam.gymcrm.exceptions.UserNotFoundException;
 import epam.gymcrm.model.User;
+import epam.gymcrm.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserAuthService implements AuthServices {
 
-    private final UserDao userDao;
+    private final UsersRepository usersRepository;
 
     @Override
     public boolean authenticate(String username, String password) {
-        User user = userDao.findByUsername(username)
+        User user = usersRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User with username '" + username + "' not found"));
 
         if (!user.getPassword().equals(password)) {
