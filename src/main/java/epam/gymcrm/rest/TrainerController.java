@@ -17,7 +17,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,7 +49,7 @@ public class TrainerController {
     @Operation(
             summary = "Update trainer profile",
             description = "Updates the profile details of a trainer.",
-            requestBody = @RequestBody(
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Trainer profile update payload",
                     required = true
             ),
@@ -84,7 +83,7 @@ public class TrainerController {
     @Operation(
             summary = "Get list of trainings by trainer",
             description = "Fetches a list of trainings conducted by a specific trainer.",
-            requestBody = @RequestBody(
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Trainer trainings list request payload (e.g., username, date filter)",
                     required = true
             ),
@@ -102,7 +101,7 @@ public class TrainerController {
     @Operation(
             summary = "Change trainer active status (activate/deactivate)",
             description = "Activates or deactivates a trainer account using their username.",
-            requestBody = @RequestBody(
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Trainer status change request (username and new status)",
                     required = true
             ),

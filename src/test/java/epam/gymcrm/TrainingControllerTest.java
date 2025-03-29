@@ -1,0 +1,63 @@
+package epam.gymcrm;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import epam.gymcrm.dto.request.TrainingRegisterDto;
+import epam.gymcrm.rest.TrainingController;
+import epam.gymcrm.service.TrainingServices;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@WebMvcTest(TrainingController.class)
+@Import(TrainingControllerTest.MockedBeansConfig.class)
+class TrainingControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private TrainingServices trainingServices;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    private TrainingRegisterDto trainingRegisterDto;
+
+    @BeforeEach
+    void setUp() throws Exception {
+        Date date = new SimpleDateFormat("dd/MM/yyyy").parse("29/03/2025");
+        trainingRegisterDto = new TrainingRegisterDto("trainee1", "trainer1", "karate", date, 1.5);
+    }
+
+    @Test
+    void testCreateTraining_Success() throws Exception {
+        when(trainingServices.createTraining(any())).thenReturn(ResponseEntity.ok().build());
+
+        mockMvc.perform(post("/trainings/create")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(trainingRegisterDto)))
+                .andExpect(status().isOk());
+    }
+
+    @TestConfiguration
+    static class MockedBeansConfig {
+        @Bean
+        public TrainingServices trainingServices() {
+            return mock(TrainingServices.class);
+        }
+    }
+}

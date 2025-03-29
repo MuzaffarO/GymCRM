@@ -4,7 +4,6 @@ import epam.gymcrm.dto.request.TrainingRegisterDto;
 import epam.gymcrm.service.TrainingServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ public class TrainingController {
     @Operation(
             summary = "Create a new training",
             description = "Registers a new training session for a trainee with a specific trainer and training type.",
-            requestBody = @RequestBody(
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Training registration data including trainee username, trainer username, training name, date, and duration",
                     required = true
             ),

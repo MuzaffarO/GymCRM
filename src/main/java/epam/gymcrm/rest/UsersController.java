@@ -6,7 +6,6 @@ import epam.gymcrm.dto.response.CredentialsInfoResponseDto;
 import epam.gymcrm.service.UsersServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +22,7 @@ public class UsersController {
     @Operation(
             summary = "Register a new trainer",
             description = "Registers a new trainer and returns credentials info.",
-            requestBody = @RequestBody(
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Trainer registration data",
                     required = true
             ),
@@ -42,7 +41,7 @@ public class UsersController {
     @Operation(
             summary = "Register a new trainee",
             description = "Registers a new trainee and returns credentials info.",
-            requestBody = @RequestBody(
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Trainee registration data",
                     required = true
             ),
