@@ -4,6 +4,7 @@ import epam.gymcrm.dto.request.TraineeRegisterDto;
 import epam.gymcrm.dto.request.TrainerRegisterDto;
 import epam.gymcrm.dto.response.CredentialsInfoResponseDto;
 import epam.gymcrm.exceptions.DatabaseException;
+import epam.gymcrm.exceptions.InvalidUsernameOrPasswordException;
 import epam.gymcrm.model.Trainee;
 import epam.gymcrm.model.Trainer;
 import epam.gymcrm.model.TrainingType;
@@ -16,6 +17,7 @@ import epam.gymcrm.service.UsersServices;
 import epam.gymcrm.service.mapper.TrainingTypeMapper;
 import epam.gymcrm.security.AuthServices;
 import epam.gymcrm.credentials.CredentialGenerator;
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
@@ -36,6 +38,7 @@ public class UsersServicesImpl implements UsersServices {
     private final CredentialGenerator credentialGenerator;
     private final AuthServices authServices;
     private final TrainingTypeRepository trainingTypeRepository;
+    private final MeterRegistry meterRegistry;
 
     @Override
     public Optional<User> findByUsername(String username) {
@@ -69,7 +72,7 @@ public class UsersServicesImpl implements UsersServices {
         trainerRepository.save(trainer);
 
         log.info("New trainer registered: {}", trainer);
-
+        meterRegistry.counter("trainer.registration.count").increment();
         return ResponseEntity.ok(new CredentialsInfoResponseDto(savedUser.getUsername(), savedUser.getPassword()));
     }
 
@@ -85,13 +88,19 @@ public class UsersServicesImpl implements UsersServices {
                 .build();
 
         traineeRepository.save(trainee);
-
+        meterRegistry.counter("trainee.registration.count").increment();
         return ResponseEntity.ok(new CredentialsInfoResponseDto(savedUser.getUsername(), savedUser.getPassword()));
     }
 
     @Override
     public ResponseEntity<Void> login(String username, String password) {
-        authServices.authenticate(username, password);
+        try {
+            authServices.authenticate(username, password);
+            meterRegistry.counter("gymcrm.login.success").increment();
+        }catch (Exception e) {
+            meterRegistry.counter("gymcrm.login.failed").increment();
+            throw new InvalidUsernameOrPasswordException(e.getMessage());
+        }
         return ResponseEntity.ok().build();
     }
 

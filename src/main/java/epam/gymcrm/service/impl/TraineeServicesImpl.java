@@ -16,6 +16,7 @@ import epam.gymcrm.repository.TrainerRepository;
 import epam.gymcrm.service.TraineeServices;
 import epam.gymcrm.service.mapper.TraineeMapper;
 import epam.gymcrm.service.mapper.TrainingMapper;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,7 @@ public class TraineeServicesImpl implements TraineeServices {
     }
 
     @Override
+    @Timed(value = "gymcrm.trainee.profile.get", description = "Time to fetch trainee profile")
     public ResponseEntity<TraineeProfileResponseDto> getByUsername(String username) {
         Trainee trainee = getTraineeByUsername(username);
         return ResponseEntity.ok(mapToProfileResponse(trainee));

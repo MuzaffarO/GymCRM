@@ -21,6 +21,8 @@ import epam.gymcrm.repository.specifications.TrainerSpecification;
 import epam.gymcrm.repository.specifications.TrainingSpecification;
 import epam.gymcrm.service.TrainingServices;
 import epam.gymcrm.service.mapper.TrainingMapper;
+import io.micrometer.core.annotation.Timed;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -34,13 +36,15 @@ public class TrainingServicesImpl implements TrainingServices {
     private final TrainerRepository trainerRepository;
     private final TraineeRepository traineeRepository;
     private final TrainingTypeRepository trainingTypeRepository;
+    private final MeterRegistry meterRegistry;
 
-    public TrainingServicesImpl(TrainingRepository trainingRepository, TrainingMapper trainingMapper, TrainerRepository trainerRepository, TraineeRepository traineeRepository, TrainingTypeRepository trainingTypeRepository) {
+    public TrainingServicesImpl(TrainingRepository trainingRepository, TrainingMapper trainingMapper, TrainerRepository trainerRepository, TraineeRepository traineeRepository, TrainingTypeRepository trainingTypeRepository, MeterRegistry meterRegistry) {
         this.trainingRepository = trainingRepository;
         this.trainingMapper = trainingMapper;
         this.trainerRepository = trainerRepository;
         this.traineeRepository = traineeRepository;
         this.trainingTypeRepository = trainingTypeRepository;
+        this.meterRegistry = meterRegistry;
     }
 
     @Override
@@ -75,11 +79,13 @@ public class TrainingServicesImpl implements TrainingServices {
         training.setTrainingDuration(trainingRegisterDto.getTrainingDuration());
 
         trainingRepository.save(training);
+        meterRegistry.counter("gymcrm.training.created").increment();
 
         return ResponseEntity.ok().build();
     }
 
     @Override
+    @Timed(value = "gymcrm.trainee.trainings.get", description = "Time to fetch trainee trainings")
     public ResponseEntity<List<TraineeTrainingsListResponseDto>> getTraineeTrainings(TraineeTrainingsRequestDto trainingsRequestDto) {
         List<Training> trainings = trainingRepository.findAll(
                 TrainingSpecification.findTraineeTrainingsByFilters(
@@ -103,6 +109,7 @@ public class TrainingServicesImpl implements TrainingServices {
     }
 
     @Override
+    @Timed(value = "gymcrm.trainer.trainings.get", description = "Time to fetch trainer trainings")
     public ResponseEntity<List<TrainerTrainingsListResponseDto>> getTrainerTrainings(TrainerTrainingsRequestDto trainerTrainingsRequestDto) {
 
         Trainer trainer = trainerRepository.findByUserUsername(trainerTrainingsRequestDto.getUsername())
