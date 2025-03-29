@@ -23,5 +23,9 @@ public interface TrainerRepository extends JpaRepository<Trainer, Integer>, JpaS
             "WHERE t.user.isActive = true " +
             "AND t NOT IN (SELECT tt FROM Trainee tr JOIN tr.trainers tt WHERE tr.user.username = :username)")
     List<Trainer> findNotAssignedActiveTrainers(String username);
+
+    @Query("SELECT t FROM Trainer t WHERE t.user.username IN :usernames")
+    List<Trainer> findAllByUsername(List<String> usernames);
+
 }
 

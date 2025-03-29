@@ -1,6 +1,5 @@
 package epam.gymcrm.service.impl;
 
-import epam.gymcrm.dto.TraineeDto;
 import epam.gymcrm.dto.TrainingDto;
 import epam.gymcrm.dto.request.ActivateDeactivateRequestDto;
 import epam.gymcrm.dto.request.TrainerUsernameRequestDto;
@@ -23,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -61,26 +61,29 @@ public class TraineeServicesImpl implements TraineeServices {
         return ResponseEntity.ok(mapToUpdateProfileResponse(trainee));
     }
 
-//    @Override
-//    public ResponseEntity<TrainerResponseDto> updateTraineeTrainersList(UpdateTraineeTrainerListRequestDto updateTraineeTrainerListDto) {
-//        Trainee trainee = getTraineeByUsername(updateTraineeTrainerListDto.getUsername());
-//
-//        List<String> trainerUsernames = updateTraineeTrainerListDto.getTrainersList().stream()
-//                .map(TrainerUsernameRequestDto::getUsername)
-//                .toList();
-//        updateTraineeTrainersList(trainee, trainerUsernames);
-//
-//        return ResponseEntity.ok(new TrainerResponseDto(
-//                trainee.getUser().getUsername(),
-//                trainee.getUser().getFirstName(),
-//                trainee.getUser().getLastName(),
-//                Optional.ofNullable(trainee.getTrainers().stream()
-//                                .findFirst()
-//                                .flatMap(trainer -> Optional.ofNullable(trainer.getSpecializationType())
-//                                        .map(specialization -> new SpecializationNameDto(specialization.getTrainingTypeName()))))
-//                        .orElse(null)
-//        ));
-//    }
+    @Override
+    public ResponseEntity<UpdateTraineeTrainersResponseDto> updateTraineeTrainersList(UpdateTraineeTrainerListRequestDto updateTraineeTrainerListDto) {
+        Trainee trainee = getTraineeByUsername(updateTraineeTrainerListDto.getUsername());
+
+        List<String> trainerUsernames = updateTraineeTrainerListDto.getTrainersList().stream()
+                .map(TrainerUsernameRequestDto::getUsername)
+                .toList();
+        setTraineeTrainersList(trainee, trainerUsernames);
+
+
+        return ResponseEntity.ok(new UpdateTraineeTrainersResponseDto(
+                trainee.getTrainers().stream()
+                        .map(trainer -> new TrainerResponseDto(
+                                trainer.getUser().getUsername(),
+                                trainer.getUser().getFirstName(),
+                                trainer.getUser().getLastName(),
+                                Optional.ofNullable(trainer.getSpecializationType())
+                                        .map(specialization -> new SpecializationNameDto(specialization.getTrainingTypeName()))
+                                        .orElse(null)
+                        ))
+                        .toList()
+        ));
+    }
 
     @Override
     public ResponseEntity<Void> changeStatus(ActivateDeactivateRequestDto statusDto) {
@@ -162,9 +165,9 @@ public class TraineeServicesImpl implements TraineeServices {
                 .toList();
     }
 
-//    private void updateTraineeTrainersList(Trainee trainee, List<String> trainerUsernames) {
-//        List<Trainer> trainers = trainerRepository.findAllByUserUsernameIn(trainerUsernames);
-//        trainee.setTrainers(trainers);
-//        traineeRepository.save(trainee);
-//    }
+    private void setTraineeTrainersList(Trainee trainee, List<String> trainerUsernames) {
+        List<Trainer> trainers = trainerRepository.findAllByUsername(trainerUsernames);
+        trainee.setTrainers(trainers);
+        traineeRepository.save(trainee);
+    }
 }

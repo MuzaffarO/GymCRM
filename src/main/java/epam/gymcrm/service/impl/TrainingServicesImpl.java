@@ -6,6 +6,8 @@ import epam.gymcrm.dto.request.TrainingRegisterDto;
 import epam.gymcrm.dto.response.TraineeTrainingsListResponseDto;
 import epam.gymcrm.dto.response.TrainerTrainingsListResponseDto;
 import epam.gymcrm.exceptions.DatabaseException;
+import epam.gymcrm.exceptions.TrainingTypeNotMatchingException;
+import epam.gymcrm.exceptions.UnexpectedException;
 import epam.gymcrm.exceptions.UserNotFoundException;
 import epam.gymcrm.model.Trainee;
 import epam.gymcrm.model.Trainer;
@@ -52,6 +54,18 @@ public class TrainingServicesImpl implements TrainingServices {
         TrainingType trainingType = trainingTypeRepository.findByTrainingTypeName(trainingRegisterDto.getTrainingName())
                 .orElseThrow(() -> new DatabaseException("Training type not found: " + trainingRegisterDto.getTrainingName()));
 
+        if(!trainer.getSpecializationType().equals(trainingType) ) {
+            throw new TrainingTypeNotMatchingException("Training type does not match trainer's specialization");
+        }
+
+        if (!trainee.getTrainers().contains(trainer)) {
+            trainee.getTrainers().add(trainer);
+        } // adding to the entity trainee_trainer as well
+
+        if (!trainer.getTrainees().contains(trainee)) {
+            trainer.getTrainees().add(trainee);
+        } // adding to the trainer's trainee list
+
         Training training = new Training();
         training.setTrainee(trainee);
         training.setTrainer(trainer);
@@ -90,6 +104,10 @@ public class TrainingServicesImpl implements TrainingServices {
 
     @Override
     public ResponseEntity<List<TrainerTrainingsListResponseDto>> getTrainerTrainings(TrainerTrainingsRequestDto trainerTrainingsRequestDto) {
+
+        Trainer trainer = trainerRepository.findByUserUsername(trainerTrainingsRequestDto.getUsername())
+                .orElseThrow(() -> new UserNotFoundException("Trainer not found with username: " + trainerTrainingsRequestDto.getUsername()));
+
         List<Training> trainings = trainingRepository.findAll(
                 TrainerSpecification.findTrainerTrainingsByFilters(
                         trainerTrainingsRequestDto.getUsername(),
