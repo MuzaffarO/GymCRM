@@ -8,8 +8,8 @@ import epam.gymcrm.dto.response.CredentialsInfoResponseDto;
 import epam.gymcrm.model.*;
 import epam.gymcrm.repository.*;
 import epam.gymcrm.security.AuthServices;
-import epam.gymcrm.service.impl.UsersServicesImpl;
-import epam.gymcrm.service.mapper.TrainingTypeMapper;
+import epam.gymcrm.service.impl.UsersServiceImpl;
+import epam.gymcrm.mapper.TrainingTypeMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class UsersServicesImplTest {
+class UsersServiceImplTest {
 
     @Mock UsersRepository userRepository;
     @Mock TrainerRepository trainerRepository;
@@ -36,7 +36,7 @@ class UsersServicesImplTest {
     @Mock TrainingTypeMapper trainingTypeMapper;
 
     @InjectMocks
-    UsersServicesImpl usersServices;
+    UsersServiceImpl usersServices;
 
     User user;
 
@@ -64,10 +64,10 @@ class UsersServicesImplTest {
         when(credentialGenerator.generatePassword()).thenReturn("password");
         when(userRepository.save(any(User.class))).thenReturn(user);
 
-        ResponseEntity<CredentialsInfoResponseDto> response = usersServices.registerTrainer(dto);
+        CredentialsInfoResponseDto response = usersServices.registerTrainer(dto);
 
-        assertEquals("john.doe", response.getBody().getUsername());
-        assertEquals("password", response.getBody().getPassword());
+        assertEquals("john.doe", response.getUsername());
+        assertEquals("password", response.getPassword());
         verify(trainerRepository).save(any(Trainer.class));
     }
 
@@ -79,18 +79,17 @@ class UsersServicesImplTest {
         when(userRepository.save(any())).thenReturn(User.builder()
                 .firstName("Alice").lastName("Smith").username("alice.smith").password("secure").build());
 
-        ResponseEntity<CredentialsInfoResponseDto> response = usersServices.registerTrainee(dto);
+        CredentialsInfoResponseDto response = usersServices.registerTrainee(dto);
 
-        assertEquals("alice.smith", response.getBody().getUsername());
-        assertEquals("secure", response.getBody().getPassword());
+        assertEquals("alice.smith", response.getUsername());
+        assertEquals("secure", response.getPassword());
         verify(traineeRepository).save(any(Trainee.class));
     }
 
     @Test
     void testLogin() {
         when(authServices.authenticate("user", "pass")).thenReturn(true);
-        ResponseEntity<Void> response = usersServices.login("user", "pass");
-        assertEquals(200, response.getStatusCodeValue());
+        usersServices.login("user", "pass");
         verify(authServices).authenticate("user", "pass");
     }
 
@@ -98,9 +97,8 @@ class UsersServicesImplTest {
     void testChangeLogin() {
         when(authServices.authenticate("user", "oldPass")).thenReturn(true);
 
-        ResponseEntity<Void> response = usersServices.changeLogin("user", "oldPass", "newPass");
+        usersServices.changeLogin("user", "oldPass", "newPass");
 
-        assertEquals(200, response.getStatusCodeValue());
         verify(userRepository).changePassword("user", "newPass");
     }
 

@@ -13,22 +13,20 @@ import epam.gymcrm.model.Trainer;
 import epam.gymcrm.model.User;
 import epam.gymcrm.repository.TraineeRepository;
 import epam.gymcrm.repository.TrainerRepository;
-import epam.gymcrm.service.TraineeServices;
-import epam.gymcrm.service.mapper.TraineeMapper;
-import epam.gymcrm.service.mapper.TrainingMapper;
+import epam.gymcrm.service.TraineeService;
+import epam.gymcrm.mapper.TraineeMapper;
+import epam.gymcrm.mapper.TrainingMapper;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class TraineeServicesImpl implements TraineeServices {
+public class TraineeServiceImpl implements TraineeService {
 
     private final TraineeRepository traineeRepository;
     private final TrainerRepository trainerRepository;
@@ -50,21 +48,21 @@ public class TraineeServicesImpl implements TraineeServices {
 
     @Override
     @Timed(value = "gymcrm.trainee.profile.get", description = "Time to fetch trainee profile")
-    public ResponseEntity<TraineeProfileResponseDto> getByUsername(String username) {
+    public TraineeProfileResponseDto getByUsername(String username) {
         Trainee trainee = getTraineeByUsername(username);
-        return ResponseEntity.ok(mapToProfileResponse(trainee));
+        return mapToProfileResponse(trainee);
     }
 
     @Override
-    public ResponseEntity<UpdateTraineeProfileResponseDto> updateProfile(UpdateTraineeProfileRequestDto updateTraineeProfileRequestDto) {
+    public UpdateTraineeProfileResponseDto updateProfile(UpdateTraineeProfileRequestDto updateTraineeProfileRequestDto) {
         Trainee trainee = getTraineeByUsername(updateTraineeProfileRequestDto.getUsername());
         updateTraineeDetails(trainee, updateTraineeProfileRequestDto);
         traineeRepository.save(trainee);
-        return ResponseEntity.ok(mapToUpdateProfileResponse(trainee));
+        return mapToUpdateProfileResponse(trainee);
     }
 
     @Override
-    public ResponseEntity<UpdateTraineeTrainersResponseDto> updateTraineeTrainersList(UpdateTraineeTrainerListRequestDto updateTraineeTrainerListDto) {
+    public UpdateTraineeTrainersResponseDto updateTraineeTrainersList(UpdateTraineeTrainerListRequestDto updateTraineeTrainerListDto) {
         Trainee trainee = getTraineeByUsername(updateTraineeTrainerListDto.getUsername());
 
         List<String> trainerUsernames = updateTraineeTrainerListDto.getTrainersList().stream()
@@ -73,7 +71,7 @@ public class TraineeServicesImpl implements TraineeServices {
         setTraineeTrainersList(trainee, trainerUsernames);
 
 
-        return ResponseEntity.ok(new UpdateTraineeTrainersResponseDto(
+        return new UpdateTraineeTrainersResponseDto(
                 trainee.getTrainers().stream()
                         .map(trainer -> new TrainerResponseDto(
                                 trainer.getUser().getUsername(),
@@ -84,11 +82,11 @@ public class TraineeServicesImpl implements TraineeServices {
                                         .orElse(null)
                         ))
                         .toList()
-        ));
+        );
     }
 
     @Override
-    public ResponseEntity<Void> changeStatus(ActivateDeactivateRequestDto statusDto) {
+    public void changeStatus(ActivateDeactivateRequestDto statusDto) {
         Trainee trainee = getTraineeByUsername(statusDto.getUsername());
 
         try {
@@ -99,19 +97,16 @@ public class TraineeServicesImpl implements TraineeServices {
         } catch (DataAccessException e) {
             throw new DatabaseException("Error while updating trainee status");
         }
-
-        return ResponseEntity.ok().build();
     }
 
     @Override
-    public ResponseEntity<Void> deleteByUsername(String username) {
+    public void deleteByUsername(String username) {
         Trainee trainee = getTraineeByUsername(username);
         try {
             traineeRepository.delete(trainee);
         } catch (DataAccessException e) {
             throw new DatabaseException("Error deleting trainee with username: " + username);
         }
-        return ResponseEntity.ok().build();
     }
 
 

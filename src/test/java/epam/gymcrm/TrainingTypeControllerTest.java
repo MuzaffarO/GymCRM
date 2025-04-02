@@ -1,10 +1,9 @@
 package epam.gymcrm;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import epam.gymcrm.dto.TrainingTypeDto;
 import epam.gymcrm.model.TrainingType;
 import epam.gymcrm.rest.TrainingTypeController;
-import epam.gymcrm.service.TrainingTypeServices;
+import epam.gymcrm.service.TrainingTypeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -30,12 +29,12 @@ class TrainingTypeControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private TrainingTypeServices trainingTypeServices;
+    private TrainingTypeService trainingTypeService;
 
     @Test
     void testGetTrainingType() throws Exception {
         List<TrainingTypeDto> mockList = List.of(new TrainingTypeDto(1,"karate"));
-        when(trainingTypeServices.getTrainingType()).thenReturn(ResponseEntity.ok(mockList));
+        when(trainingTypeService.getTrainingType()).thenReturn(mockList);
 
         mockMvc.perform(get("/training-type"))
                 .andExpect(status().isOk())
@@ -47,7 +46,7 @@ class TrainingTypeControllerTest {
         TrainingType trainingType = new TrainingType();
         trainingType.setTrainingTypeName("yoga");
 
-        when(trainingTypeServices.createTrainingType(anyString())).thenReturn(ResponseEntity.ok(trainingType));
+        when(trainingTypeService.createTrainingType(anyString())).thenReturn(trainingType);
 
         mockMvc.perform(post("/training-type")
                         .param("name", "yoga")
@@ -59,8 +58,8 @@ class TrainingTypeControllerTest {
     @TestConfiguration
     static class MockedBeansConfig {
         @Bean
-        public TrainingTypeServices trainingTypeServices() {
-            return mock(TrainingTypeServices.class);
+        public TrainingTypeService trainingTypeServices() {
+            return mock(TrainingTypeService.class);
         }
     }
 }

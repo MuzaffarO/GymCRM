@@ -6,19 +6,18 @@ import epam.gymcrm.dto.request.UpdateTrainerProfileRequestDto;
 import epam.gymcrm.dto.response.TrainerProfileResponseDto;
 import epam.gymcrm.dto.response.TrainerResponseDto;
 import epam.gymcrm.dto.response.UpdateTrainerProfileResponseDto;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface TrainerServices {
+public interface TrainerService {
 
     List<TrainingDto> getTrainerTrainingsByUsername(String username);
 
-    ResponseEntity<TrainerProfileResponseDto> getByUsername(String username);
+    TrainerProfileResponseDto getByUsername(String username);
 
-    ResponseEntity<UpdateTrainerProfileResponseDto> updateProfile(UpdateTrainerProfileRequestDto updateTrainerProfileDto);
+    UpdateTrainerProfileResponseDto updateProfile(UpdateTrainerProfileRequestDto updateTrainerProfileDto);
 
-    ResponseEntity<List<TrainerResponseDto>> getNotAssignedActiveTrainers(String username);
+    List<TrainerResponseDto> getNotAssignedActiveTrainers(String username);
 
-    ResponseEntity<Void> changeStatus(ActivateDeactivateRequestDto statusDto);
+    void changeStatus(ActivateDeactivateRequestDto statusDto);
 }

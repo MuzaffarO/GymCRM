@@ -5,8 +5,8 @@ import epam.gymcrm.dto.request.TraineeTrainingsRequestDto;
 import epam.gymcrm.dto.request.UpdateTraineeProfileRequestDto;
 import epam.gymcrm.dto.request.UpdateTraineeTrainerListRequestDto;
 import epam.gymcrm.dto.response.*;
-import epam.gymcrm.service.TraineeServices;
-import epam.gymcrm.service.TrainingServices;
+import epam.gymcrm.service.TraineeService;
+import epam.gymcrm.service.TrainingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,8 +24,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TraineeController {
 
-    private final TraineeServices traineeServices;
-    private final TrainingServices trainingServices;
+    private final TraineeService traineeService;
+    private final TrainingService trainingService;
 
     @Operation(
             summary = "Get trainee profile by username",
@@ -41,7 +41,7 @@ public class TraineeController {
     @GetMapping("/by-username")
     public ResponseEntity<TraineeProfileResponseDto> getByUsername(
            @NotBlank @NotNull @RequestParam("username") String username) {
-        return traineeServices.getByUsername(username);
+        return ResponseEntity.ok(traineeService.getByUsername(username));
     }
 
     @Operation(
@@ -60,7 +60,7 @@ public class TraineeController {
     @PutMapping("/update-profile")
     public ResponseEntity<UpdateTraineeProfileResponseDto> updateProfile(
             @RequestBody @Valid UpdateTraineeProfileRequestDto updateTraineeProfileRequestDto) {
-        return traineeServices.updateProfile(updateTraineeProfileRequestDto);
+        return ResponseEntity.ok(traineeService.updateProfile(updateTraineeProfileRequestDto));
     }
 
     @Operation(
@@ -77,7 +77,7 @@ public class TraineeController {
     @DeleteMapping("/delete")
     public ResponseEntity<Void> deleteByUsername(
             @RequestParam("username") @Valid String username) {
-        traineeServices.deleteByUsername(username);
+        traineeService.deleteByUsername(username);
         return ResponseEntity.ok().build();
     }
 
@@ -96,7 +96,7 @@ public class TraineeController {
     @PutMapping("/update-trainers-list")
     public ResponseEntity<UpdateTraineeTrainersResponseDto> updateTraineeTrainersList(
             @RequestBody @Valid UpdateTraineeTrainerListRequestDto updateTraineeTrainerListDto) {
-        return traineeServices.updateTraineeTrainersList(updateTraineeTrainerListDto);
+        return ResponseEntity.ok(traineeService.updateTraineeTrainersList(updateTraineeTrainerListDto));
     }
 
     @Operation(
@@ -114,7 +114,7 @@ public class TraineeController {
     @GetMapping("/trainings-list")
     public ResponseEntity<List<TraineeTrainingsListResponseDto>> getTrainingsList(
             @RequestBody @Valid TraineeTrainingsRequestDto trainingsRequestDto) {
-        return trainingServices.getTraineeTrainings(trainingsRequestDto);
+        return ResponseEntity.ok(trainingService.getTraineeTrainings(trainingsRequestDto));
     }
 
     @Operation(
@@ -132,6 +132,7 @@ public class TraineeController {
     @PatchMapping("/change-status")
     public ResponseEntity<Void> changeStatus(
             @RequestBody @Valid ActivateDeactivateRequestDto statusDto) {
-        return traineeServices.changeStatus(statusDto);
+        traineeService.changeStatus(statusDto);
+        return ResponseEntity.ok().build();
     }
 }

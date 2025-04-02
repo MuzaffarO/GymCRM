@@ -13,15 +13,14 @@ import epam.gymcrm.repository.TrainerRepository;
 import epam.gymcrm.repository.TraineeRepository;
 import epam.gymcrm.repository.TrainingTypeRepository;
 import epam.gymcrm.repository.UsersRepository;
-import epam.gymcrm.service.UsersServices;
-import epam.gymcrm.service.mapper.TrainingTypeMapper;
+import epam.gymcrm.service.UsersService;
+import epam.gymcrm.mapper.TrainingTypeMapper;
 import epam.gymcrm.security.AuthServices;
 import epam.gymcrm.credentials.CredentialGenerator;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -29,7 +28,7 @@ import java.util.Optional;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class UsersServicesImpl implements UsersServices {
+public class UsersServiceImpl implements UsersService {
 
     private final TrainingTypeMapper specializationTypeMapper;
     private final UsersRepository userRepository;
@@ -50,7 +49,7 @@ public class UsersServicesImpl implements UsersServices {
     }
 
     @Override
-    public ResponseEntity<CredentialsInfoResponseDto> registerTrainer(TrainerRegisterDto trainerRegisterDto) {
+    public CredentialsInfoResponseDto registerTrainer(TrainerRegisterDto trainerRegisterDto) {
         TrainingType specialization = null;
         if (trainerRegisterDto.getSpecialization() != null) {
             specialization = specializationTypeMapper.toEntity(trainerRegisterDto.getSpecialization());
@@ -73,12 +72,12 @@ public class UsersServicesImpl implements UsersServices {
 
         log.info("New trainer registered: {}", trainer);
         meterRegistry.counter("trainer.registration.count").increment();
-        return ResponseEntity.ok(new CredentialsInfoResponseDto(savedUser.getUsername(), savedUser.getPassword()));
+        return new CredentialsInfoResponseDto(savedUser.getUsername(), savedUser.getPassword());
     }
 
 
     @Override
-    public ResponseEntity<CredentialsInfoResponseDto> registerTrainee(TraineeRegisterDto traineeRegisterDto) {
+    public CredentialsInfoResponseDto registerTrainee(TraineeRegisterDto traineeRegisterDto) {
         User savedUser = createUser(traineeRegisterDto.getFirstName(), traineeRegisterDto.getLastName());
 
         Trainee trainee = Trainee.builder()
@@ -89,11 +88,11 @@ public class UsersServicesImpl implements UsersServices {
 
         traineeRepository.save(trainee);
         meterRegistry.counter("trainee.registration.count").increment();
-        return ResponseEntity.ok(new CredentialsInfoResponseDto(savedUser.getUsername(), savedUser.getPassword()));
+        return new CredentialsInfoResponseDto(savedUser.getUsername(), savedUser.getPassword());
     }
 
     @Override
-    public ResponseEntity<Void> login(String username, String password) {
+    public void login(String username, String password) {
         try {
             authServices.authenticate(username, password);
             meterRegistry.counter("gymcrm.login.success").increment();
@@ -101,18 +100,16 @@ public class UsersServicesImpl implements UsersServices {
             meterRegistry.counter("gymcrm.login.failed").increment();
             throw new InvalidUsernameOrPasswordException(e.getMessage());
         }
-        return ResponseEntity.ok().build();
     }
 
     @Override
-    public ResponseEntity<Void> changeLogin(String username, String oldPassword, String newPassword) {
+    public void changeLogin(String username, String oldPassword, String newPassword) {
         authServices.authenticate(username, oldPassword);
         try {
             userRepository.changePassword(username, newPassword);
         } catch (DataAccessException e) {
             throw new DatabaseException(e.getMessage());
         }
-        return ResponseEntity.ok().build();
     }
 
     private User createUser(String firstName, String lastName) {

@@ -5,7 +5,7 @@ import epam.gymcrm.dto.request.TraineeRegisterDto;
 import epam.gymcrm.dto.request.TrainerRegisterDto;
 import epam.gymcrm.dto.response.CredentialsInfoResponseDto;
 import epam.gymcrm.rest.UsersController;
-import epam.gymcrm.service.UsersServices;
+import epam.gymcrm.service.UsersService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -32,7 +32,7 @@ class UsersControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private UsersServices usersServices;
+    private UsersService usersService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -42,7 +42,7 @@ class UsersControllerTest {
         TrainerRegisterDto dto = new TrainerRegisterDto("John", "Doe", new epam.gymcrm.dto.TrainingTypeDto(1,"karate"));
         CredentialsInfoResponseDto response = new CredentialsInfoResponseDto("john.doe", "generatedPassword");
 
-        when(usersServices.registerTrainer(any())).thenReturn(ResponseEntity.ok(response));
+        when(usersService.registerTrainer(any())).thenReturn(response);
 
         mockMvc.perform(post("/users/trainer/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -57,7 +57,7 @@ class UsersControllerTest {
         TraineeRegisterDto dto = new TraineeRegisterDto("Jane", "Smith", date, "123 Street");
         CredentialsInfoResponseDto response = new CredentialsInfoResponseDto("jane.smith", "secret");
 
-        when(usersServices.registerTrainee(any())).thenReturn(ResponseEntity.ok(response));
+        when(usersService.registerTrainee(any())).thenReturn(response);
 
         mockMvc.perform(post("/users/trainee/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -68,7 +68,7 @@ class UsersControllerTest {
 
     @Test
     void testLogin() throws Exception {
-        when(usersServices.login("user", "pass")).thenReturn(ResponseEntity.ok().build());
+        doNothing().when(usersService).login("user", "pass");
 
         mockMvc.perform(get("/users/login")
                         .param("username", "user")
@@ -78,7 +78,7 @@ class UsersControllerTest {
 
     @Test
     void testChangeLogin() throws Exception {
-        when(usersServices.changeLogin("user", "oldPass", "newPass")).thenReturn(ResponseEntity.ok().build());
+        doNothing().when(usersService).changeLogin("user", "oldPass", "newPass");
 
         mockMvc.perform(put("/users/change-login")
                         .param("username", "user")
@@ -90,8 +90,8 @@ class UsersControllerTest {
     @TestConfiguration
     static class MockedBeansConfig {
         @Bean
-        public UsersServices usersServices() {
-            return mock(UsersServices.class);
+        public UsersService usersServices() {
+            return mock(UsersService.class);
         }
     }
 }

@@ -9,10 +9,8 @@ import epam.gymcrm.exceptions.TrainingTypeNotMatchingException;
 import epam.gymcrm.exceptions.UserNotFoundException;
 import epam.gymcrm.model.*;
 import epam.gymcrm.repository.*;
-import epam.gymcrm.repository.specifications.TrainerSpecification;
-import epam.gymcrm.repository.specifications.TrainingSpecification;
-import epam.gymcrm.service.impl.TrainingServicesImpl;
-import epam.gymcrm.service.mapper.TrainingMapper;
+import epam.gymcrm.service.impl.TrainingServiceImpl;
+import epam.gymcrm.mapper.TrainingMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +27,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class TrainingServicesImplTest {
+class TrainingServiceImplTest {
 
     @Mock private TrainingRepository trainingRepository;
     @Mock private TrainingMapper trainingMapper;
@@ -37,7 +35,7 @@ class TrainingServicesImplTest {
     @Mock private TraineeRepository traineeRepository;
     @Mock private TrainingTypeRepository trainingTypeRepository;
 
-    @InjectMocks private TrainingServicesImpl trainingServices;
+    @InjectMocks private TrainingServiceImpl trainingServices;
 
     private Trainee trainee;
     private Trainer trainer;
@@ -61,9 +59,8 @@ class TrainingServicesImplTest {
         when(trainerRepository.findByUserUsername("bob.trainer")).thenReturn(Optional.of(trainer));
         when(trainingTypeRepository.findByTrainingTypeName("karate")).thenReturn(Optional.of(trainingType));
 
-        ResponseEntity<Void> response = trainingServices.createTraining(dto);
+        trainingServices.createTraining(dto);
 
-        assertEquals(200, response.getStatusCodeValue());
         verify(trainingRepository, times(1)).save(any(Training.class));
     }
 
@@ -94,11 +91,10 @@ class TrainingServicesImplTest {
 
         when(trainingRepository.findAll(any(Specification.class))).thenReturn(List.of(training));
 
-        ResponseEntity<List<TraineeTrainingsListResponseDto>> response = trainingServices.getTraineeTrainings(dto);
+        List<TraineeTrainingsListResponseDto> response = trainingServices.getTraineeTrainings(dto);
 
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals(1, response.getBody().size());
-        assertEquals("karate", response.getBody().get(0).trainingType());
+        assertEquals(1, response.size());
+        assertEquals("karate", response.get(0).trainingType());
     }
 
     @Test
@@ -109,11 +105,10 @@ class TrainingServicesImplTest {
         when(trainerRepository.findByUserUsername("bob.trainer")).thenReturn(Optional.of(trainer));
         when(trainingRepository.findAll(any(Specification.class))).thenReturn(List.of(training));
 
-        ResponseEntity<List<TrainerTrainingsListResponseDto>> response = trainingServices.getTrainerTrainings(dto);
+        List<TrainerTrainingsListResponseDto> response = trainingServices.getTrainerTrainings(dto);
 
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals(1, response.getBody().size());
-        assertEquals("karate", response.getBody().get(0).trainingType());
+        assertEquals(1, response.size());
+        assertEquals("karate", response.get(0).trainingType());
     }
 
     @Test

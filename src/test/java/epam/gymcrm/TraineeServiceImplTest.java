@@ -9,15 +9,14 @@ import epam.gymcrm.model.Trainer;
 import epam.gymcrm.model.User;
 import epam.gymcrm.repository.TraineeRepository;
 import epam.gymcrm.repository.TrainerRepository;
-import epam.gymcrm.service.impl.TraineeServicesImpl;
-import epam.gymcrm.service.mapper.TraineeMapper;
-import epam.gymcrm.service.mapper.TrainingMapper;
+import epam.gymcrm.service.impl.TraineeServiceImpl;
+import epam.gymcrm.mapper.TraineeMapper;
+import epam.gymcrm.mapper.TrainingMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
@@ -28,14 +27,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class TraineeServicesImplTest {
+class TraineeServiceImplTest {
 
     @Mock private TraineeRepository traineeRepository;
     @Mock private TrainerRepository trainerRepository;
     @Mock private TrainingMapper trainingMapper;
     @Mock private TraineeMapper traineeMapper;
 
-    @InjectMocks private TraineeServicesImpl traineeServices;
+    @InjectMocks private TraineeServiceImpl traineeServices;
 
     private Trainee mockTrainee;
 
@@ -49,9 +48,8 @@ class TraineeServicesImplTest {
     void testGetByUsername_Success() {
         when(traineeRepository.findByUserUsername("john.doe")).thenReturn(Optional.of(mockTrainee));
 
-        ResponseEntity<TraineeProfileResponseDto> response = traineeServices.getByUsername("john.doe");
+        TraineeProfileResponseDto response = traineeServices.getByUsername("john.doe");
 
-        assertEquals(200, response.getStatusCodeValue());
         verify(traineeRepository).findByUserUsername("john.doe");
     }
 
@@ -68,9 +66,8 @@ class TraineeServicesImplTest {
         when(traineeRepository.findByUserUsername("john.doe")).thenReturn(Optional.of(mockTrainee));
         when(traineeRepository.save(any())).thenReturn(mockTrainee);
 
-        ResponseEntity<UpdateTraineeProfileResponseDto> response = traineeServices.updateProfile(dto);
+        UpdateTraineeProfileResponseDto response = traineeServices.updateProfile(dto);
 
-        assertEquals(200, response.getStatusCodeValue());
         verify(traineeRepository).save(mockTrainee);
     }
 
@@ -78,9 +75,8 @@ class TraineeServicesImplTest {
     void testDeleteByUsername_Success() {
         when(traineeRepository.findByUserUsername("john.doe")).thenReturn(Optional.of(mockTrainee));
 
-        ResponseEntity<Void> response = traineeServices.deleteByUsername("john.doe");
+        traineeServices.deleteByUsername("john.doe");
 
-        assertEquals(200, response.getStatusCodeValue());
         verify(traineeRepository).delete(mockTrainee);
     }
 
@@ -99,10 +95,8 @@ class TraineeServicesImplTest {
 
         when(traineeRepository.findByUserUsername("john.doe")).thenReturn(Optional.of(mockTrainee));
         when(traineeRepository.save(any())).thenReturn(mockTrainee);
+        traineeServices.changeStatus(dto);
 
-        ResponseEntity<Void> response = traineeServices.changeStatus(dto);
-
-        assertEquals(200, response.getStatusCodeValue());
         assertFalse(mockTrainee.getUser().isActive());
     }
 
@@ -117,9 +111,8 @@ class TraineeServicesImplTest {
         when(trainerRepository.findAllByUsername(List.of("trainer1"))).thenReturn(List.of(mockTrainer));
         when(traineeRepository.save(any())).thenReturn(mockTrainee);
 
-        ResponseEntity<UpdateTraineeTrainersResponseDto> response = traineeServices.updateTraineeTrainersList(dto);
+        UpdateTraineeTrainersResponseDto response = traineeServices.updateTraineeTrainersList(dto);
 
-        assertEquals(200, response.getStatusCodeValue());
         assertEquals(1, mockTrainee.getTrainers().size());
     }
 }

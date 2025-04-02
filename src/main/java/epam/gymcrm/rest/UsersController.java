@@ -3,7 +3,7 @@ package epam.gymcrm.rest;
 import epam.gymcrm.dto.request.TraineeRegisterDto;
 import epam.gymcrm.dto.request.TrainerRegisterDto;
 import epam.gymcrm.dto.response.CredentialsInfoResponseDto;
-import epam.gymcrm.service.UsersServices;
+import epam.gymcrm.service.UsersService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UsersController {
 
-    private final UsersServices usersServices;
+    private final UsersService usersService;
 
     @Operation(
             summary = "Register a new trainer",
@@ -35,7 +35,7 @@ public class UsersController {
     @PostMapping("/trainer/register")
     public ResponseEntity<CredentialsInfoResponseDto> registerTrainer(
             @Valid @RequestBody TrainerRegisterDto trainerRegisterDto) {
-        return usersServices.registerTrainer(trainerRegisterDto);
+        return ResponseEntity.ok(usersService.registerTrainer(trainerRegisterDto));
     }
 
     @Operation(
@@ -54,7 +54,7 @@ public class UsersController {
     @PostMapping("/trainee/register")
     public ResponseEntity<CredentialsInfoResponseDto> registerTrainee(
             @Valid @RequestBody TraineeRegisterDto traineeRegisterDto) {
-        return usersServices.registerTrainee(traineeRegisterDto);
+        return ResponseEntity.ok(usersService.registerTrainee(traineeRegisterDto));
     }
 
     @Operation(
@@ -74,7 +74,8 @@ public class UsersController {
     public ResponseEntity<Void> login(
             @RequestParam(name = "username") String username,
             @RequestParam(name = "password") String password) {
-        return usersServices.login(username, password);
+        usersService.login(username, password);
+        return ResponseEntity.ok().build();
     }
 
     @Operation(
@@ -96,6 +97,7 @@ public class UsersController {
             @RequestParam(name = "username") String username,
             @RequestParam(name = "oldPassword") String oldPassword,
             @RequestParam(name = "newPassword") String newPassword) {
-        return usersServices.changeLogin(username, oldPassword, newPassword);
+        usersService.changeLogin(username, oldPassword, newPassword);
+        return ResponseEntity.ok().build();
     }
 }

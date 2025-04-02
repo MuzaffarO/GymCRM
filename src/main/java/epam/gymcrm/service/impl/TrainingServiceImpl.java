@@ -7,7 +7,6 @@ import epam.gymcrm.dto.response.TraineeTrainingsListResponseDto;
 import epam.gymcrm.dto.response.TrainerTrainingsListResponseDto;
 import epam.gymcrm.exceptions.DatabaseException;
 import epam.gymcrm.exceptions.TrainingTypeNotMatchingException;
-import epam.gymcrm.exceptions.UnexpectedException;
 import epam.gymcrm.exceptions.UserNotFoundException;
 import epam.gymcrm.model.Trainee;
 import epam.gymcrm.model.Trainer;
@@ -19,17 +18,16 @@ import epam.gymcrm.repository.TraineeRepository;
 import epam.gymcrm.repository.TrainingTypeRepository;
 import epam.gymcrm.repository.specifications.TrainerSpecification;
 import epam.gymcrm.repository.specifications.TrainingSpecification;
-import epam.gymcrm.service.TrainingServices;
-import epam.gymcrm.service.mapper.TrainingMapper;
+import epam.gymcrm.service.TrainingService;
+import epam.gymcrm.mapper.TrainingMapper;
 import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class TrainingServicesImpl implements TrainingServices {
+public class TrainingServiceImpl implements TrainingService {
 
     private final TrainingRepository trainingRepository;
     private final TrainingMapper trainingMapper;
@@ -38,7 +36,7 @@ public class TrainingServicesImpl implements TrainingServices {
     private final TrainingTypeRepository trainingTypeRepository;
     private final MeterRegistry meterRegistry;
 
-    public TrainingServicesImpl(TrainingRepository trainingRepository, TrainingMapper trainingMapper, TrainerRepository trainerRepository, TraineeRepository traineeRepository, TrainingTypeRepository trainingTypeRepository, MeterRegistry meterRegistry) {
+    public TrainingServiceImpl(TrainingRepository trainingRepository, TrainingMapper trainingMapper, TrainerRepository trainerRepository, TraineeRepository traineeRepository, TrainingTypeRepository trainingTypeRepository, MeterRegistry meterRegistry) {
         this.trainingRepository = trainingRepository;
         this.trainingMapper = trainingMapper;
         this.trainerRepository = trainerRepository;
@@ -48,7 +46,7 @@ public class TrainingServicesImpl implements TrainingServices {
     }
 
     @Override
-    public ResponseEntity<Void> createTraining(TrainingRegisterDto trainingRegisterDto) {
+    public void createTraining(TrainingRegisterDto trainingRegisterDto) {
         Trainee trainee = traineeRepository.findByUserUsername(trainingRegisterDto.getTraineeUsername())
                 .orElseThrow(() -> new UserNotFoundException("Trainee not found with username: " + trainingRegisterDto.getTraineeUsername()));
 
@@ -80,13 +78,11 @@ public class TrainingServicesImpl implements TrainingServices {
 
         trainingRepository.save(training);
         meterRegistry.counter("gymcrm.training.created").increment();
-
-        return ResponseEntity.ok().build();
     }
 
     @Override
     @Timed(value = "gymcrm.trainee.trainings.get", description = "Time to fetch trainee trainings")
-    public ResponseEntity<List<TraineeTrainingsListResponseDto>> getTraineeTrainings(TraineeTrainingsRequestDto trainingsRequestDto) {
+    public List<TraineeTrainingsListResponseDto> getTraineeTrainings(TraineeTrainingsRequestDto trainingsRequestDto) {
         List<Training> trainings = trainingRepository.findAll(
                 TrainingSpecification.findTraineeTrainingsByFilters(
                         trainingsRequestDto.getUsername(),
@@ -97,7 +93,7 @@ public class TrainingServicesImpl implements TrainingServices {
                 )
         );
 
-        return ResponseEntity.ok(trainings.stream()
+        return trainings.stream()
                 .map(training -> new TraineeTrainingsListResponseDto(
                         training.getTrainingName(),
                         training.getTrainingDate(),
@@ -105,12 +101,12 @@ public class TrainingServicesImpl implements TrainingServices {
                         training.getTrainingDuration(),
                         training.getTrainer().getUser().getFirstName()
                 ))
-                .toList());
+                .toList();
     }
 
     @Override
     @Timed(value = "gymcrm.trainer.trainings.get", description = "Time to fetch trainer trainings")
-    public ResponseEntity<List<TrainerTrainingsListResponseDto>> getTrainerTrainings(TrainerTrainingsRequestDto trainerTrainingsRequestDto) {
+    public List<TrainerTrainingsListResponseDto> getTrainerTrainings(TrainerTrainingsRequestDto trainerTrainingsRequestDto) {
 
         Trainer trainer = trainerRepository.findByUserUsername(trainerTrainingsRequestDto.getUsername())
                 .orElseThrow(() -> new UserNotFoundException("Trainer not found with username: " + trainerTrainingsRequestDto.getUsername()));
@@ -134,6 +130,6 @@ public class TrainingServicesImpl implements TrainingServices {
                 ))
                 .toList();
 
-        return ResponseEntity.ok(responseList);
+        return responseList;
     }
 }

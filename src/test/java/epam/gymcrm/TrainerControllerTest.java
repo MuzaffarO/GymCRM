@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import epam.gymcrm.dto.request.*;
 import epam.gymcrm.dto.response.*;
 import epam.gymcrm.rest.TrainerController;
-import epam.gymcrm.service.TrainerServices;
-import epam.gymcrm.service.TrainingServices;
+import epam.gymcrm.service.TrainerService;
+import epam.gymcrm.service.TrainingService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,24 +34,24 @@ class TrainerControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private TrainerServices trainerServices;
+    private TrainerService trainerService;
 
     @Autowired
-    private TrainingServices trainingServices;
+    private TrainingService trainingService;
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @BeforeEach
     void setup() {
-        reset(trainerServices, trainingServices);
+        reset(trainerService, trainingService);
     }
 
     @Test
     void testGetByUsername() throws Exception {
         String username = "john.doe";
         TrainerProfileResponseDto dto = new TrainerProfileResponseDto("John", "Doe", null, true, null);
-        when(trainerServices.getByUsername(eq(username))).thenReturn(ResponseEntity.ok(dto));
+        when(trainerService.getByUsername(eq(username))).thenReturn(dto);
 
         mockMvc.perform(get("/trainers/by-username")
                         .param("username", username))
@@ -63,7 +63,7 @@ class TrainerControllerTest {
     void testUpdateProfile() throws Exception {
         UpdateTrainerProfileRequestDto request = new UpdateTrainerProfileRequestDto("John.Doe", "John", "Doe", new SpecializationNameDto("karate"), true);
         UpdateTrainerProfileResponseDto response = new UpdateTrainerProfileResponseDto("John.Doe", "John", "Doe", new SpecializationNameDto("karate"), true, null);
-        when(trainerServices.updateProfile(any())).thenReturn(ResponseEntity.ok(response));
+        when(trainerService.updateProfile(any())).thenReturn(response);
 
         mockMvc.perform(put("/trainers/update-profile")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -76,7 +76,7 @@ class TrainerControllerTest {
     void testGetNotAssignedActiveTrainers() throws Exception {
         String username = "john.doe";
         TrainerResponseDto trainer = new TrainerResponseDto("trainer1", "Trainer", "One", null);
-        when(trainerServices.getNotAssignedActiveTrainers(eq(username))).thenReturn(ResponseEntity.ok(List.of(trainer)));
+        when(trainerService.getNotAssignedActiveTrainers(eq(username))).thenReturn(List.of(trainer));
 
         mockMvc.perform(get("/trainers/not-assigned-active")
                         .param("username", username))
@@ -88,7 +88,7 @@ class TrainerControllerTest {
     void testGetTrainerTrainings() throws Exception {
         TrainerTrainingsRequestDto request = new TrainerTrainingsRequestDto("trainer1", new Date(), new Date(), null);
         List<TrainerTrainingsListResponseDto> responseList = List.of();
-        when(trainingServices.getTrainerTrainings(any())).thenReturn(ResponseEntity.ok(responseList));
+        when(trainingService.getTrainerTrainings(any())).thenReturn(responseList);
 
         mockMvc.perform(get("/trainers/trainings-list")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -99,7 +99,7 @@ class TrainerControllerTest {
     @Test
     void testChangeStatus() throws Exception {
         ActivateDeactivateRequestDto request = new ActivateDeactivateRequestDto("trainer1", false);
-        when(trainerServices.changeStatus(any())).thenReturn(ResponseEntity.ok().build());
+        doNothing().when(trainerService).changeStatus(any());
 
         mockMvc.perform(patch("/trainers/change-status")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -110,13 +110,13 @@ class TrainerControllerTest {
     @TestConfiguration
     static class MockedBeansConfig {
         @Bean
-        public TrainerServices trainerServices() {
-            return mock(TrainerServices.class);
+        public TrainerService trainerServices() {
+            return mock(TrainerService.class);
         }
 
         @Bean
-        public TrainingServices trainingServices() {
-            return mock(TrainingServices.class);
+        public TrainingService trainingServices() {
+            return mock(TrainingService.class);
         }
     }
 }

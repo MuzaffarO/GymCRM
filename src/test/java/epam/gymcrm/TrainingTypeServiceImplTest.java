@@ -3,8 +3,8 @@ package epam.gymcrm;
 import epam.gymcrm.dto.TrainingTypeDto;
 import epam.gymcrm.model.TrainingType;
 import epam.gymcrm.repository.TrainingTypeRepository;
-import epam.gymcrm.service.impl.TrainingTypeServicesImpl;
-import epam.gymcrm.service.mapper.TrainingTypeMapper;
+import epam.gymcrm.service.impl.TrainingTypeServiceImpl;
+import epam.gymcrm.mapper.TrainingTypeMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class TrainingTypeServicesImplTest {
+class TrainingTypeServiceImplTest {
 
     @Mock
     private TrainingTypeRepository trainingTypeRepository;
@@ -27,7 +27,7 @@ class TrainingTypeServicesImplTest {
     private TrainingTypeMapper trainingTypeMapper;
 
     @InjectMocks
-    private TrainingTypeServicesImpl trainingTypeServices;
+    private TrainingTypeServiceImpl trainingTypeServices;
 
     @Test
     void testGetTrainingType() {
@@ -41,10 +41,9 @@ class TrainingTypeServicesImplTest {
 
         when(trainingTypeRepository.findAll()).thenReturn(List.of(type1, type2));
 
-        ResponseEntity<List<TrainingTypeDto>> response = trainingTypeServices.getTrainingType();
+        List<TrainingTypeDto> response = trainingTypeServices.getTrainingType();
 
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals(2, response.getBody().size());
+        assertEquals(2, response.size());
     }
 
     @Test
@@ -58,10 +57,9 @@ class TrainingTypeServicesImplTest {
 
         when(trainingTypeRepository.save(any(TrainingType.class))).thenReturn(savedType);
 
-        ResponseEntity<TrainingType> response = trainingTypeServices.createTrainingType("boxing");
+        TrainingType response = trainingTypeServices.createTrainingType("boxing");
 
-        assertEquals(201, response.getStatusCodeValue());
-        assertEquals("boxing", response.getBody().getTrainingTypeName());
-        assertNotNull(response.getBody().getId());
+        assertEquals("boxing", response.getTrainingTypeName());
+        assertNotNull(response.getId());
     }
 }

@@ -1,7 +1,7 @@
 package epam.gymcrm.rest;
 
 import epam.gymcrm.dto.request.TrainingRegisterDto;
-import epam.gymcrm.service.TrainingServices;
+import epam.gymcrm.service.TrainingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class TrainingController {
 
-    private final TrainingServices trainingServices;
+    private final TrainingService trainingService;
 
     @Operation(
             summary = "Create a new training",
@@ -32,6 +32,7 @@ public class TrainingController {
     )
     @PostMapping("/create")
     public ResponseEntity<Void> createTraining(@RequestBody @Valid TrainingRegisterDto trainingRegisterDto) {
-        return trainingServices.createTraining(trainingRegisterDto);
+        trainingService.createTraining(trainingRegisterDto);
+        return ResponseEntity.ok().build();
     }
 }

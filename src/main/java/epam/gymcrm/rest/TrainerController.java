@@ -7,8 +7,8 @@ import epam.gymcrm.dto.response.TrainerProfileResponseDto;
 import epam.gymcrm.dto.response.TrainerResponseDto;
 import epam.gymcrm.dto.response.TrainerTrainingsListResponseDto;
 import epam.gymcrm.dto.response.UpdateTrainerProfileResponseDto;
-import epam.gymcrm.service.TrainerServices;
-import epam.gymcrm.service.TrainingServices;
+import epam.gymcrm.service.TrainerService;
+import epam.gymcrm.service.TrainingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -26,8 +26,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TrainerController {
 
-    private final TrainerServices trainerServices;
-    private final TrainingServices trainingServices;
+    private final TrainerService trainerService;
+    private final TrainingService trainingService;
 
     @Operation(
             summary = "Get trainer profile by username",
@@ -43,7 +43,7 @@ public class TrainerController {
     @GetMapping("/by-username")
     public ResponseEntity<TrainerProfileResponseDto> getByUsername(
             @NotNull @NotBlank @RequestParam("username") String username) {
-        return trainerServices.getByUsername(username);
+        return ResponseEntity.ok(trainerService.getByUsername(username));
     }
 
     @Operation(
@@ -61,7 +61,7 @@ public class TrainerController {
     @PutMapping("/update-profile")
     public ResponseEntity<UpdateTrainerProfileResponseDto> updateProfile(
             @RequestBody @Valid UpdateTrainerProfileRequestDto updateTrainerProfileRequestDto) {
-        return trainerServices.updateProfile(updateTrainerProfileRequestDto);
+        return ResponseEntity.ok(trainerService.updateProfile(updateTrainerProfileRequestDto));
     }
 
     @Operation(
@@ -77,7 +77,7 @@ public class TrainerController {
     @GetMapping("/not-assigned-active")
     public ResponseEntity<List<TrainerResponseDto>> getNotAssignedActiveTrainers(
             @NotBlank @NotNull @RequestParam("username") String username) {
-        return trainerServices.getNotAssignedActiveTrainers(username);
+        return ResponseEntity.ok(trainerService.getNotAssignedActiveTrainers(username));
     }
 
     @Operation(
@@ -95,7 +95,7 @@ public class TrainerController {
     @GetMapping("/trainings-list")
     public ResponseEntity<List<TrainerTrainingsListResponseDto>> getTrainerTrainings(
             @RequestBody @Valid TrainerTrainingsRequestDto trainerTrainingsRequestDto) {
-        return trainingServices.getTrainerTrainings(trainerTrainingsRequestDto);
+        return ResponseEntity.ok(trainingService.getTrainerTrainings(trainerTrainingsRequestDto));
     }
 
     @Operation(
@@ -113,6 +113,7 @@ public class TrainerController {
     @PatchMapping("/change-status")
     public ResponseEntity<Void> changeStatus(
             @RequestBody @Valid ActivateDeactivateRequestDto statusDto) {
-        return trainerServices.changeStatus(statusDto);
+        trainerService.changeStatus(statusDto);
+        return ResponseEntity.ok().build();
     }
 }

@@ -3,7 +3,7 @@ package epam.gymcrm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import epam.gymcrm.dto.request.TrainingRegisterDto;
 import epam.gymcrm.rest.TrainingController;
-import epam.gymcrm.service.TrainingServices;
+import epam.gymcrm.service.TrainingService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ class TrainingControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private TrainingServices trainingServices;
+    private TrainingService trainingService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -45,7 +45,7 @@ class TrainingControllerTest {
 
     @Test
     void testCreateTraining_Success() throws Exception {
-        when(trainingServices.createTraining(any())).thenReturn(ResponseEntity.ok().build());
+        doNothing().when(trainingService).createTraining(any());
 
         mockMvc.perform(post("/trainings/create")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -56,8 +56,8 @@ class TrainingControllerTest {
     @TestConfiguration
     static class MockedBeansConfig {
         @Bean
-        public TrainingServices trainingServices() {
-            return mock(TrainingServices.class);
+        public TrainingService trainingServices() {
+            return mock(TrainingService.class);
         }
     }
 }

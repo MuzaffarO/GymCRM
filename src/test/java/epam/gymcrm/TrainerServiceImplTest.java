@@ -16,8 +16,8 @@ import epam.gymcrm.model.TrainingType;
 import epam.gymcrm.model.User;
 import epam.gymcrm.repository.TraineeRepository;
 import epam.gymcrm.repository.TrainerRepository;
-import epam.gymcrm.service.impl.TrainerServicesImpl;
-import epam.gymcrm.service.mapper.TrainingMapper;
+import epam.gymcrm.service.impl.TrainerServiceImpl;
+import epam.gymcrm.mapper.TrainingMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,14 +35,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class TrainerServicesImplTest {
+class TrainerServiceImplTest {
 
     @Mock TrainerRepository trainerRepository;
     @Mock TraineeRepository traineeRepository;
     @Mock TrainingMapper trainingMapper;
 
     @InjectMocks
-    TrainerServicesImpl trainerServices;
+    TrainerServiceImpl trainerServices;
 
     private Trainer mockTrainer;
 
@@ -57,10 +57,9 @@ class TrainerServicesImplTest {
     void testGetByUsername_Success() {
         when(trainerRepository.findByUserUsername("john.doe")).thenReturn(Optional.of(mockTrainer));
 
-        ResponseEntity<TrainerProfileResponseDto> response = trainerServices.getByUsername("john.doe");
+        TrainerProfileResponseDto response = trainerServices.getByUsername("john.doe");
 
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals("John", response.getBody().firstName());
+        assertEquals("John", response.firstName());
     }
 
     @Test
@@ -75,10 +74,9 @@ class TrainerServicesImplTest {
         when(trainerRepository.findByUserUsername("john.doe")).thenReturn(Optional.of(mockTrainer));
         when(trainerRepository.save(any())).thenReturn(mockTrainer);
 
-        ResponseEntity<UpdateTrainerProfileResponseDto> response = trainerServices.updateProfile(dto);
+        UpdateTrainerProfileResponseDto response = trainerServices.updateProfile(dto);
 
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals("Smith", response.getBody().lastName());
+        assertEquals("Smith", response.lastName());
     }
 
     @Test
@@ -86,11 +84,10 @@ class TrainerServicesImplTest {
         when(traineeRepository.findByUserUsername("trainee1")).thenReturn(Optional.of(mock(Trainee.class)));
         when(trainerRepository.findNotAssignedActiveTrainers("trainee1")).thenReturn(List.of(mockTrainer));
 
-        ResponseEntity<List<TrainerResponseDto>> response = trainerServices.getNotAssignedActiveTrainers("trainee1");
+        List<TrainerResponseDto> response = trainerServices.getNotAssignedActiveTrainers("trainee1");
 
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals(1, response.getBody().size());
-        assertEquals("john.doe", response.getBody().get(0).username());
+        assertEquals(1, response.size());
+        assertEquals("john.doe", response.get(0).username());
     }
 
     @Test
@@ -98,9 +95,8 @@ class TrainerServicesImplTest {
         ActivateDeactivateRequestDto dto = new ActivateDeactivateRequestDto("john.doe", false);
         when(trainerRepository.findByUserUsername("john.doe")).thenReturn(Optional.of(mockTrainer));
 
-        ResponseEntity<Void> response = trainerServices.changeStatus(dto);
+        trainerServices.changeStatus(dto);
 
-        assertEquals(200, response.getStatusCodeValue());
         assertFalse(mockTrainer.getUser().isActive());
     }
 
