@@ -1,5 +1,7 @@
 package epam.gymcrm.service.impl;
 
+import epam.gymcrm.dto.LoginRequest;
+import epam.gymcrm.dto.PasswordChangeRequest;
 import epam.gymcrm.dto.request.TraineeRegisterDto;
 import epam.gymcrm.dto.request.TrainerRegisterDto;
 import epam.gymcrm.dto.response.CredentialsInfoResponseDto;
@@ -21,6 +23,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -38,6 +41,7 @@ public class UsersServiceImpl implements UsersService {
     private final AuthServices authServices;
     private final TrainingTypeRepository trainingTypeRepository;
     private final MeterRegistry meterRegistry;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Optional<User> findByUsername(String username) {
@@ -60,8 +64,8 @@ public class UsersServiceImpl implements UsersService {
                 specialization = trainingTypeRepository.save(specialization);
             }
         }
-
-        User savedUser = createUser(trainerRegisterDto.getFirstName(), trainerRegisterDto.getLastName());
+        StringBuilder rawPasswordHolder = new StringBuilder();
+        User savedUser = createUser(trainerRegisterDto.getFirstName(), trainerRegisterDto.getLastName(), rawPasswordHolder);
 
         Trainer trainer = Trainer.builder()
                 .specializationType(specialization)
@@ -72,13 +76,14 @@ public class UsersServiceImpl implements UsersService {
 
         log.info("New trainer registered: {}", trainer);
         meterRegistry.counter("trainer.registration.count").increment();
-        return new CredentialsInfoResponseDto(savedUser.getUsername(), savedUser.getPassword());
+        return new CredentialsInfoResponseDto(savedUser.getUsername(), rawPasswordHolder.toString());
     }
 
 
     @Override
     public CredentialsInfoResponseDto registerTrainee(TraineeRegisterDto traineeRegisterDto) {
-        User savedUser = createUser(traineeRegisterDto.getFirstName(), traineeRegisterDto.getLastName());
+        StringBuilder rawPasswordHolder = new StringBuilder();
+        User savedUser = createUser(traineeRegisterDto.getFirstName(), traineeRegisterDto.getLastName(),rawPasswordHolder);
 
         Trainee trainee = Trainee.builder()
                 .user(savedUser)
@@ -88,13 +93,13 @@ public class UsersServiceImpl implements UsersService {
 
         traineeRepository.save(trainee);
         meterRegistry.counter("trainee.registration.count").increment();
-        return new CredentialsInfoResponseDto(savedUser.getUsername(), savedUser.getPassword());
+        return new CredentialsInfoResponseDto(savedUser.getUsername(), rawPasswordHolder.toString());
     }
 
     @Override
-    public void login(String username, String password) {
+    public void login(LoginRequest loginRequest) {
         try {
-            authServices.authenticate(username, password);
+            authServices.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
             meterRegistry.counter("gymcrm.login.success").increment();
         }catch (Exception e) {
             meterRegistry.counter("gymcrm.login.failed").increment();
@@ -103,25 +108,31 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public void changeLogin(String username, String oldPassword, String newPassword) {
-        authServices.authenticate(username, oldPassword);
+    public void changeLogin(PasswordChangeRequest passwordChangeRequest) {
+        authServices.authenticate(passwordChangeRequest.getUsername(), passwordChangeRequest.getOldPassword());
         try {
-            userRepository.changePassword(username, newPassword);
+            String hashedNewPassword = passwordEncoder.encode(passwordChangeRequest.getNewPassword());
+            userRepository.changePassword(passwordChangeRequest.getUsername(), hashedNewPassword);
         } catch (DataAccessException e) {
             throw new DatabaseException(e.getMessage());
         }
     }
 
-    private User createUser(String firstName, String lastName) {
-        String generatedUsername = credentialGenerator.generateUsername(firstName, lastName);
-        String generatedPassword = credentialGenerator.generatePassword();
+    private User createUser(String firstName, String lastName, StringBuilder rawPasswordHolder) {
+        String username = credentialGenerator.generateUsername(firstName, lastName);
+        String plainPassword = credentialGenerator.generatePassword();
+        String hashedPassword = passwordEncoder.encode(plainPassword);
+
+        rawPasswordHolder.append(plainPassword); // store for later use
 
         return userRepository.save(User.builder()
                 .firstName(firstName)
                 .lastName(lastName)
-                .username(generatedUsername)
-                .password(generatedPassword)
+                .username(username)
+                .password(hashedPassword)
                 .isActive(true)
                 .build());
     }
+
+
 }

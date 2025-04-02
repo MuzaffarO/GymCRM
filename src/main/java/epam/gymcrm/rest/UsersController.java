@@ -1,8 +1,12 @@
 package epam.gymcrm.rest;
 
+import epam.gymcrm.dto.JwtResponse;
+import epam.gymcrm.dto.LoginRequest;
+import epam.gymcrm.dto.PasswordChangeRequest;
 import epam.gymcrm.dto.request.TraineeRegisterDto;
 import epam.gymcrm.dto.request.TrainerRegisterDto;
 import epam.gymcrm.dto.response.CredentialsInfoResponseDto;
+import epam.gymcrm.security.JwtUtil;
 import epam.gymcrm.service.UsersService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -10,6 +14,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 public class UsersController {
 
     private final UsersService usersService;
+    private final UserDetailsService userDetailsService;
+    private final JwtUtil jwtUtil;
 
     @Operation(
             summary = "Register a new trainer",
@@ -70,13 +78,19 @@ public class UsersController {
                     @ApiResponse(responseCode = "404", description = "User not found")
             }
     )
+
     @GetMapping("/login")
-    public ResponseEntity<Void> login(
-            @RequestParam(name = "username") String username,
-            @RequestParam(name = "password") String password) {
-        usersService.login(username, password);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest loginRequest) {
+
+        usersService.login(loginRequest); // Your logic already authenticates
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUsername());
+        String jwt = jwtUtil.generateToken(userDetails);
+
+        return ResponseEntity.ok(new JwtResponse(jwt));
     }
+
+    // NEED TO REWRITE SWAGGER FOR SECURITY
 
     @Operation(
             summary = "Change user password",
@@ -93,11 +107,8 @@ public class UsersController {
             }
     )
     @PutMapping("/change-login")
-    public ResponseEntity<Void> changeLogin(
-            @RequestParam(name = "username") String username,
-            @RequestParam(name = "oldPassword") String oldPassword,
-            @RequestParam(name = "newPassword") String newPassword) {
-        usersService.changeLogin(username, oldPassword, newPassword);
+    public ResponseEntity<Void> changeLogin(@RequestBody PasswordChangeRequest passwordChangeRequest) {
+        usersService.changeLogin(passwordChangeRequest);
         return ResponseEntity.ok().build();
     }
 }

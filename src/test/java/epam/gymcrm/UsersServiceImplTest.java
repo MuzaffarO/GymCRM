@@ -1,6 +1,8 @@
 package epam.gymcrm;
 
 import epam.gymcrm.credentials.CredentialGenerator;
+import epam.gymcrm.dto.LoginRequest;
+import epam.gymcrm.dto.PasswordChangeRequest;
 import epam.gymcrm.dto.TrainingTypeDto;
 import epam.gymcrm.dto.request.TraineeRegisterDto;
 import epam.gymcrm.dto.request.TrainerRegisterDto;
@@ -96,7 +98,7 @@ class UsersServiceImplTest {
     void testLogin() {
         when(meterRegistry.counter(anyString())).thenReturn(mockCounter);
         when(authServices.authenticate("user", "pass")).thenReturn(true);
-        usersServices.login("user", "pass");
+        usersServices.login(new LoginRequest("user", "pass"));
         verify(authServices).authenticate("user", "pass");
     }
 
@@ -104,7 +106,7 @@ class UsersServiceImplTest {
     void testChangeLogin() {
         when(authServices.authenticate("user", "oldPass")).thenReturn(true);
 
-        usersServices.changeLogin("user", "oldPass", "newPass");
+        usersServices.changeLogin(new PasswordChangeRequest("user", "oldPass", "newPass"));
 
         verify(userRepository).changePassword("user", "newPass");
     }

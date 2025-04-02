@@ -1,6 +1,8 @@
 package epam.gymcrm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import epam.gymcrm.dto.LoginRequest;
+import epam.gymcrm.dto.PasswordChangeRequest;
 import epam.gymcrm.dto.request.TraineeRegisterDto;
 import epam.gymcrm.dto.request.TrainerRegisterDto;
 import epam.gymcrm.dto.response.CredentialsInfoResponseDto;
@@ -68,7 +70,7 @@ class UsersControllerTest {
 
     @Test
     void testLogin() throws Exception {
-        doNothing().when(usersService).login("user", "pass");
+        doNothing().when(usersService).login(new LoginRequest("user", "pass"));
 
         mockMvc.perform(get("/users/login")
                         .param("username", "user")
@@ -78,7 +80,7 @@ class UsersControllerTest {
 
     @Test
     void testChangeLogin() throws Exception {
-        doNothing().when(usersService).changeLogin("user", "oldPass", "newPass");
+        doNothing().when(usersService).changeLogin(new PasswordChangeRequest("user", "oldPass", "newPass"));
 
         mockMvc.perform(put("/users/change-login")
                         .param("username", "user")

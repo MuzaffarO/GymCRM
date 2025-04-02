@@ -1,5 +1,7 @@
 package epam.gymcrm.service;
 
+import epam.gymcrm.dto.LoginRequest;
+import epam.gymcrm.dto.PasswordChangeRequest;
 import epam.gymcrm.dto.request.TraineeRegisterDto;
 import epam.gymcrm.dto.request.TrainerRegisterDto;
 import epam.gymcrm.dto.response.CredentialsInfoResponseDto;
@@ -15,8 +17,8 @@ public interface UsersService {
 
     CredentialsInfoResponseDto registerTrainee(TraineeRegisterDto traineeRegisterDto);
 
-    void login(String username, String password);
+    void login(LoginRequest loginRequest);
 
-    void changeLogin(String username, String oldPassword, String newPassword);
+    void changeLogin(PasswordChangeRequest passwordChangeRequest);
 
 }
