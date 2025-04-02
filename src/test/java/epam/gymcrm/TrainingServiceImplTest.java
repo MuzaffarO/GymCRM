@@ -11,6 +11,7 @@ import epam.gymcrm.model.*;
 import epam.gymcrm.repository.*;
 import epam.gymcrm.service.impl.TrainingServiceImpl;
 import epam.gymcrm.mapper.TrainingMapper;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,8 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.ResponseEntity;
-
+import io.micrometer.core.instrument.Counter;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,6 +34,9 @@ class TrainingServiceImplTest {
     @Mock private TrainerRepository trainerRepository;
     @Mock private TraineeRepository traineeRepository;
     @Mock private TrainingTypeRepository trainingTypeRepository;
+    @Mock private MeterRegistry meterRegistry;
+    @Mock private Counter mockCounter;
+
 
     @InjectMocks private TrainingServiceImpl trainingServices;
 
@@ -54,7 +57,7 @@ class TrainingServiceImplTest {
     @Test
     void testCreateTraining_Success() {
         TrainingRegisterDto dto = new TrainingRegisterDto("alice.wonder", "bob.trainer", "karate", new Date(), 1.5);
-
+        when(meterRegistry.counter(anyString())).thenReturn(mockCounter);
         when(traineeRepository.findByUserUsername("alice.wonder")).thenReturn(Optional.of(trainee));
         when(trainerRepository.findByUserUsername("bob.trainer")).thenReturn(Optional.of(trainer));
         when(trainingTypeRepository.findByTrainingTypeName("karate")).thenReturn(Optional.of(trainingType));

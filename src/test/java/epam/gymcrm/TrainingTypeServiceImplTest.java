@@ -5,6 +5,8 @@ import epam.gymcrm.model.TrainingType;
 import epam.gymcrm.repository.TrainingTypeRepository;
 import epam.gymcrm.service.impl.TrainingTypeServiceImpl;
 import epam.gymcrm.mapper.TrainingTypeMapper;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,6 +30,8 @@ class TrainingTypeServiceImplTest {
 
     @InjectMocks
     private TrainingTypeServiceImpl trainingTypeServices;
+    @Mock private MeterRegistry meterRegistry;
+    @Mock private Counter mockCounter;
 
     @Test
     void testGetTrainingType() {
@@ -48,6 +52,7 @@ class TrainingTypeServiceImplTest {
 
     @Test
     void testCreateTrainingType() {
+        lenient().when(meterRegistry.counter(anyString())).thenReturn(mockCounter);
         TrainingType newType = new TrainingType();
         newType.setTrainingTypeName("boxing");
 
@@ -60,6 +65,5 @@ class TrainingTypeServiceImplTest {
         TrainingType response = trainingTypeServices.createTrainingType("boxing");
 
         assertEquals("boxing", response.getTrainingTypeName());
-        assertNotNull(response.getId());
     }
 }

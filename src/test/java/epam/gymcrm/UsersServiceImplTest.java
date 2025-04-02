@@ -10,6 +10,8 @@ import epam.gymcrm.repository.*;
 import epam.gymcrm.security.AuthServices;
 import epam.gymcrm.service.impl.UsersServiceImpl;
 import epam.gymcrm.mapper.TrainingTypeMapper;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,6 +36,8 @@ class UsersServiceImplTest {
     @Mock CredentialGenerator credentialGenerator;
     @Mock AuthServices authServices;
     @Mock TrainingTypeMapper trainingTypeMapper;
+    @Mock private MeterRegistry meterRegistry;
+    @Mock private Counter mockCounter;
 
     @InjectMocks
     UsersServiceImpl usersServices;
@@ -53,6 +57,7 @@ class UsersServiceImplTest {
 
     @Test
     void testRegisterTrainer_WithNewSpecialization() {
+        when(meterRegistry.counter(anyString())).thenReturn(mockCounter);
         TrainerRegisterDto dto = new TrainerRegisterDto("John", "Doe", new TrainingTypeDto(1,"karate"));
         TrainingType trainingType = new TrainingType();
         trainingType.setTrainingTypeName("karate");
@@ -73,6 +78,7 @@ class UsersServiceImplTest {
 
     @Test
     void testRegisterTrainee() {
+        when(meterRegistry.counter(anyString())).thenReturn(mockCounter);
         TraineeRegisterDto dto = new TraineeRegisterDto("Alice", "Smith", new Date(), "123 Street");
         when(credentialGenerator.generateUsername("Alice", "Smith")).thenReturn("alice.smith");
         when(credentialGenerator.generatePassword()).thenReturn("secure");
@@ -88,6 +94,7 @@ class UsersServiceImplTest {
 
     @Test
     void testLogin() {
+        when(meterRegistry.counter(anyString())).thenReturn(mockCounter);
         when(authServices.authenticate("user", "pass")).thenReturn(true);
         usersServices.login("user", "pass");
         verify(authServices).authenticate("user", "pass");

@@ -48,6 +48,6 @@ public class TrainingTypeController {
     )
     @PostMapping
     public ResponseEntity<TrainingType> createTrainingType(@NotEmpty @RequestParam String name) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(trainingTypeService.createTrainingType(name));
+        return ResponseEntity.ok(trainingTypeService.createTrainingType(name));
     }
 }
