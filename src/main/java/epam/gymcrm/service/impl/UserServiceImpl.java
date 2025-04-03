@@ -12,7 +12,7 @@ import epam.gymcrm.model.User;
 import epam.gymcrm.repository.TrainerRepository;
 import epam.gymcrm.repository.TraineeRepository;
 import epam.gymcrm.repository.TrainingTypeRepository;
-import epam.gymcrm.repository.UsersRepository;
+import epam.gymcrm.repository.UserRepository;
 import epam.gymcrm.service.UserService;
 import epam.gymcrm.mapper.TrainingTypeMapper;
 import epam.gymcrm.security.AuthServices;
@@ -31,7 +31,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final TrainingTypeMapper specializationTypeMapper;
-    private final UsersRepository userRepository;
+    private final UserRepository userRepository;
     private final TrainerRepository trainerRepository;
     private final TraineeRepository traineeRepository;
     private final CredentialGenerator credentialGenerator;

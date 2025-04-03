@@ -28,7 +28,8 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
 
-    @Mock UsersRepository userRepository;
+    @Mock
+    UserRepository userRepository;
     @Mock TrainerRepository trainerRepository;
     @Mock TraineeRepository traineeRepository;
     @Mock TrainingTypeRepository trainingTypeRepository;
