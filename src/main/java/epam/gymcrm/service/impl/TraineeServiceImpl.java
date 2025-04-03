@@ -1,15 +1,14 @@
 package epam.gymcrm.service.impl;
 
-import epam.gymcrm.dto.training.TrainingDto;
-import epam.gymcrm.dto.user.request.ActivateDeactivateRequestDto;
-import epam.gymcrm.dto.trainer.request.SpecializationNameDto;
-import epam.gymcrm.dto.trainer.request.TrainerUsernameRequestDto;
-import epam.gymcrm.dto.trainee.request.UpdateTraineeProfileRequestDto;
-import epam.gymcrm.dto.trainee.request.UpdateTraineeTrainerListRequestDto;
-import epam.gymcrm.dto.trainee.response.TraineeProfileResponseDto;
-import epam.gymcrm.dto.trainee.response.UpdateTraineeProfileResponseDto;
-import epam.gymcrm.dto.trainee.response.UpdateTraineeTrainersResponseDto;
-import epam.gymcrm.dto.trainer.response.TrainerResponseDto;
+import epam.gymcrm.dto.user.request.ActivateDeactivateRequest;
+import epam.gymcrm.dto.trainer.request.SpecializationName;
+import epam.gymcrm.dto.trainer.request.TrainerUsernameRequest;
+import epam.gymcrm.dto.trainee.request.UpdateTraineeProfileRequest;
+import epam.gymcrm.dto.trainee.request.UpdateTraineeTrainerListRequest;
+import epam.gymcrm.dto.trainee.response.TraineeProfileResponse;
+import epam.gymcrm.dto.trainee.response.UpdateTraineeProfileResponse;
+import epam.gymcrm.dto.trainee.response.UpdateTraineeTrainersResponse;
+import epam.gymcrm.dto.trainer.response.TrainerResponse;
 import epam.gymcrm.exceptions.DatabaseException;
 import epam.gymcrm.exceptions.UserNotFoundException;
 import epam.gymcrm.model.Trainee;
@@ -39,37 +38,37 @@ public class TraineeServiceImpl implements TraineeService {
 
     @Override
     @Timed(value = "gymcrm.trainee.profile.get", description = "Time to fetch trainee profile")
-    public TraineeProfileResponseDto getByUsername(String username) {
+    public TraineeProfileResponse getByUsername(String username) {
         Trainee trainee = getTraineeByUsername(username);
         return mapToProfileResponse(trainee);
     }
 
     @Override
-    public UpdateTraineeProfileResponseDto updateProfile(UpdateTraineeProfileRequestDto updateTraineeProfileRequestDto) {
-        Trainee trainee = getTraineeByUsername(updateTraineeProfileRequestDto.getUsername());
-        updateTraineeDetails(trainee, updateTraineeProfileRequestDto);
+    public UpdateTraineeProfileResponse updateProfile(UpdateTraineeProfileRequest updateTraineeProfileRequest) {
+        Trainee trainee = getTraineeByUsername(updateTraineeProfileRequest.getUsername());
+        updateTraineeDetails(trainee, updateTraineeProfileRequest);
         traineeRepository.save(trainee);
         return mapToUpdateProfileResponse(trainee);
     }
 
     @Override
-    public UpdateTraineeTrainersResponseDto updateTraineeTrainersList(UpdateTraineeTrainerListRequestDto updateTraineeTrainerListDto) {
+    public UpdateTraineeTrainersResponse updateTraineeTrainersList(UpdateTraineeTrainerListRequest updateTraineeTrainerListDto) {
         Trainee trainee = getTraineeByUsername(updateTraineeTrainerListDto.getUsername());
 
         List<String> trainerUsernames = updateTraineeTrainerListDto.getTrainersList().stream()
-                .map(TrainerUsernameRequestDto::getUsername)
+                .map(TrainerUsernameRequest::getUsername)
                 .toList();
         setTraineeTrainersList(trainee, trainerUsernames);
 
 
-        return new UpdateTraineeTrainersResponseDto(
+        return new UpdateTraineeTrainersResponse(
                 trainee.getTrainers().stream()
-                        .map(trainer -> new TrainerResponseDto(
+                        .map(trainer -> new TrainerResponse(
                                 trainer.getUser().getUsername(),
                                 trainer.getUser().getFirstName(),
                                 trainer.getUser().getLastName(),
                                 Optional.ofNullable(trainer.getSpecializationType())
-                                        .map(specialization -> new SpecializationNameDto(specialization.getTrainingTypeName()))
+                                        .map(specialization -> new SpecializationName(specialization.getTrainingTypeName()))
                                         .orElse(null)
                         ))
                         .toList()
@@ -77,7 +76,7 @@ public class TraineeServiceImpl implements TraineeService {
     }
 
     @Override
-    public void changeStatus(ActivateDeactivateRequestDto statusDto) {
+    public void changeStatus(ActivateDeactivateRequest statusDto) {
         Trainee trainee = getTraineeByUsername(statusDto.getUsername());
 
         try {
@@ -106,19 +105,19 @@ public class TraineeServiceImpl implements TraineeService {
                 .orElseThrow(() -> new UserNotFoundException("Trainee not found for username: " + username));
     }
 
-    private void updateTraineeDetails(Trainee trainee, UpdateTraineeProfileRequestDto updateTraineeProfileRequestDto) {
+    private void updateTraineeDetails(Trainee trainee, UpdateTraineeProfileRequest updateTraineeProfileRequest) {
         User user = trainee.getUser();
 
-        user.setFirstName(Optional.ofNullable(updateTraineeProfileRequestDto.getFirstName()).orElse(user.getFirstName()));
-        user.setLastName(Optional.ofNullable(updateTraineeProfileRequestDto.getLastName()).orElse(user.getLastName()));
-        user.setActive(updateTraineeProfileRequestDto.getIsActive());
+        user.setFirstName(Optional.ofNullable(updateTraineeProfileRequest.getFirstName()).orElse(user.getFirstName()));
+        user.setLastName(Optional.ofNullable(updateTraineeProfileRequest.getLastName()).orElse(user.getLastName()));
+        user.setActive(updateTraineeProfileRequest.getIsActive());
 
-        trainee.setAddress(Optional.ofNullable(updateTraineeProfileRequestDto.getAddress()).orElse(trainee.getAddress()));
-        trainee.setDateOfBirth(Optional.ofNullable(updateTraineeProfileRequestDto.getDateOfBirth()).orElse(trainee.getDateOfBirth()));
+        trainee.setAddress(Optional.ofNullable(updateTraineeProfileRequest.getAddress()).orElse(trainee.getAddress()));
+        trainee.setDateOfBirth(Optional.ofNullable(updateTraineeProfileRequest.getDateOfBirth()).orElse(trainee.getDateOfBirth()));
     }
 
-    private TraineeProfileResponseDto mapToProfileResponse(Trainee trainee) {
-        return new TraineeProfileResponseDto(
+    private TraineeProfileResponse mapToProfileResponse(Trainee trainee) {
+        return new TraineeProfileResponse(
                 trainee.getUser().getFirstName(),
                 trainee.getUser().getLastName(),
                 trainee.getDateOfBirth(),
@@ -128,8 +127,8 @@ public class TraineeServiceImpl implements TraineeService {
         );
     }
 
-    private UpdateTraineeProfileResponseDto mapToUpdateProfileResponse(Trainee trainee) {
-        return new UpdateTraineeProfileResponseDto(
+    private UpdateTraineeProfileResponse mapToUpdateProfileResponse(Trainee trainee) {
+        return new UpdateTraineeProfileResponse(
                 trainee.getUser().getUsername(),
                 trainee.getUser().getFirstName(),
                 trainee.getUser().getLastName(),
@@ -140,14 +139,14 @@ public class TraineeServiceImpl implements TraineeService {
         );
     }
 
-    private List<TrainerResponseDto> mapTrainers(List<Trainer> trainers) {
+    private List<TrainerResponse> mapTrainers(List<Trainer> trainers) {
         return trainers.stream()
-                .map(trainer -> new TrainerResponseDto(
+                .map(trainer -> new TrainerResponse(
                         trainer.getUser().getUsername(),
                         trainer.getUser().getFirstName(),
                         trainer.getUser().getLastName(),
                         Optional.ofNullable(trainer.getSpecializationType())
-                                .map(specialization -> new SpecializationNameDto(specialization.getTrainingTypeName()))
+                                .map(specialization -> new SpecializationName(specialization.getTrainingTypeName()))
                                 .orElse(null)
                 ))
                 .toList();

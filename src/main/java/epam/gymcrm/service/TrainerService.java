@@ -1,23 +1,23 @@
 package epam.gymcrm.service;
 
-import epam.gymcrm.dto.training.TrainingDto;
-import epam.gymcrm.dto.user.request.ActivateDeactivateRequestDto;
-import epam.gymcrm.dto.trainer.request.UpdateTrainerProfileRequestDto;
-import epam.gymcrm.dto.trainer.response.TrainerProfileResponseDto;
-import epam.gymcrm.dto.trainer.response.TrainerResponseDto;
-import epam.gymcrm.dto.trainer.response.UpdateTrainerProfileResponseDto;
+import epam.gymcrm.dto.training.TrainingDTO;
+import epam.gymcrm.dto.user.request.ActivateDeactivateRequest;
+import epam.gymcrm.dto.trainer.request.UpdateTrainerProfileRequest;
+import epam.gymcrm.dto.trainer.response.TrainerProfileResponse;
+import epam.gymcrm.dto.trainer.response.TrainerResponse;
+import epam.gymcrm.dto.trainer.response.UpdateTrainerProfileResponse;
 
 import java.util.List;
 
 public interface TrainerService {
 
-    List<TrainingDto> getTrainerTrainingsByUsername(String username);
+    List<TrainingDTO> getTrainerTrainingsByUsername(String username);
 
-    TrainerProfileResponseDto getByUsername(String username);
+    TrainerProfileResponse getByUsername(String username);
 
-    UpdateTrainerProfileResponseDto updateProfile(UpdateTrainerProfileRequestDto updateTrainerProfileDto);
+    UpdateTrainerProfileResponse updateProfile(UpdateTrainerProfileRequest updateTrainerProfileDto);
 
-    List<TrainerResponseDto> getNotAssignedActiveTrainers(String username);
+    List<TrainerResponse> getNotAssignedActiveTrainers(String username);
 
-    void changeStatus(ActivateDeactivateRequestDto statusDto);
+    void changeStatus(ActivateDeactivateRequest statusDto);
 }

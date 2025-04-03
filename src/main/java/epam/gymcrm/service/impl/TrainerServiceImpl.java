@@ -1,13 +1,13 @@
 package epam.gymcrm.service.impl;
 
-import epam.gymcrm.dto.training.TrainingDto;
-import epam.gymcrm.dto.user.request.ActivateDeactivateRequestDto;
-import epam.gymcrm.dto.trainer.request.SpecializationNameDto;
-import epam.gymcrm.dto.trainer.request.UpdateTrainerProfileRequestDto;
-import epam.gymcrm.dto.trainee.response.TraineeResponseDto;
-import epam.gymcrm.dto.trainer.response.TrainerProfileResponseDto;
-import epam.gymcrm.dto.trainer.response.TrainerResponseDto;
-import epam.gymcrm.dto.trainer.response.UpdateTrainerProfileResponseDto;
+import epam.gymcrm.dto.training.TrainingDTO;
+import epam.gymcrm.dto.user.request.ActivateDeactivateRequest;
+import epam.gymcrm.dto.trainer.request.SpecializationName;
+import epam.gymcrm.dto.trainer.request.UpdateTrainerProfileRequest;
+import epam.gymcrm.dto.trainee.response.TraineeResponse;
+import epam.gymcrm.dto.trainer.response.TrainerProfileResponse;
+import epam.gymcrm.dto.trainer.response.TrainerResponse;
+import epam.gymcrm.dto.trainer.response.UpdateTrainerProfileResponse;
 import epam.gymcrm.exceptions.DatabaseException;
 import epam.gymcrm.exceptions.UserNotFoundException;
 import epam.gymcrm.model.Trainer;
@@ -33,7 +33,7 @@ public class TrainerServiceImpl implements TrainerService {
     private final TraineeRepository traineeRepository;
 
     @Override
-    public List<TrainingDto> getTrainerTrainingsByUsername(String username) {
+    public List<TrainingDTO> getTrainerTrainingsByUsername(String username) {
         try {
             return trainerRepository.getTrainerTrainingsByUsername(username)
                     .stream()
@@ -46,13 +46,13 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     @Timed(value = "gymcrm.trainer.profile.get", description = "Time to fetch trainer profile")
-    public TrainerProfileResponseDto getByUsername(String username) {
+    public TrainerProfileResponse getByUsername(String username) {
         Trainer trainer = getTrainerByUsername(username);
         return mapToProfileResponse(trainer);
     }
 
     @Override
-    public UpdateTrainerProfileResponseDto updateProfile(UpdateTrainerProfileRequestDto requestDto) {
+    public UpdateTrainerProfileResponse updateProfile(UpdateTrainerProfileRequest requestDto) {
         Trainer trainer = getTrainerByUsername(requestDto.getUsername());
         updateTrainerDetails(trainer, requestDto);
         trainerRepository.save(trainer);  // Using repository to save
@@ -60,17 +60,17 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Override
-    public List<TrainerResponseDto> getNotAssignedActiveTrainers(String username) {
+    public List<TrainerResponse> getNotAssignedActiveTrainers(String username) {
         traineeRepository.findByUserUsername(username).orElseThrow(() -> new UserNotFoundException("Trainee not found"));
 
         try {
-            List<TrainerResponseDto> responseDtoList = trainerRepository.findNotAssignedActiveTrainers(username)
+            List<TrainerResponse> responseDtoList = trainerRepository.findNotAssignedActiveTrainers(username)
                     .stream()
-                    .map(trainer -> new TrainerResponseDto(
+                    .map(trainer -> new TrainerResponse(
                             trainer.getUser().getUsername(),
                             trainer.getUser().getFirstName(),
                             trainer.getUser().getLastName(),
-                            new SpecializationNameDto(trainer.getSpecializationType().getTrainingTypeName())
+                            new SpecializationName(trainer.getSpecializationType().getTrainingTypeName())
                     ))
                     .toList();
             return responseDtoList;
@@ -80,7 +80,7 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Override
-    public void changeStatus(ActivateDeactivateRequestDto statusDto) {
+    public void changeStatus(ActivateDeactivateRequest statusDto) {
         Trainer trainer = getTrainerByUsername(statusDto.getUsername());
 
         try {
@@ -96,41 +96,41 @@ public class TrainerServiceImpl implements TrainerService {
                 .orElseThrow(() -> new UserNotFoundException("Trainer not found for username: " + username));
     }
 
-    private void updateTrainerDetails(Trainer trainer, UpdateTrainerProfileRequestDto requestDto) {
+    private void updateTrainerDetails(Trainer trainer, UpdateTrainerProfileRequest requestDto) {
         User user = trainer.getUser();
         user.setFirstName(requestDto.getFirstName());
         user.setLastName(requestDto.getLastName());
         user.setActive(requestDto.getIsActive());
     }
 
-    private TrainerProfileResponseDto mapToProfileResponse(Trainer trainer) {
-        return new TrainerProfileResponseDto(
+    private TrainerProfileResponse mapToProfileResponse(Trainer trainer) {
+        return new TrainerProfileResponse(
                 trainer.getUser().getFirstName(),
                 trainer.getUser().getLastName(),
                 Optional.ofNullable(trainer.getSpecializationType())
-                        .map(specialization -> new SpecializationNameDto(specialization.getTrainingTypeName()))
+                        .map(specialization -> new SpecializationName(specialization.getTrainingTypeName()))
                         .orElse(null),
                 trainer.getUser().isActive(),
                 mapTrainees(trainer)
         );
     }
 
-    private UpdateTrainerProfileResponseDto mapToUpdateProfileResponse(Trainer trainer) {
-        return new UpdateTrainerProfileResponseDto(
+    private UpdateTrainerProfileResponse mapToUpdateProfileResponse(Trainer trainer) {
+        return new UpdateTrainerProfileResponse(
                 trainer.getUser().getUsername(),
                 trainer.getUser().getFirstName(),
                 trainer.getUser().getLastName(),
                 Optional.ofNullable(trainer.getSpecializationType())
-                        .map(specialization -> new SpecializationNameDto(specialization.getTrainingTypeName()))
+                        .map(specialization -> new SpecializationName(specialization.getTrainingTypeName()))
                         .orElse(null),
                 trainer.getUser().isActive(),
                 mapTrainees(trainer)
         );
     }
 
-    private List<TraineeResponseDto> mapTrainees(Trainer trainer) {
+    private List<TraineeResponse> mapTrainees(Trainer trainer) {
         return trainer.getTrainees().stream()
-                .map(trainee -> new TraineeResponseDto(
+                .map(trainee -> new TraineeResponse(
                         trainee.getUser().getFirstName(),
                         trainee.getUser().getLastName(),
                         trainee.getUser().getUsername()

@@ -1,6 +1,6 @@
 package epam.gymcrm.controller;
 
-import epam.gymcrm.dto.training.request.TrainingRegisterDto;
+import epam.gymcrm.dto.training.request.TrainingRegister;
 import epam.gymcrm.facade.TrainingFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -31,8 +31,8 @@ public class TrainingController {
             }
     )
     @PostMapping("/create")
-    public ResponseEntity<Void> createTraining(@RequestBody @Valid TrainingRegisterDto trainingRegisterDto) {
-        trainingFacade.createTraining(trainingRegisterDto);
+    public ResponseEntity<Void> createTraining(@RequestBody @Valid TrainingRegister trainingRegister) {
+        trainingFacade.createTraining(trainingRegister);
         return ResponseEntity.ok().build();
     }
 }

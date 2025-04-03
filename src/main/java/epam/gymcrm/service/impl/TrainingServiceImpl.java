@@ -1,10 +1,10 @@
 package epam.gymcrm.service.impl;
 
-import epam.gymcrm.dto.trainee.request.TraineeTrainingsRequestDto;
-import epam.gymcrm.dto.trainer.request.TrainerTrainingsRequestDto;
-import epam.gymcrm.dto.training.request.TrainingRegisterDto;
-import epam.gymcrm.dto.trainee.response.TraineeTrainingsListResponseDto;
-import epam.gymcrm.dto.trainer.response.TrainerTrainingsListResponseDto;
+import epam.gymcrm.dto.trainee.request.TraineeTrainingsRequest;
+import epam.gymcrm.dto.trainer.request.TrainerTrainingsRequest;
+import epam.gymcrm.dto.training.request.TrainingRegister;
+import epam.gymcrm.dto.trainee.response.TraineeTrainingsListResponse;
+import epam.gymcrm.dto.trainer.response.TrainerTrainingsListResponse;
 import epam.gymcrm.exceptions.DatabaseException;
 import epam.gymcrm.exceptions.TrainingTypeNotMatchingException;
 import epam.gymcrm.exceptions.UserNotFoundException;
@@ -46,15 +46,15 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     @Override
-    public void createTraining(TrainingRegisterDto trainingRegisterDto) {
-        Trainee trainee = traineeRepository.findByUserUsername(trainingRegisterDto.getTraineeUsername())
-                .orElseThrow(() -> new UserNotFoundException("Trainee not found with username: " + trainingRegisterDto.getTraineeUsername()));
+    public void createTraining(TrainingRegister trainingRegister) {
+        Trainee trainee = traineeRepository.findByUserUsername(trainingRegister.getTraineeUsername())
+                .orElseThrow(() -> new UserNotFoundException("Trainee not found with username: " + trainingRegister.getTraineeUsername()));
 
-        Trainer trainer = trainerRepository.findByUserUsername(trainingRegisterDto.getTrainerUsername())
-                .orElseThrow(() -> new UserNotFoundException("Trainer not found with username: " + trainingRegisterDto.getTrainerUsername()));
+        Trainer trainer = trainerRepository.findByUserUsername(trainingRegister.getTrainerUsername())
+                .orElseThrow(() -> new UserNotFoundException("Trainer not found with username: " + trainingRegister.getTrainerUsername()));
 
-        TrainingType trainingType = trainingTypeRepository.findByTrainingTypeName(trainingRegisterDto.getTrainingName())
-                .orElseThrow(() -> new DatabaseException("Training type not found: " + trainingRegisterDto.getTrainingName()));
+        TrainingType trainingType = trainingTypeRepository.findByTrainingTypeName(trainingRegister.getTrainingName())
+                .orElseThrow(() -> new DatabaseException("Training type not found: " + trainingRegister.getTrainingName()));
 
         if(!trainer.getSpecializationType().equals(trainingType) ) {
             throw new TrainingTypeNotMatchingException("Training type does not match trainer's specialization");
@@ -72,9 +72,9 @@ public class TrainingServiceImpl implements TrainingService {
         training.setTrainee(trainee);
         training.setTrainer(trainer);
         training.setTrainingType(trainingType);
-        training.setTrainingName(trainingRegisterDto.getTrainingName());
-        training.setTrainingDate(trainingRegisterDto.getTrainingDate());
-        training.setTrainingDuration(trainingRegisterDto.getTrainingDuration());
+        training.setTrainingName(trainingRegister.getTrainingName());
+        training.setTrainingDate(trainingRegister.getTrainingDate());
+        training.setTrainingDuration(trainingRegister.getTrainingDuration());
 
         trainingRepository.save(training);
         meterRegistry.counter("gymcrm.training.created").increment();
@@ -82,7 +82,7 @@ public class TrainingServiceImpl implements TrainingService {
 
     @Override
     @Timed(value = "gymcrm.trainee.trainings.get", description = "Time to fetch trainee trainings")
-    public List<TraineeTrainingsListResponseDto> getTraineeTrainings(TraineeTrainingsRequestDto trainingsRequestDto) {
+    public List<TraineeTrainingsListResponse> getTraineeTrainings(TraineeTrainingsRequest trainingsRequestDto) {
         List<Training> trainings = trainingRepository.findAll(
                 TrainingSpecification.findTraineeTrainingsByFilters(
                         trainingsRequestDto.getUsername(),
@@ -94,7 +94,7 @@ public class TrainingServiceImpl implements TrainingService {
         );
 
         return trainings.stream()
-                .map(training -> new TraineeTrainingsListResponseDto(
+                .map(training -> new TraineeTrainingsListResponse(
                         training.getTrainingName(),
                         training.getTrainingDate(),
                         training.getTrainingType().getTrainingTypeName(),
@@ -106,22 +106,22 @@ public class TrainingServiceImpl implements TrainingService {
 
     @Override
     @Timed(value = "gymcrm.trainer.trainings.get", description = "Time to fetch trainer trainings")
-    public List<TrainerTrainingsListResponseDto> getTrainerTrainings(TrainerTrainingsRequestDto trainerTrainingsRequestDto) {
+    public List<TrainerTrainingsListResponse> getTrainerTrainings(TrainerTrainingsRequest trainerTrainingsRequest) {
 
-        Trainer trainer = trainerRepository.findByUserUsername(trainerTrainingsRequestDto.getUsername())
-                .orElseThrow(() -> new UserNotFoundException("Trainer not found with username: " + trainerTrainingsRequestDto.getUsername()));
+        Trainer trainer = trainerRepository.findByUserUsername(trainerTrainingsRequest.getUsername())
+                .orElseThrow(() -> new UserNotFoundException("Trainer not found with username: " + trainerTrainingsRequest.getUsername()));
 
         List<Training> trainings = trainingRepository.findAll(
                 TrainerSpecification.findTrainerTrainingsByFilters(
-                        trainerTrainingsRequestDto.getUsername(),
-                        trainerTrainingsRequestDto.getPeriodFrom(),
-                        trainerTrainingsRequestDto.getPeriodTo(),
-                        trainerTrainingsRequestDto.getTraineeName()
+                        trainerTrainingsRequest.getUsername(),
+                        trainerTrainingsRequest.getPeriodFrom(),
+                        trainerTrainingsRequest.getPeriodTo(),
+                        trainerTrainingsRequest.getTraineeName()
                 )
         );
 
-        List<TrainerTrainingsListResponseDto> responseList = trainings.stream()
-                .map(training -> new TrainerTrainingsListResponseDto(
+        List<TrainerTrainingsListResponse> responseList = trainings.stream()
+                .map(training -> new TrainerTrainingsListResponse(
                         training.getTrainingName(),
                         training.getTrainingDate(),
                         training.getTrainingType().getTrainingTypeName(),

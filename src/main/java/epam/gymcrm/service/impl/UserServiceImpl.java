@@ -2,9 +2,9 @@ package epam.gymcrm.service.impl;
 
 import epam.gymcrm.dto.auth.LoginRequest;
 import epam.gymcrm.dto.auth.PasswordChangeRequest;
-import epam.gymcrm.dto.trainee.request.TraineeRegisterDto;
-import epam.gymcrm.dto.trainer.request.TrainerRegisterDto;
-import epam.gymcrm.dto.user.response.CredentialsInfoResponseDto;
+import epam.gymcrm.dto.trainee.request.TraineeRegister;
+import epam.gymcrm.dto.trainer.request.TrainerRegister;
+import epam.gymcrm.dto.user.response.CredentialsInfoResponse;
 import epam.gymcrm.exceptions.DatabaseException;
 import epam.gymcrm.exceptions.InvalidUsernameOrPasswordException;
 import epam.gymcrm.model.Trainee;
@@ -53,10 +53,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public CredentialsInfoResponseDto registerTrainer(TrainerRegisterDto trainerRegisterDto) {
+    public CredentialsInfoResponse registerTrainer(TrainerRegister trainerRegister) {
         TrainingType specialization = null;
-        if (trainerRegisterDto.getSpecialization() != null) {
-            specialization = specializationTypeMapper.toEntity(trainerRegisterDto.getSpecialization());
+        if (trainerRegister.getSpecialization() != null) {
+            specialization = specializationTypeMapper.toEntity(trainerRegister.getSpecialization());
             Optional<TrainingType> existingSpecialization = trainingTypeRepository.findByTrainingTypeName(specialization.getTrainingTypeName());
             if (existingSpecialization.isPresent()) {
                 specialization = existingSpecialization.get();
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
             }
         }
         StringBuilder rawPasswordHolder = new StringBuilder();
-        User savedUser = createUser(trainerRegisterDto.getFirstName(), trainerRegisterDto.getLastName(), rawPasswordHolder);
+        User savedUser = createUser(trainerRegister.getFirstName(), trainerRegister.getLastName(), rawPasswordHolder);
 
         Trainer trainer = Trainer.builder()
                 .specializationType(specialization)
@@ -76,24 +76,24 @@ public class UserServiceImpl implements UserService {
 
         log.info("New trainer registered: {}", trainer);
         meterRegistry.counter("trainer.registration.count").increment();
-        return new CredentialsInfoResponseDto(savedUser.getUsername(), rawPasswordHolder.toString());
+        return new CredentialsInfoResponse(savedUser.getUsername(), rawPasswordHolder.toString());
     }
 
 
     @Override
-    public CredentialsInfoResponseDto registerTrainee(TraineeRegisterDto traineeRegisterDto) {
+    public CredentialsInfoResponse registerTrainee(TraineeRegister traineeRegister) {
         StringBuilder rawPasswordHolder = new StringBuilder();
-        User savedUser = createUser(traineeRegisterDto.getFirstName(), traineeRegisterDto.getLastName(),rawPasswordHolder);
+        User savedUser = createUser(traineeRegister.getFirstName(), traineeRegister.getLastName(),rawPasswordHolder);
 
         Trainee trainee = Trainee.builder()
                 .user(savedUser)
-                .dateOfBirth(traineeRegisterDto.getDateOfBirth())
-                .address(traineeRegisterDto.getAddress())
+                .dateOfBirth(traineeRegister.getDateOfBirth())
+                .address(traineeRegister.getAddress())
                 .build();
 
         traineeRepository.save(trainee);
         meterRegistry.counter("trainee.registration.count").increment();
-        return new CredentialsInfoResponseDto(savedUser.getUsername(), rawPasswordHolder.toString());
+        return new CredentialsInfoResponse(savedUser.getUsername(), rawPasswordHolder.toString());
     }
 
     @Override

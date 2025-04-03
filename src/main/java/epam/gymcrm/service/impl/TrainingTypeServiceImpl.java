@@ -1,6 +1,6 @@
 package epam.gymcrm.service.impl;
 
-import epam.gymcrm.dto.trainingtype.TrainingTypeDto;
+import epam.gymcrm.dto.trainingtype.TrainingTypeDTO;
 import epam.gymcrm.model.TrainingType;
 import epam.gymcrm.repository.TrainingTypeRepository;
 import epam.gymcrm.service.TrainingTypeService;
@@ -22,10 +22,10 @@ public class TrainingTypeServiceImpl implements TrainingTypeService {
     }
 
     @Override
-    public List<TrainingTypeDto> getTrainingType() {
-        List<TrainingTypeDto> trainingTypes = trainingTypeRepository.findAll()
+    public List<TrainingTypeDTO> getTrainingType() {
+        List<TrainingTypeDTO> trainingTypes = trainingTypeRepository.findAll()
                 .stream()
-                .map(trainingType -> new TrainingTypeDto(trainingType.getId(), trainingType.getTrainingTypeName()))
+                .map(trainingType -> new TrainingTypeDTO(trainingType.getId(), trainingType.getTrainingTypeName()))
                 .collect(Collectors.toList());
 
         return trainingTypes;

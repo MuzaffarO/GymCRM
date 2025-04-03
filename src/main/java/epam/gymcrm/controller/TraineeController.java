@@ -1,13 +1,13 @@
 package epam.gymcrm.controller;
 
-import epam.gymcrm.dto.trainee.request.TraineeTrainingsRequestDto;
-import epam.gymcrm.dto.trainee.request.UpdateTraineeProfileRequestDto;
-import epam.gymcrm.dto.trainee.request.UpdateTraineeTrainerListRequestDto;
-import epam.gymcrm.dto.trainee.response.TraineeProfileResponseDto;
-import epam.gymcrm.dto.trainee.response.TraineeTrainingsListResponseDto;
-import epam.gymcrm.dto.trainee.response.UpdateTraineeProfileResponseDto;
-import epam.gymcrm.dto.trainee.response.UpdateTraineeTrainersResponseDto;
-import epam.gymcrm.dto.user.request.ActivateDeactivateRequestDto;
+import epam.gymcrm.dto.trainee.request.TraineeTrainingsRequest;
+import epam.gymcrm.dto.trainee.request.UpdateTraineeProfileRequest;
+import epam.gymcrm.dto.trainee.request.UpdateTraineeTrainerListRequest;
+import epam.gymcrm.dto.trainee.response.TraineeProfileResponse;
+import epam.gymcrm.dto.trainee.response.TraineeTrainingsListResponse;
+import epam.gymcrm.dto.trainee.response.UpdateTraineeProfileResponse;
+import epam.gymcrm.dto.trainee.response.UpdateTraineeTrainersResponse;
+import epam.gymcrm.dto.user.request.ActivateDeactivateRequest;
 import epam.gymcrm.facade.TraineeFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -40,7 +40,7 @@ public class TraineeController {
             }
     )
     @GetMapping("/by-username")
-    public ResponseEntity<TraineeProfileResponseDto> getByUsername(
+    public ResponseEntity<TraineeProfileResponse> getByUsername(
             @NotBlank @NotNull @RequestParam("username") String username) {
         return ResponseEntity.ok(traineeFacade.getByUsername(username));
     }
@@ -59,9 +59,9 @@ public class TraineeController {
             }
     )
     @PutMapping("/update-profile")
-    public ResponseEntity<UpdateTraineeProfileResponseDto> updateProfile(
-            @RequestBody @Valid UpdateTraineeProfileRequestDto updateTraineeProfileRequestDto) {
-        return ResponseEntity.ok(traineeFacade.updateProfile(updateTraineeProfileRequestDto));
+    public ResponseEntity<UpdateTraineeProfileResponse> updateProfile(
+            @RequestBody @Valid UpdateTraineeProfileRequest updateTraineeProfileRequest) {
+        return ResponseEntity.ok(traineeFacade.updateProfile(updateTraineeProfileRequest));
     }
 
     @Operation(
@@ -95,8 +95,8 @@ public class TraineeController {
             }
     )
     @PutMapping("/update-trainers-list")
-    public ResponseEntity<UpdateTraineeTrainersResponseDto> updateTraineeTrainersList(
-            @RequestBody @Valid UpdateTraineeTrainerListRequestDto updateTraineeTrainerListDto) {
+    public ResponseEntity<UpdateTraineeTrainersResponse> updateTraineeTrainersList(
+            @RequestBody @Valid UpdateTraineeTrainerListRequest updateTraineeTrainerListDto) {
         return ResponseEntity.ok(traineeFacade.updateTraineeTrainersList(updateTraineeTrainerListDto));
     }
 
@@ -113,8 +113,8 @@ public class TraineeController {
             }
     )
     @GetMapping("/trainings-list")
-    public ResponseEntity<List<TraineeTrainingsListResponseDto>> getTrainingsList(
-            @RequestBody @Valid TraineeTrainingsRequestDto trainingsRequestDto) {
+    public ResponseEntity<List<TraineeTrainingsListResponse>> getTrainingsList(
+            @RequestBody @Valid TraineeTrainingsRequest trainingsRequestDto) {
         return ResponseEntity.ok(traineeFacade.getTraineeTrainings(trainingsRequestDto));
     }
 
@@ -132,7 +132,7 @@ public class TraineeController {
     )
     @PatchMapping("/change-status")
     public ResponseEntity<Void> changeStatus(
-            @RequestBody @Valid ActivateDeactivateRequestDto statusDto) {
+            @RequestBody @Valid ActivateDeactivateRequest statusDto) {
         traineeFacade.changeStatus(statusDto);
         return ResponseEntity.ok().build();
     }

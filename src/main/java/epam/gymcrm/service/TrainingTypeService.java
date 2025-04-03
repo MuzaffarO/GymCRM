@@ -1,12 +1,12 @@
 package epam.gymcrm.service;
 
-import epam.gymcrm.dto.trainingtype.TrainingTypeDto;
+import epam.gymcrm.dto.trainingtype.TrainingTypeDTO;
 import epam.gymcrm.model.TrainingType;
 
 import java.util.List;
 
 public interface TrainingTypeService {
-    List<TrainingTypeDto> getTrainingType();
+    List<TrainingTypeDTO> getTrainingType();
 
     TrainingType createTrainingType(String name);
 }

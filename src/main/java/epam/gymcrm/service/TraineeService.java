@@ -1,24 +1,21 @@
 package epam.gymcrm.service;
 
-import epam.gymcrm.dto.training.TrainingDto;
-import epam.gymcrm.dto.user.request.ActivateDeactivateRequestDto;
-import epam.gymcrm.dto.trainee.request.UpdateTraineeProfileRequestDto;
-import epam.gymcrm.dto.trainee.request.UpdateTraineeTrainerListRequestDto;
-import epam.gymcrm.dto.trainee.response.TraineeProfileResponseDto;
-import epam.gymcrm.dto.trainee.response.UpdateTraineeProfileResponseDto;
-import epam.gymcrm.dto.trainee.response.UpdateTraineeTrainersResponseDto;
-
-import java.util.List;
+import epam.gymcrm.dto.user.request.ActivateDeactivateRequest;
+import epam.gymcrm.dto.trainee.request.UpdateTraineeProfileRequest;
+import epam.gymcrm.dto.trainee.request.UpdateTraineeTrainerListRequest;
+import epam.gymcrm.dto.trainee.response.TraineeProfileResponse;
+import epam.gymcrm.dto.trainee.response.UpdateTraineeProfileResponse;
+import epam.gymcrm.dto.trainee.response.UpdateTraineeTrainersResponse;
 
 public interface TraineeService {
 
     void deleteByUsername(String username);
 
-    TraineeProfileResponseDto getByUsername(String username);
+    TraineeProfileResponse getByUsername(String username);
 
-    UpdateTraineeProfileResponseDto updateProfile(UpdateTraineeProfileRequestDto updateTraineeDto);
+    UpdateTraineeProfileResponse updateProfile(UpdateTraineeProfileRequest updateTraineeDto);
 
-    UpdateTraineeTrainersResponseDto updateTraineeTrainersList(UpdateTraineeTrainerListRequestDto updateTraineeTrainerListDto);
+    UpdateTraineeTrainersResponse updateTraineeTrainersList(UpdateTraineeTrainerListRequest updateTraineeTrainerListDto);
 
-    void changeStatus(ActivateDeactivateRequestDto statusDto);
+    void changeStatus(ActivateDeactivateRequest statusDto);
 }
