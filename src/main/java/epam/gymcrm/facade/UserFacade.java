@@ -8,9 +8,8 @@ import epam.gymcrm.dto.trainer.request.TrainerRegisterDto;
 import epam.gymcrm.dto.user.response.CredentialsInfoResponseDto;
 import epam.gymcrm.security.JwtUtil;
 import epam.gymcrm.security.TokenBlacklistService;
-import epam.gymcrm.service.UsersService;
+import epam.gymcrm.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
@@ -21,28 +20,28 @@ import jakarta.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class UserFacade {
 
-    private final UsersService usersService;
+    private final UserService userService;
     private final UserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
     private final TokenBlacklistService tokenBlacklistService;
 
     public CredentialsInfoResponseDto registerTrainer(TrainerRegisterDto dto) {
-        return usersService.registerTrainer(dto);
+        return userService.registerTrainer(dto);
     }
 
     public CredentialsInfoResponseDto registerTrainee(TraineeRegisterDto dto) {
-        return usersService.registerTrainee(dto);
+        return userService.registerTrainee(dto);
     }
 
     public JwtResponse login(LoginRequest request) {
-        usersService.login(request);
+        userService.login(request);
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
         String jwt = jwtUtil.generateToken(userDetails);
         return new JwtResponse(jwt);
     }
 
     public void changeLogin(PasswordChangeRequest request) {
-        usersService.changeLogin(request);
+        userService.changeLogin(request);
     }
 
     public String logout(HttpServletRequest request) {

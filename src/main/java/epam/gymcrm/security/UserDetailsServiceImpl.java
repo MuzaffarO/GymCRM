@@ -1,7 +1,7 @@
 package epam.gymcrm.security;
 
 import epam.gymcrm.model.User;
-import epam.gymcrm.repository.UsersRepository;
+import epam.gymcrm.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
@@ -13,7 +13,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UsersRepository userRepo;
+    private final UserRepository userRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

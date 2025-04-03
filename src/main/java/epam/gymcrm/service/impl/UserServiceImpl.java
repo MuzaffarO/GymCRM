@@ -14,8 +14,8 @@ import epam.gymcrm.model.User;
 import epam.gymcrm.repository.TrainerRepository;
 import epam.gymcrm.repository.TraineeRepository;
 import epam.gymcrm.repository.TrainingTypeRepository;
-import epam.gymcrm.repository.UsersRepository;
-import epam.gymcrm.service.UsersService;
+import epam.gymcrm.repository.UserRepository;
+import epam.gymcrm.service.UserService;
 import epam.gymcrm.mapper.TrainingTypeMapper;
 import epam.gymcrm.security.AuthService;
 import epam.gymcrm.credentials.CredentialGenerator;
@@ -31,10 +31,10 @@ import java.util.Optional;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class UsersServiceImpl implements UsersService {
+public class UserServiceImpl implements UserService {
 
     private final TrainingTypeMapper specializationTypeMapper;
-    private final UsersRepository userRepository;
+    private final UserRepository userRepository;
     private final TrainerRepository trainerRepository;
     private final TraineeRepository traineeRepository;
     private final CredentialGenerator credentialGenerator;

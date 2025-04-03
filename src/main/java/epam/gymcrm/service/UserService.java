@@ -9,7 +9,7 @@ import epam.gymcrm.model.User;
 
 import java.util.Optional;
 
-public interface UsersService {
+public interface UserService {
 
     Optional<User> findByUsername(String username);
 

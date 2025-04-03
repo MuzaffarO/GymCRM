@@ -29,7 +29,7 @@ package epam.gymcrm.security;//package epam.gymcrm.security;
 import epam.gymcrm.exceptions.InvalidUsernameOrPasswordException;
 import epam.gymcrm.exceptions.UserNotFoundException;
 import epam.gymcrm.model.User;
-import epam.gymcrm.repository.UsersRepository;
+import epam.gymcrm.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -38,7 +38,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserAuthService implements AuthService {
 
-    private final UsersRepository usersRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final BruteForceProtectionService bruteForceService;
 
@@ -48,7 +48,7 @@ public class UserAuthService implements AuthService {
             throw new InvalidUsernameOrPasswordException("Account locked for 5 minutes due to multiple failed attempts.");
         }
 
-        User user = usersRepository.findByUsername(username)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User with username '" + username + "' not found"));
 
         if (!passwordEncoder.matches(password, user.getPassword())) {

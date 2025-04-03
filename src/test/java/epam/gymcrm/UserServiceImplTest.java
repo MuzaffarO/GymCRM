@@ -10,7 +10,7 @@ import epam.gymcrm.dto.user.response.CredentialsInfoResponseDto;
 import epam.gymcrm.model.*;
 import epam.gymcrm.repository.*;
 import epam.gymcrm.security.AuthService;
-import epam.gymcrm.service.impl.UsersServiceImpl;
+import epam.gymcrm.service.impl.UserServiceImpl;
 import epam.gymcrm.mapper.TrainingTypeMapper;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -28,9 +28,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class UsersServiceImplTest {
+class UserServiceImplTest {
 
-    @Mock UsersRepository userRepository;
+    @Mock
+    UserRepository userRepository;
     @Mock TrainerRepository trainerRepository;
     @Mock TraineeRepository traineeRepository;
     @Mock TrainingTypeRepository trainingTypeRepository;
@@ -42,7 +43,7 @@ class UsersServiceImplTest {
     @Mock private Counter mockCounter;
 
     @InjectMocks
-    UsersServiceImpl usersServices;
+    UserServiceImpl usersServices;
 
     User user;
 
