@@ -1,6 +1,6 @@
 package epam.gymcrm.dto.user.request;
 
-public record SpecializationNameDto(
+public record SpecializationName(
         String trainingTypeName
 ) {
 }

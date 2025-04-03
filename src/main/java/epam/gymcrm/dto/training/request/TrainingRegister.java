@@ -16,7 +16,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TrainingRegisterDto {
+public class TrainingRegister {
 
     @Schema(description = "Username of the trainee who will attend the training", example = "alice.smith", required = true)
     @NotBlank

@@ -1,6 +1,6 @@
 package epam.gymcrm.dto.trainee.request;
 
-import epam.gymcrm.dto.trainer.request.TrainerUsernameRequestDto;
+import epam.gymcrm.dto.trainer.request.TrainerUsernameRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UpdateTraineeTrainerListRequestDto {
+public class UpdateTraineeTrainerListRequest {
 
     @Schema(description = "Username of the trainee whose trainer list is being updated", example = "john.doe", required = true)
     @NotBlank
@@ -25,5 +25,5 @@ public class UpdateTraineeTrainerListRequestDto {
     @Schema(description = "List of trainer usernames to assign to the trainee", required = true)
     @NotEmpty
     @Valid
-    private List<@Valid TrainerUsernameRequestDto> trainersList;
+    private List<@Valid TrainerUsernameRequest> trainersList;
 }

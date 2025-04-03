@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ActivateDeactivateRequestDto {
+public class ActivateDeactivateRequest {
 
     @Schema(description = "Username of the user whose status will be changed", example = "john.doe", required = true)
     private String username;

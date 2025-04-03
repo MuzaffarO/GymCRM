@@ -1,8 +1,7 @@
 package epam.gymcrm.controller;
 
-import epam.gymcrm.dto.trainingtype.TrainingTypeDto;
+import epam.gymcrm.dto.trainingtype.TrainingTypeDTO;
 import epam.gymcrm.facade.TrainingTypeFacade;
-import epam.gymcrm.model.TrainingType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -29,7 +28,7 @@ public class TrainingTypeController {
             }
     )
     @GetMapping
-    public ResponseEntity<List<TrainingTypeDto>> getTrainingType() {
+    public ResponseEntity<List<TrainingTypeDTO>> getTrainingType() {
         return ResponseEntity.ok(trainingTypeFacade.getAllTrainingTypes());
     }
 
@@ -46,7 +45,7 @@ public class TrainingTypeController {
             }
     )
     @PostMapping
-    public ResponseEntity<TrainingType> createTrainingType(@NotEmpty @RequestParam String name) {
+    public ResponseEntity<epam.gymcrm.model.TrainingType> createTrainingType(@NotEmpty @RequestParam String name) {
         return ResponseEntity.ok(trainingTypeFacade.createTrainingType(name));
     }
 }

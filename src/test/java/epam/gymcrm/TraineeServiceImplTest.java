@@ -1,12 +1,12 @@
 package epam.gymcrm;
 
-import epam.gymcrm.dto.trainee.request.UpdateTraineeProfileRequestDto;
-import epam.gymcrm.dto.trainee.request.UpdateTraineeTrainerListRequestDto;
-import epam.gymcrm.dto.trainee.response.TraineeProfileResponseDto;
-import epam.gymcrm.dto.trainee.response.UpdateTraineeProfileResponseDto;
-import epam.gymcrm.dto.trainee.response.UpdateTraineeTrainersResponseDto;
-import epam.gymcrm.dto.trainer.request.TrainerUsernameRequestDto;
-import epam.gymcrm.dto.user.request.ActivateDeactivateRequestDto;
+import epam.gymcrm.dto.trainee.request.UpdateTraineeProfileRequest;
+import epam.gymcrm.dto.trainee.request.UpdateTraineeTrainerListRequest;
+import epam.gymcrm.dto.trainee.response.TraineeProfileResponse;
+import epam.gymcrm.dto.trainee.response.UpdateTraineeProfileResponse;
+import epam.gymcrm.dto.trainee.response.UpdateTraineeTrainersResponse;
+import epam.gymcrm.dto.trainer.request.TrainerUsernameRequest;
+import epam.gymcrm.dto.user.request.ActivateDeactivateRequest;
 import epam.gymcrm.exceptions.DatabaseException;
 import epam.gymcrm.exceptions.UserNotFoundException;
 import epam.gymcrm.model.Trainee;
@@ -52,7 +52,7 @@ class TraineeServiceImplTest {
     void testGetByUsername_Success() {
         when(traineeRepository.findByUserUsername("john.doe")).thenReturn(Optional.of(mockTrainee));
 
-        TraineeProfileResponseDto response = traineeServices.getByUsername("john.doe");
+        TraineeProfileResponse response = traineeServices.getByUsername("john.doe");
 
         verify(traineeRepository).findByUserUsername("john.doe");
     }
@@ -66,11 +66,11 @@ class TraineeServiceImplTest {
 
     @Test
     void testUpdateProfile_Success() {
-        UpdateTraineeProfileRequestDto dto = new UpdateTraineeProfileRequestDto("john.doe", "John", "Doe", new Date(), "New Address", true);
+        UpdateTraineeProfileRequest dto = new UpdateTraineeProfileRequest("john.doe", "John", "Doe", new Date(), "New Address", true);
         when(traineeRepository.findByUserUsername("john.doe")).thenReturn(Optional.of(mockTrainee));
         when(traineeRepository.save(any())).thenReturn(mockTrainee);
 
-        UpdateTraineeProfileResponseDto response = traineeServices.updateProfile(dto);
+        UpdateTraineeProfileResponse response = traineeServices.updateProfile(dto);
 
         verify(traineeRepository).save(mockTrainee);
     }
@@ -94,7 +94,7 @@ class TraineeServiceImplTest {
 
     @Test
     void testChangeStatus_Success() {
-        ActivateDeactivateRequestDto dto = new ActivateDeactivateRequestDto("john.doe", false);
+        ActivateDeactivateRequest dto = new ActivateDeactivateRequest("john.doe", false);
         mockTrainee.getUser().setActive(true);
 
         when(traineeRepository.findByUserUsername("john.doe")).thenReturn(Optional.of(mockTrainee));
@@ -106,7 +106,7 @@ class TraineeServiceImplTest {
 
     @Test
     void testUpdateTraineeTrainersList_Success() {
-        UpdateTraineeTrainerListRequestDto dto = new UpdateTraineeTrainerListRequestDto("john.doe", List.of(new TrainerUsernameRequestDto("trainer1")));
+        UpdateTraineeTrainerListRequest dto = new UpdateTraineeTrainerListRequest("john.doe", List.of(new TrainerUsernameRequest("trainer1")));
         Trainer mockTrainer = new Trainer();
         User trainerUser = new User(2, "Trainer", "One", "trainer1", "pass", true);
         mockTrainer.setUser(trainerUser);
@@ -115,7 +115,7 @@ class TraineeServiceImplTest {
         when(trainerRepository.findAllByUsername(List.of("trainer1"))).thenReturn(List.of(mockTrainer));
         when(traineeRepository.save(any())).thenReturn(mockTrainee);
 
-        UpdateTraineeTrainersResponseDto response = traineeServices.updateTraineeTrainersList(dto);
+        UpdateTraineeTrainersResponse response = traineeServices.updateTraineeTrainersList(dto);
 
         assertEquals(1, mockTrainee.getTrainers().size());
     }

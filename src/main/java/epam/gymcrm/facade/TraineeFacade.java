@@ -1,13 +1,13 @@
 package epam.gymcrm.facade;
 
-import epam.gymcrm.dto.trainee.request.TraineeTrainingsRequestDto;
-import epam.gymcrm.dto.trainee.request.UpdateTraineeProfileRequestDto;
-import epam.gymcrm.dto.trainee.request.UpdateTraineeTrainerListRequestDto;
-import epam.gymcrm.dto.trainee.response.TraineeProfileResponseDto;
-import epam.gymcrm.dto.trainee.response.TraineeTrainingsListResponseDto;
-import epam.gymcrm.dto.trainee.response.UpdateTraineeProfileResponseDto;
-import epam.gymcrm.dto.trainee.response.UpdateTraineeTrainersResponseDto;
-import epam.gymcrm.dto.user.request.ActivateDeactivateRequestDto;
+import epam.gymcrm.dto.trainee.request.TraineeTrainingsRequest;
+import epam.gymcrm.dto.trainee.request.UpdateTraineeProfileRequest;
+import epam.gymcrm.dto.trainee.request.UpdateTraineeTrainerListRequest;
+import epam.gymcrm.dto.trainee.response.TraineeProfileResponse;
+import epam.gymcrm.dto.trainee.response.TraineeTrainingsListResponse;
+import epam.gymcrm.dto.trainee.response.UpdateTraineeProfileResponse;
+import epam.gymcrm.dto.trainee.response.UpdateTraineeTrainersResponse;
+import epam.gymcrm.dto.user.request.ActivateDeactivateRequest;
 import epam.gymcrm.service.TraineeService;
 import epam.gymcrm.service.TrainingService;
 import lombok.RequiredArgsConstructor;
@@ -22,11 +22,11 @@ public class TraineeFacade {
     private final TraineeService traineeService;
     private final TrainingService trainingService;
 
-    public TraineeProfileResponseDto getByUsername(String username) {
+    public TraineeProfileResponse getByUsername(String username) {
         return traineeService.getByUsername(username);
     }
 
-    public UpdateTraineeProfileResponseDto updateProfile(UpdateTraineeProfileRequestDto dto) {
+    public UpdateTraineeProfileResponse updateProfile(UpdateTraineeProfileRequest dto) {
         return traineeService.updateProfile(dto);
     }
 
@@ -34,15 +34,15 @@ public class TraineeFacade {
         traineeService.deleteByUsername(username);
     }
 
-    public UpdateTraineeTrainersResponseDto updateTraineeTrainersList(UpdateTraineeTrainerListRequestDto dto) {
+    public UpdateTraineeTrainersResponse updateTraineeTrainersList(UpdateTraineeTrainerListRequest dto) {
         return traineeService.updateTraineeTrainersList(dto);
     }
 
-    public List<TraineeTrainingsListResponseDto> getTrainingsList(TraineeTrainingsRequestDto dto) {
+    public List<TraineeTrainingsListResponse> getTrainingsList(TraineeTrainingsRequest dto) {
         return trainingService.getTraineeTrainings(dto);
     }
 
-    public void changeStatus(ActivateDeactivateRequestDto dto) {
+    public void changeStatus(ActivateDeactivateRequest dto) {
         traineeService.changeStatus(dto);
     }
 }

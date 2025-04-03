@@ -1,7 +1,7 @@
 package epam.gymcrm.dto.trainer;
 
-import epam.gymcrm.dto.trainingtype.TrainingTypeDto;
-import epam.gymcrm.dto.user.UserDto;
+import epam.gymcrm.dto.trainingtype.TrainingTypeDTO;
+import epam.gymcrm.dto.user.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +11,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TrainerDto {
+public class TrainerDTO {
 
     private Integer id;
-    private TrainingTypeDto specializationType;
-    private UserDto user;
+    private TrainingTypeDTO specializationType;
+    private UserDTO user;
 
 }

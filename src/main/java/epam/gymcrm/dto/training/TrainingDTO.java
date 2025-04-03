@@ -1,8 +1,8 @@
 package epam.gymcrm.dto.training;
 
-import epam.gymcrm.dto.trainingtype.TrainingTypeDto;
-import epam.gymcrm.dto.trainee.TraineeDto;
-import epam.gymcrm.dto.trainer.TrainerDto;
+import epam.gymcrm.dto.trainingtype.TrainingTypeDTO;
+import epam.gymcrm.dto.trainee.TraineeDTO;
+import epam.gymcrm.dto.trainer.TrainerDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,13 +14,13 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TrainingDto {
+public class TrainingDTO {
 
     private Integer id;
-    private TraineeDto trainee;
-    private TrainerDto trainer;
+    private TraineeDTO trainee;
+    private TrainerDTO trainer;
     private String trainingName;
-    private TrainingTypeDto trainingType;
+    private TrainingTypeDTO trainingType;
     private Date trainingDate;
     private Double trainingDuration;
 }

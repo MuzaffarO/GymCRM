@@ -1,6 +1,6 @@
 package epam.gymcrm.dto.trainer.request;
 
-import epam.gymcrm.dto.user.request.SpecializationNameDto;
+import epam.gymcrm.dto.user.request.SpecializationName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateTrainerProfileRequestDto {
+public class UpdateTrainerProfileRequest {
 
     @Schema(description = "Username of the trainer to be updated", example = "jason.john", required = true)
     @NotBlank
@@ -29,7 +29,7 @@ public class UpdateTrainerProfileRequestDto {
 
     @Schema(description = "Updated specialization of the trainer", example = "{\"trainingTypeName\": \"soccer\"}")
     @NotNull
-    private SpecializationNameDto specialization;
+    private SpecializationName specialization;
 
     @Schema(description = "Whether the trainer is active or not", example = "true", required = true)
     @NotNull

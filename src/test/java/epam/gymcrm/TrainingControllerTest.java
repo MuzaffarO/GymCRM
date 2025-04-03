@@ -1,10 +1,9 @@
 package epam.gymcrm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import epam.gymcrm.dto.training.request.TrainingRegisterDto;
+import epam.gymcrm.dto.training.request.TrainingRegister;
 import epam.gymcrm.controller.TrainingController;
 import epam.gymcrm.facade.TrainingFacade;
-import epam.gymcrm.service.TrainingService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +34,12 @@ class TrainingControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private TrainingRegisterDto trainingRegisterDto;
+    private TrainingRegister trainingRegister;
 
     @BeforeEach
     void setUp() throws Exception {
         Date date = new SimpleDateFormat("dd/MM/yyyy").parse("29/03/2025");
-        trainingRegisterDto = new TrainingRegisterDto("trainee1", "trainer1", "karate", date, 1.5);
+        trainingRegister = new TrainingRegister("trainee1", "trainer1", "karate", date, 1.5);
     }
 
     @Test
@@ -49,7 +48,7 @@ class TrainingControllerTest {
 
         mockMvc.perform(post("/trainings/create")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(trainingRegisterDto)))
+                        .content(objectMapper.writeValueAsString(trainingRegister)))
                 .andExpect(status().isOk());
     }
 

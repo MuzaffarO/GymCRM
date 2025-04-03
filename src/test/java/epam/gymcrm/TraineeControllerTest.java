@@ -1,20 +1,18 @@
 package epam.gymcrm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import epam.gymcrm.dto.trainee.request.TraineeTrainingsRequestDto;
-import epam.gymcrm.dto.trainee.request.UpdateTraineeProfileRequestDto;
-import epam.gymcrm.dto.trainee.request.UpdateTraineeTrainerListRequestDto;
-import epam.gymcrm.dto.trainee.response.TraineeProfileResponseDto;
-import epam.gymcrm.dto.trainee.response.TraineeTrainingsListResponseDto;
-import epam.gymcrm.dto.trainee.response.UpdateTraineeProfileResponseDto;
-import epam.gymcrm.dto.trainee.response.UpdateTraineeTrainersResponseDto;
-import epam.gymcrm.dto.trainer.request.TrainerUsernameRequestDto;
-import epam.gymcrm.dto.user.request.ActivateDeactivateRequestDto;
+import epam.gymcrm.dto.trainee.request.TraineeTrainingsRequest;
+import epam.gymcrm.dto.trainee.request.UpdateTraineeProfileRequest;
+import epam.gymcrm.dto.trainee.request.UpdateTraineeTrainerListRequest;
+import epam.gymcrm.dto.trainee.response.TraineeProfileResponse;
+import epam.gymcrm.dto.trainee.response.TraineeTrainingsListResponse;
+import epam.gymcrm.dto.trainee.response.UpdateTraineeProfileResponse;
+import epam.gymcrm.dto.trainee.response.UpdateTraineeTrainersResponse;
+import epam.gymcrm.dto.trainer.request.TrainerUsernameRequest;
+import epam.gymcrm.dto.user.request.ActivateDeactivateRequest;
 import epam.gymcrm.controller.TraineeController;
 import epam.gymcrm.facade.TraineeFacade;
 import epam.gymcrm.facade.TrainingFacade;
-import epam.gymcrm.service.TraineeService;
-import epam.gymcrm.service.TrainingService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -59,7 +57,7 @@ class TraineeControllerTest {
     @Test
     void testGetByUsername() throws Exception {
         String username = "john.doe";
-        TraineeProfileResponseDto responseDto = new TraineeProfileResponseDto("John", "Doe", new Date(), "123 Street", true, Collections.emptyList());
+        TraineeProfileResponse responseDto = new TraineeProfileResponse("John", "Doe", new Date(), "123 Street", true, Collections.emptyList());
 
         Mockito.when(traineeFacade.getByUsername(eq(username)))
                 .thenReturn(responseDto);
@@ -72,8 +70,8 @@ class TraineeControllerTest {
 
     @Test
     void testUpdateProfile() throws Exception {
-        UpdateTraineeProfileRequestDto requestDto = new UpdateTraineeProfileRequestDto("john.doe", "John", "Doe", new Date(), "New Street", true);
-        UpdateTraineeProfileResponseDto responseDto = new UpdateTraineeProfileResponseDto("john.doe", "John", "Doe", new Date(), "New Street", true, Collections.emptyList());
+        UpdateTraineeProfileRequest requestDto = new UpdateTraineeProfileRequest("john.doe", "John", "Doe", new Date(), "New Street", true);
+        UpdateTraineeProfileResponse responseDto = new UpdateTraineeProfileResponse("john.doe", "John", "Doe", new Date(), "New Street", true, Collections.emptyList());
 
         Mockito.when(traineeFacade.updateProfile(any())).thenReturn(responseDto);
 
@@ -98,10 +96,10 @@ class TraineeControllerTest {
 
     @Test
     void testUpdateTraineeTrainersList() throws Exception {
-        UpdateTraineeTrainerListRequestDto requestDto = new UpdateTraineeTrainerListRequestDto(
-                "john.doe", List.of(new TrainerUsernameRequestDto("trainer1")));
+        UpdateTraineeTrainerListRequest requestDto = new UpdateTraineeTrainerListRequest(
+                "john.doe", List.of(new TrainerUsernameRequest("trainer1")));
 
-        UpdateTraineeTrainersResponseDto responseDto = new UpdateTraineeTrainersResponseDto(Collections.emptyList());
+        UpdateTraineeTrainersResponse responseDto = new UpdateTraineeTrainersResponse(Collections.emptyList());
 
         Mockito.when(traineeFacade.updateTraineeTrainersList(any()))
                 .thenReturn(responseDto);
@@ -114,8 +112,8 @@ class TraineeControllerTest {
 
     @Test
     void testGetTrainingsList() throws Exception {
-        TraineeTrainingsRequestDto requestDto = new TraineeTrainingsRequestDto("john.doe", new Date(), new Date(), null, null);
-        List<TraineeTrainingsListResponseDto> trainingList = List.of();
+        TraineeTrainingsRequest requestDto = new TraineeTrainingsRequest("john.doe", new Date(), new Date(), null, null);
+        List<TraineeTrainingsListResponse> trainingList = List.of();
 
         Mockito.when(traineeFacade.getTrainingsList(any()))
                 .thenReturn(trainingList);
@@ -128,7 +126,7 @@ class TraineeControllerTest {
 
     @Test
     void testChangeStatus() throws Exception {
-        ActivateDeactivateRequestDto statusDto = new ActivateDeactivateRequestDto("john.doe", true);
+        ActivateDeactivateRequest statusDto = new ActivateDeactivateRequest("john.doe", true);
 
         doNothing().when(traineeFacade).changeStatus(any());
 

@@ -1,6 +1,6 @@
 package epam.gymcrm.dto.trainer.request;
 
-import epam.gymcrm.dto.trainingtype.TrainingTypeDto;
+import epam.gymcrm.dto.trainingtype.TrainingTypeDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class TrainerRegisterDto {
+public class TrainerRegister {
 
     @Schema(description = "Trainer's first name", example = "John", required = true)
     @NotBlank(message = "First name cannot be blank")
@@ -24,5 +24,5 @@ public class TrainerRegisterDto {
     @Schema(description = "Trainer's specialization type",example = "soccer", required = true)
     @Valid
     @NotNull(message = "Specialization cannot be null")
-    private TrainingTypeDto specialization;
+    private TrainingTypeDTO specialization;
 }

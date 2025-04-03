@@ -8,7 +8,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TrainerUsernameRequestDto {
+public class TrainerUsernameRequest {
 
     @Schema(description = "Username of the trainer", example = "john.doe", required = true)
     @NotBlank

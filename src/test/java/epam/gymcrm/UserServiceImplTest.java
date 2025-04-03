@@ -1,10 +1,10 @@
 package epam.gymcrm;
 
 import epam.gymcrm.credentials.CredentialGenerator;
-import epam.gymcrm.dto.trainingtype.TrainingTypeDto;
-import epam.gymcrm.dto.trainee.request.TraineeRegisterDto;
-import epam.gymcrm.dto.trainer.request.TrainerRegisterDto;
-import epam.gymcrm.dto.user.response.CredentialsInfoResponseDto;
+import epam.gymcrm.dto.trainee.request.TraineeRegisterRequest;
+import epam.gymcrm.dto.trainer.request.TrainerRegister;
+import epam.gymcrm.dto.trainingtype.TrainingTypeDTO;
+import epam.gymcrm.dto.user.response.CredentialsInfoResponse;
 import epam.gymcrm.model.*;
 import epam.gymcrm.repository.*;
 import epam.gymcrm.security.AuthServices;
@@ -58,8 +58,8 @@ class UserServiceImplTest {
     @Test
     void testRegisterTrainer_WithNewSpecialization() {
         when(meterRegistry.counter(anyString())).thenReturn(mockCounter);
-        TrainerRegisterDto dto = new TrainerRegisterDto("John", "Doe", new TrainingTypeDto(1,"karate"));
-        TrainingType trainingType = new TrainingType();
+        TrainerRegister dto = new TrainerRegister("John", "Doe", new TrainingTypeDTO(1,"karate"));
+        epam.gymcrm.model.TrainingType trainingType = new epam.gymcrm.model.TrainingType();
         trainingType.setTrainingTypeName("karate");
 
         when(trainingTypeMapper.toEntity(dto.getSpecialization())).thenReturn(trainingType);
@@ -69,7 +69,7 @@ class UserServiceImplTest {
         when(credentialGenerator.generatePassword()).thenReturn("password");
         when(userRepository.save(any(User.class))).thenReturn(user);
 
-        CredentialsInfoResponseDto response = usersServices.registerTrainer(dto);
+        CredentialsInfoResponse response = usersServices.registerTrainer(dto);
 
         assertEquals("john.doe", response.getUsername());
         assertEquals("password", response.getPassword());
@@ -79,13 +79,13 @@ class UserServiceImplTest {
     @Test
     void testRegisterTrainee() {
         when(meterRegistry.counter(anyString())).thenReturn(mockCounter);
-        TraineeRegisterDto dto = new TraineeRegisterDto("Alice", "Smith", new Date(), "123 Street");
+        TraineeRegisterRequest dto = new TraineeRegisterRequest("Alice", "Smith", new Date(), "123 Street");
         when(credentialGenerator.generateUsername("Alice", "Smith")).thenReturn("alice.smith");
         when(credentialGenerator.generatePassword()).thenReturn("secure");
         when(userRepository.save(any())).thenReturn(User.builder()
                 .firstName("Alice").lastName("Smith").username("alice.smith").password("secure").build());
 
-        CredentialsInfoResponseDto response = usersServices.registerTrainee(dto);
+        CredentialsInfoResponse response = usersServices.registerTrainee(dto);
 
         assertEquals("alice.smith", response.getUsername());
         assertEquals("secure", response.getPassword());

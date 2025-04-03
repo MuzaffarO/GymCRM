@@ -1,10 +1,9 @@
 package epam.gymcrm.controller;
 
-import epam.gymcrm.dto.trainee.request.TraineeRegisterDto;
-import epam.gymcrm.dto.trainer.request.TrainerRegisterDto;
-import epam.gymcrm.dto.user.response.CredentialsInfoResponseDto;
+import epam.gymcrm.dto.trainee.request.TraineeRegisterRequest;
+import epam.gymcrm.dto.trainer.request.TrainerRegister;
+import epam.gymcrm.dto.user.response.CredentialsInfoResponse;
 import epam.gymcrm.facade.UserFacade;
-import epam.gymcrm.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -34,9 +33,9 @@ public class UserController {
             }
     )
     @PostMapping("/trainer/register")
-    public ResponseEntity<CredentialsInfoResponseDto> registerTrainer(
-            @Valid @RequestBody TrainerRegisterDto trainerRegisterDto) {
-        return ResponseEntity.ok(userFacade.registerTrainer(trainerRegisterDto));
+    public ResponseEntity<CredentialsInfoResponse> registerTrainer(
+            @Valid @RequestBody TrainerRegister trainerRegister) {
+        return ResponseEntity.ok(userFacade.registerTrainer(trainerRegister));
     }
 
     @Operation(
@@ -53,9 +52,9 @@ public class UserController {
             }
     )
     @PostMapping("/trainee/register")
-    public ResponseEntity<CredentialsInfoResponseDto> registerTrainee(
-            @Valid @RequestBody TraineeRegisterDto traineeRegisterDto) {
-        return ResponseEntity.ok(userFacade.registerTrainee(traineeRegisterDto));
+    public ResponseEntity<CredentialsInfoResponse> registerTrainee(
+            @Valid @RequestBody TraineeRegisterRequest traineeRegisterRequest) {
+        return ResponseEntity.ok(userFacade.registerTrainee(traineeRegisterRequest));
     }
 
     @Operation(

@@ -1,10 +1,10 @@
 package epam.gymcrm;
 
-import epam.gymcrm.dto.trainee.request.TraineeTrainingsRequestDto;
-import epam.gymcrm.dto.trainer.request.TrainerTrainingsRequestDto;
-import epam.gymcrm.dto.training.request.TrainingRegisterDto;
-import epam.gymcrm.dto.trainee.response.TraineeTrainingsListResponseDto;
-import epam.gymcrm.dto.trainer.response.TrainerTrainingsListResponseDto;
+import epam.gymcrm.dto.trainee.request.TraineeTrainingsRequest;
+import epam.gymcrm.dto.trainer.request.TrainerTrainingsRequest;
+import epam.gymcrm.dto.training.request.TrainingRegister;
+import epam.gymcrm.dto.trainee.response.TraineeTrainingsListResponse;
+import epam.gymcrm.dto.trainer.response.TrainerTrainingsListResponse;
 import epam.gymcrm.exceptions.TrainingTypeNotMatchingException;
 import epam.gymcrm.exceptions.UserNotFoundException;
 import epam.gymcrm.model.*;
@@ -56,7 +56,7 @@ class TrainingServiceImplTest {
 
     @Test
     void testCreateTraining_Success() {
-        TrainingRegisterDto dto = new TrainingRegisterDto("alice.wonder", "bob.trainer", "karate", new Date(), 1.5);
+        TrainingRegister dto = new TrainingRegister("alice.wonder", "bob.trainer", "karate", new Date(), 1.5);
         when(meterRegistry.counter(anyString())).thenReturn(mockCounter);
         when(traineeRepository.findByUserUsername("alice.wonder")).thenReturn(Optional.of(trainee));
         when(trainerRepository.findByUserUsername("bob.trainer")).thenReturn(Optional.of(trainer));
@@ -69,7 +69,7 @@ class TrainingServiceImplTest {
 
     @Test
     void testCreateTraining_TrainerSpecializationMismatch() {
-        TrainingRegisterDto dto = new TrainingRegisterDto("alice.wonder", "bob.trainer", "boxing", new Date(), 1.5);
+        TrainingRegister dto = new TrainingRegister("alice.wonder", "bob.trainer", "boxing", new Date(), 1.5);
 
         when(traineeRepository.findByUserUsername("alice.wonder")).thenReturn(Optional.of(trainee));
         when(trainerRepository.findByUserUsername("bob.trainer")).thenReturn(Optional.of(trainer));
@@ -80,7 +80,7 @@ class TrainingServiceImplTest {
 
     @Test
     void testCreateTraining_TraineeNotFound() {
-        TrainingRegisterDto dto = new TrainingRegisterDto("unknown", "bob.trainer", "karate", new Date(), 1.5);
+        TrainingRegister dto = new TrainingRegister("unknown", "bob.trainer", "karate", new Date(), 1.5);
 
         when(traineeRepository.findByUserUsername("unknown")).thenReturn(Optional.empty());
 
@@ -89,12 +89,12 @@ class TrainingServiceImplTest {
 
     @Test
     void testGetTraineeTrainings() {
-        TraineeTrainingsRequestDto dto = new TraineeTrainingsRequestDto("alice.wonder", null, null, null, null);
+        TraineeTrainingsRequest dto = new TraineeTrainingsRequest("alice.wonder", null, null, null, null);
         Training training = new Training(1, trainee, trainer, "karate", trainingType, new Date(), 1.0);
 
         when(trainingRepository.findAll(any(Specification.class))).thenReturn(List.of(training));
 
-        List<TraineeTrainingsListResponseDto> response = trainingServices.getTraineeTrainings(dto);
+        List<TraineeTrainingsListResponse> response = trainingServices.getTraineeTrainings(dto);
 
         assertEquals(1, response.size());
         assertEquals("karate", response.get(0).trainingType());
@@ -102,13 +102,13 @@ class TrainingServiceImplTest {
 
     @Test
     void testGetTrainerTrainings() {
-        TrainerTrainingsRequestDto dto = new TrainerTrainingsRequestDto("bob.trainer", null, null, null);
+        TrainerTrainingsRequest dto = new TrainerTrainingsRequest("bob.trainer", null, null, null);
         Training training = new Training(1, trainee, trainer, "karate", trainingType, new Date(), 1.0);
 
         when(trainerRepository.findByUserUsername("bob.trainer")).thenReturn(Optional.of(trainer));
         when(trainingRepository.findAll(any(Specification.class))).thenReturn(List.of(training));
 
-        List<TrainerTrainingsListResponseDto> response = trainingServices.getTrainerTrainings(dto);
+        List<TrainerTrainingsListResponse> response = trainingServices.getTrainerTrainings(dto);
 
         assertEquals(1, response.size());
         assertEquals("karate", response.get(0).trainingType());
@@ -116,7 +116,7 @@ class TrainingServiceImplTest {
 
     @Test
     void testGetTrainerTrainings_TrainerNotFound() {
-        TrainerTrainingsRequestDto dto = new TrainerTrainingsRequestDto("unknown", null, null, null);
+        TrainerTrainingsRequest dto = new TrainerTrainingsRequest("unknown", null, null, null);
         when(trainerRepository.findByUserUsername("unknown")).thenReturn(Optional.empty());
 
         assertThrows(UserNotFoundException.class, () -> trainingServices.getTrainerTrainings(dto));

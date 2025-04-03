@@ -1,7 +1,6 @@
 package epam.gymcrm.facade;
 
-import epam.gymcrm.dto.trainingtype.TrainingTypeDto;
-import epam.gymcrm.model.TrainingType;
+import epam.gymcrm.dto.trainingtype.TrainingTypeDTO;
 import epam.gymcrm.service.TrainingTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -14,11 +13,11 @@ public class TrainingTypeFacade {
 
     private final TrainingTypeService trainingTypeService;
 
-    public List<TrainingTypeDto> getAllTrainingTypes() {
+    public List<TrainingTypeDTO> getAllTrainingTypes() {
         return trainingTypeService.getTrainingType();
     }
 
-    public TrainingType createTrainingType(String name) {
+    public epam.gymcrm.model.TrainingType createTrainingType(String name) {
         return trainingTypeService.createTrainingType(name);
     }
 }

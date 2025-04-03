@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateTraineeProfileRequestDto {
+public class UpdateTraineeProfileRequest {
 
     @Schema(description = "Username of the trainee whose profile will be updated", example = "jason.john", required = true)
     @NotBlank(message = "Username cannot be blank")

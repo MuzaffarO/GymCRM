@@ -1,6 +1,6 @@
 package epam.gymcrm.dto.trainee;
 
-import epam.gymcrm.dto.user.UserDto;
+import epam.gymcrm.dto.user.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,11 +12,11 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TraineeDto {
+public class TraineeDTO {
 
     private Integer id;
     private Date dateOfBirth;
     private String address;
-    private UserDto user;
+    private UserDTO user;
 
 }

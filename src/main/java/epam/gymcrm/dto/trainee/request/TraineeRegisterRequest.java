@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class TraineeRegisterDto {
+public class TraineeRegisterRequest {
 
     @Schema(description = "Trainee's first name", example = "Alice", required = true)
     @NotBlank(message = "First name cannot be blank")

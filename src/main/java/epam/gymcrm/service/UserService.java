@@ -1,8 +1,8 @@
 package epam.gymcrm.service;
 
-import epam.gymcrm.dto.trainee.request.TraineeRegisterDto;
-import epam.gymcrm.dto.trainer.request.TrainerRegisterDto;
-import epam.gymcrm.dto.user.response.CredentialsInfoResponseDto;
+import epam.gymcrm.dto.trainee.request.TraineeRegisterRequest;
+import epam.gymcrm.dto.trainer.request.TrainerRegister;
+import epam.gymcrm.dto.user.response.CredentialsInfoResponse;
 import epam.gymcrm.model.User;
 
 import java.util.Optional;
@@ -11,9 +11,9 @@ public interface UserService {
 
     Optional<User> findByUsername(String username);
 
-    CredentialsInfoResponseDto registerTrainer(TrainerRegisterDto trainerRegisterDto);
+    CredentialsInfoResponse registerTrainer(TrainerRegister trainerRegister);
 
-    CredentialsInfoResponseDto registerTrainee(TraineeRegisterDto traineeRegisterDto);
+    CredentialsInfoResponse registerTrainee(TraineeRegisterRequest traineeRegisterRequest);
 
     void login(String username, String password);
 

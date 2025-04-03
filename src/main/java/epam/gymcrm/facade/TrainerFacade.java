@@ -1,12 +1,12 @@
 package epam.gymcrm.facade;
 
-import epam.gymcrm.dto.trainer.request.TrainerTrainingsRequestDto;
-import epam.gymcrm.dto.trainer.request.UpdateTrainerProfileRequestDto;
-import epam.gymcrm.dto.trainer.response.TrainerProfileResponseDto;
-import epam.gymcrm.dto.trainer.response.TrainerResponseDto;
-import epam.gymcrm.dto.trainer.response.TrainerTrainingsListResponseDto;
-import epam.gymcrm.dto.trainer.response.UpdateTrainerProfileResponseDto;
-import epam.gymcrm.dto.user.request.ActivateDeactivateRequestDto;
+import epam.gymcrm.dto.trainer.request.TrainerTrainingsRequest;
+import epam.gymcrm.dto.trainer.request.UpdateTrainerProfileRequest;
+import epam.gymcrm.dto.trainer.response.TrainerProfileResponse;
+import epam.gymcrm.dto.trainer.response.TrainerResponse;
+import epam.gymcrm.dto.trainer.response.TrainerTrainingsListResponse;
+import epam.gymcrm.dto.trainer.response.UpdateTrainerProfileResponse;
+import epam.gymcrm.dto.user.request.ActivateDeactivateRequest;
 import epam.gymcrm.service.TrainerService;
 import epam.gymcrm.service.TrainingService;
 import lombok.RequiredArgsConstructor;
@@ -21,23 +21,23 @@ public class TrainerFacade {
     private final TrainerService trainerService;
     private final TrainingService trainingService;
 
-    public TrainerProfileResponseDto getByUsername(String username) {
+    public TrainerProfileResponse getByUsername(String username) {
         return trainerService.getByUsername(username);
     }
 
-    public UpdateTrainerProfileResponseDto updateProfile(UpdateTrainerProfileRequestDto dto) {
+    public UpdateTrainerProfileResponse updateProfile(UpdateTrainerProfileRequest dto) {
         return trainerService.updateProfile(dto);
     }
 
-    public List<TrainerResponseDto> getNotAssignedActiveTrainers(String username) {
+    public List<TrainerResponse> getNotAssignedActiveTrainers(String username) {
         return trainerService.getNotAssignedActiveTrainers(username);
     }
 
-    public List<TrainerTrainingsListResponseDto> getTrainerTrainings(TrainerTrainingsRequestDto dto) {
+    public List<TrainerTrainingsListResponse> getTrainerTrainings(TrainerTrainingsRequest dto) {
         return trainingService.getTrainerTrainings(dto);
     }
 
-    public void changeStatus(ActivateDeactivateRequestDto dto) {
+    public void changeStatus(ActivateDeactivateRequest dto) {
         trainerService.changeStatus(dto);
     }
 }

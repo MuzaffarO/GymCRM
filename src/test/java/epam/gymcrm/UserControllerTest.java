@@ -1,13 +1,12 @@
 package epam.gymcrm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import epam.gymcrm.dto.trainee.request.TraineeRegisterDto;
-import epam.gymcrm.dto.trainer.request.TrainerRegisterDto;
-import epam.gymcrm.dto.trainingtype.TrainingTypeDto;
-import epam.gymcrm.dto.user.response.CredentialsInfoResponseDto;
+import epam.gymcrm.dto.trainee.request.TraineeRegisterRequest;
+import epam.gymcrm.dto.trainer.request.TrainerRegister;
+import epam.gymcrm.dto.trainingtype.TrainingTypeDTO;
+import epam.gymcrm.dto.user.response.CredentialsInfoResponse;
 import epam.gymcrm.controller.UserController;
 import epam.gymcrm.facade.UserFacade;
-import epam.gymcrm.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -40,8 +39,8 @@ class UserControllerTest {
 
     @Test
     void testRegisterTrainer() throws Exception {
-        TrainerRegisterDto dto = new TrainerRegisterDto("John", "Doe", new TrainingTypeDto(1,"karate"));
-        CredentialsInfoResponseDto response = new CredentialsInfoResponseDto("john.doe", "generatedPassword");
+        TrainerRegister dto = new TrainerRegister("John", "Doe", new TrainingTypeDTO(1,"karate"));
+        CredentialsInfoResponse response = new CredentialsInfoResponse("john.doe", "generatedPassword");
 
         when(userFacade.registerTrainer(any())).thenReturn(response);
 
@@ -55,8 +54,8 @@ class UserControllerTest {
     @Test
     void testRegisterTrainee() throws Exception {
         Date date = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2000");
-        TraineeRegisterDto dto = new TraineeRegisterDto("Jane", "Smith", date, "123 Street");
-        CredentialsInfoResponseDto response = new CredentialsInfoResponseDto("jane.smith", "secret");
+        TraineeRegisterRequest dto = new TraineeRegisterRequest("Jane", "Smith", date, "123 Street");
+        CredentialsInfoResponse response = new CredentialsInfoResponse("jane.smith", "secret");
 
         when(userFacade.registerTrainee(any())).thenReturn(response);
 

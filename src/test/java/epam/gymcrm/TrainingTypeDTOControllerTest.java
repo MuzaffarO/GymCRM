@@ -1,10 +1,8 @@
 package epam.gymcrm;
 
-import epam.gymcrm.dto.trainingtype.TrainingTypeDto;
+import epam.gymcrm.dto.trainingtype.TrainingTypeDTO;
 import epam.gymcrm.facade.TrainingTypeFacade;
-import epam.gymcrm.model.TrainingType;
 import epam.gymcrm.controller.TrainingTypeController;
-import epam.gymcrm.service.TrainingTypeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -22,8 +20,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(TrainingTypeController.class)
-@Import(TrainingTypeControllerTest.MockedBeansConfig.class)
-class TrainingTypeControllerTest {
+@Import(TrainingTypeDTOControllerTest.MockedBeansConfig.class)
+class TrainingTypeDTOControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -33,7 +31,7 @@ class TrainingTypeControllerTest {
 
     @Test
     void testGetTrainingType() throws Exception {
-        List<TrainingTypeDto> mockList = List.of(new TrainingTypeDto(1,"karate"));
+        List<TrainingTypeDTO> mockList = List.of(new TrainingTypeDTO(1,"karate"));
         when(trainingTypeFacade.getAllTrainingTypes()).thenReturn(mockList);
 
         mockMvc.perform(get("/training-type"))
@@ -43,7 +41,7 @@ class TrainingTypeControllerTest {
 
     @Test
     void testCreateTrainingType() throws Exception {
-        TrainingType trainingType = new TrainingType();
+        epam.gymcrm.model.TrainingType trainingType = new epam.gymcrm.model.TrainingType();
         trainingType.setTrainingTypeName("yoga");
 
         when(trainingTypeFacade.createTrainingType(anyString())).thenReturn(trainingType);

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
-public record TrainerTrainingsListResponseDto (
+public record TrainerTrainingsListResponse(
         String trainingName,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
         Date trainingDate,
