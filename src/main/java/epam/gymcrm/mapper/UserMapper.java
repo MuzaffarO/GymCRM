@@ -1,6 +1,6 @@
 package epam.gymcrm.mapper;
 
-import epam.gymcrm.dto.UserDto;
+import epam.gymcrm.dto.user.UserDto;
 import epam.gymcrm.model.User;
 import org.mapstruct.Mapper;
 

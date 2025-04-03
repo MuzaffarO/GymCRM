@@ -1,8 +1,9 @@
 package epam.gymcrm;
 
-import epam.gymcrm.dto.TrainingTypeDto;
+import epam.gymcrm.dto.trainingtype.TrainingTypeDto;
+import epam.gymcrm.facade.TrainingTypeFacade;
 import epam.gymcrm.model.TrainingType;
-import epam.gymcrm.rest.TrainingTypeController;
+import epam.gymcrm.controller.TrainingTypeController;
 import epam.gymcrm.service.TrainingTypeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -29,12 +29,12 @@ class TrainingTypeControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private TrainingTypeService trainingTypeService;
+    private TrainingTypeFacade trainingTypeFacade;
 
     @Test
     void testGetTrainingType() throws Exception {
         List<TrainingTypeDto> mockList = List.of(new TrainingTypeDto(1,"karate"));
-        when(trainingTypeService.getTrainingType()).thenReturn(mockList);
+        when(trainingTypeFacade.getAllTrainingTypes()).thenReturn(mockList);
 
         mockMvc.perform(get("/training-type"))
                 .andExpect(status().isOk())
@@ -46,7 +46,7 @@ class TrainingTypeControllerTest {
         TrainingType trainingType = new TrainingType();
         trainingType.setTrainingTypeName("yoga");
 
-        when(trainingTypeService.createTrainingType(anyString())).thenReturn(trainingType);
+        when(trainingTypeFacade.createTrainingType(anyString())).thenReturn(trainingType);
 
         mockMvc.perform(post("/training-type")
                         .param("name", "yoga")
@@ -58,8 +58,8 @@ class TrainingTypeControllerTest {
     @TestConfiguration
     static class MockedBeansConfig {
         @Bean
-        public TrainingTypeService trainingTypeServices() {
-            return mock(TrainingTypeService.class);
+        public TrainingTypeFacade trainingTypeServices() {
+            return mock(TrainingTypeFacade.class);
         }
     }
 }

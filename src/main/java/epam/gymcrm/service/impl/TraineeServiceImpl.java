@@ -1,11 +1,14 @@
 package epam.gymcrm.service.impl;
 
-import epam.gymcrm.dto.TrainingDto;
-import epam.gymcrm.dto.request.ActivateDeactivateRequestDto;
-import epam.gymcrm.dto.request.TrainerUsernameRequestDto;
-import epam.gymcrm.dto.request.UpdateTraineeProfileRequestDto;
-import epam.gymcrm.dto.request.UpdateTraineeTrainerListRequestDto;
-import epam.gymcrm.dto.response.*;
+import epam.gymcrm.dto.user.request.ActivateDeactivateRequestDto;
+import epam.gymcrm.dto.trainer.request.TrainerUsernameRequestDto;
+import epam.gymcrm.dto.trainee.request.UpdateTraineeProfileRequestDto;
+import epam.gymcrm.dto.trainee.request.UpdateTraineeTrainerListRequestDto;
+import epam.gymcrm.dto.trainee.response.TraineeProfileResponseDto;
+import epam.gymcrm.dto.trainee.response.UpdateTraineeProfileResponseDto;
+import epam.gymcrm.dto.trainee.response.UpdateTraineeTrainersResponseDto;
+import epam.gymcrm.dto.trainer.response.TrainerResponseDto;
+import epam.gymcrm.dto.user.request.SpecializationNameDto;
 import epam.gymcrm.exceptions.DatabaseException;
 import epam.gymcrm.exceptions.UserNotFoundException;
 import epam.gymcrm.model.Trainee;
@@ -30,21 +33,6 @@ public class TraineeServiceImpl implements TraineeService {
 
     private final TraineeRepository traineeRepository;
     private final TrainerRepository trainerRepository;
-    private final TrainingMapper trainingMapper;
-    private final TraineeMapper traineeMapper;
-
-    @Override
-    public List<TrainingDto> getTraineeTrainingsByUsername(String username) {
-        try {
-            return traineeRepository.findByUserUsername(username)
-                    .map(trainee -> trainee.getTrainings().stream()
-                            .map(trainingMapper::toDto)
-                            .toList())
-                    .orElseThrow(() -> new UserNotFoundException("Trainee not found with username: " + username));
-        } catch (DataAccessException e) {
-            throw new DatabaseException("Error fetching trainings for username: " + username);
-        }
-    }
 
     @Override
     @Timed(value = "gymcrm.trainee.profile.get", description = "Time to fetch trainee profile")

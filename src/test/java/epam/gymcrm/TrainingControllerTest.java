@@ -1,8 +1,9 @@
 package epam.gymcrm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import epam.gymcrm.dto.request.TrainingRegisterDto;
-import epam.gymcrm.rest.TrainingController;
+import epam.gymcrm.dto.training.request.TrainingRegisterDto;
+import epam.gymcrm.controller.TrainingController;
+import epam.gymcrm.facade.TrainingFacade;
 import epam.gymcrm.service.TrainingService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,6 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.text.SimpleDateFormat;
@@ -30,7 +30,7 @@ class TrainingControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private TrainingService trainingService;
+    private TrainingFacade trainingFacade;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -45,7 +45,7 @@ class TrainingControllerTest {
 
     @Test
     void testCreateTraining_Success() throws Exception {
-        doNothing().when(trainingService).createTraining(any());
+        doNothing().when(trainingFacade).createTraining(any());
 
         mockMvc.perform(post("/trainings/create")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -56,8 +56,8 @@ class TrainingControllerTest {
     @TestConfiguration
     static class MockedBeansConfig {
         @Bean
-        public TrainingService trainingServices() {
-            return mock(TrainingService.class);
+        public TrainingFacade trainingServices() {
+            return mock(TrainingFacade.class);
         }
     }
 }

@@ -1,9 +1,17 @@
 package epam.gymcrm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import epam.gymcrm.dto.request.*;
-import epam.gymcrm.dto.response.*;
-import epam.gymcrm.rest.TrainerController;
+import epam.gymcrm.dto.trainer.request.TrainerTrainingsRequestDto;
+import epam.gymcrm.dto.trainer.request.UpdateTrainerProfileRequestDto;
+import epam.gymcrm.dto.trainer.response.TrainerProfileResponseDto;
+import epam.gymcrm.dto.trainer.response.TrainerResponseDto;
+import epam.gymcrm.dto.trainer.response.TrainerTrainingsListResponseDto;
+import epam.gymcrm.dto.trainer.response.UpdateTrainerProfileResponseDto;
+import epam.gymcrm.dto.user.request.ActivateDeactivateRequestDto;
+import epam.gymcrm.dto.user.request.SpecializationNameDto;
+import epam.gymcrm.controller.TrainerController;
+import epam.gymcrm.facade.TrainerFacade;
+import epam.gymcrm.facade.TrainingFacade;
 import epam.gymcrm.service.TrainerService;
 import epam.gymcrm.service.TrainingService;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +22,6 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Date;
@@ -34,24 +41,24 @@ class TrainerControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private TrainerService trainerService;
+    private TrainerFacade trainerFacade;
 
     @Autowired
-    private TrainingService trainingService;
+    private TrainingFacade trainingFacade;
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @BeforeEach
     void setup() {
-        reset(trainerService, trainingService);
+        reset(trainerFacade, trainingFacade);
     }
 
     @Test
     void testGetByUsername() throws Exception {
         String username = "john.doe";
         TrainerProfileResponseDto dto = new TrainerProfileResponseDto("John", "Doe", null, true, null);
-        when(trainerService.getByUsername(eq(username))).thenReturn(dto);
+        when(trainerFacade.getByUsername(eq(username))).thenReturn(dto);
 
         mockMvc.perform(get("/trainers/by-username")
                         .param("username", username))
@@ -63,7 +70,7 @@ class TrainerControllerTest {
     void testUpdateProfile() throws Exception {
         UpdateTrainerProfileRequestDto request = new UpdateTrainerProfileRequestDto("John.Doe", "John", "Doe", new SpecializationNameDto("karate"), true);
         UpdateTrainerProfileResponseDto response = new UpdateTrainerProfileResponseDto("John.Doe", "John", "Doe", new SpecializationNameDto("karate"), true, null);
-        when(trainerService.updateProfile(any())).thenReturn(response);
+        when(trainerFacade.updateProfile(any())).thenReturn(response);
 
         mockMvc.perform(put("/trainers/update-profile")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -76,7 +83,7 @@ class TrainerControllerTest {
     void testGetNotAssignedActiveTrainers() throws Exception {
         String username = "john.doe";
         TrainerResponseDto trainer = new TrainerResponseDto("trainer1", "Trainer", "One", null);
-        when(trainerService.getNotAssignedActiveTrainers(eq(username))).thenReturn(List.of(trainer));
+        when(trainerFacade.getNotAssignedActiveTrainers(eq(username))).thenReturn(List.of(trainer));
 
         mockMvc.perform(get("/trainers/not-assigned-active")
                         .param("username", username))
@@ -88,7 +95,7 @@ class TrainerControllerTest {
     void testGetTrainerTrainings() throws Exception {
         TrainerTrainingsRequestDto request = new TrainerTrainingsRequestDto("trainer1", new Date(), new Date(), null);
         List<TrainerTrainingsListResponseDto> responseList = List.of();
-        when(trainingService.getTrainerTrainings(any())).thenReturn(responseList);
+        when(trainingFacade.getTrainerTrainings(any())).thenReturn(responseList);
 
         mockMvc.perform(get("/trainers/trainings-list")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -99,7 +106,7 @@ class TrainerControllerTest {
     @Test
     void testChangeStatus() throws Exception {
         ActivateDeactivateRequestDto request = new ActivateDeactivateRequestDto("trainer1", false);
-        doNothing().when(trainerService).changeStatus(any());
+        doNothing().when(trainerFacade).changeStatus(any());
 
         mockMvc.perform(patch("/trainers/change-status")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -110,13 +117,13 @@ class TrainerControllerTest {
     @TestConfiguration
     static class MockedBeansConfig {
         @Bean
-        public TrainerService trainerServices() {
-            return mock(TrainerService.class);
+        public TrainerFacade trainerServices() {
+            return mock(TrainerFacade.class);
         }
 
         @Bean
-        public TrainingService trainingServices() {
-            return mock(TrainingService.class);
+        public TrainingFacade trainingServices() {
+            return mock(TrainingFacade.class);
         }
     }
 }

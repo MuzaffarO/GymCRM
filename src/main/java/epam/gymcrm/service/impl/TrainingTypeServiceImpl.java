@@ -1,6 +1,6 @@
 package epam.gymcrm.service.impl;
 
-import epam.gymcrm.dto.TrainingTypeDto;
+import epam.gymcrm.dto.trainingtype.TrainingTypeDto;
 import epam.gymcrm.model.TrainingType;
 import epam.gymcrm.repository.TrainingTypeRepository;
 import epam.gymcrm.service.TrainingTypeService;

@@ -1,6 +1,6 @@
 package epam.gymcrm.mapper;
 
-import epam.gymcrm.dto.TrainerDto;
+import epam.gymcrm.dto.trainer.TrainerDto;
 import epam.gymcrm.model.Trainer;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
