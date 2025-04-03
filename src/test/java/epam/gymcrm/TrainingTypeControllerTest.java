@@ -1,8 +1,8 @@
 package epam.gymcrm;
 
-import epam.gymcrm.dto.TrainingTypeDto;
+import epam.gymcrm.dto.trainingtype.TrainingTypeDto;
 import epam.gymcrm.model.TrainingType;
-import epam.gymcrm.rest.TrainingTypeController;
+import epam.gymcrm.controller.TrainingTypeController;
 import epam.gymcrm.service.TrainingTypeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;

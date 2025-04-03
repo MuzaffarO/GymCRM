@@ -1,10 +1,10 @@
 package epam.gymcrm;
 
-import epam.gymcrm.dto.request.TraineeTrainingsRequestDto;
-import epam.gymcrm.dto.request.TrainerTrainingsRequestDto;
-import epam.gymcrm.dto.request.TrainingRegisterDto;
-import epam.gymcrm.dto.response.TraineeTrainingsListResponseDto;
-import epam.gymcrm.dto.response.TrainerTrainingsListResponseDto;
+import epam.gymcrm.dto.trainee.request.TraineeTrainingsRequestDto;
+import epam.gymcrm.dto.trainer.request.TrainerTrainingsRequestDto;
+import epam.gymcrm.dto.training.request.TrainingRegisterDto;
+import epam.gymcrm.dto.trainee.response.TraineeTrainingsListResponseDto;
+import epam.gymcrm.dto.trainer.response.TrainerTrainingsListResponseDto;
 import epam.gymcrm.exceptions.TrainingTypeNotMatchingException;
 import epam.gymcrm.exceptions.UserNotFoundException;
 import epam.gymcrm.model.*;

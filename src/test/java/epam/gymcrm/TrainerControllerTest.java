@@ -1,9 +1,15 @@
 package epam.gymcrm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import epam.gymcrm.dto.request.*;
-import epam.gymcrm.dto.response.*;
-import epam.gymcrm.rest.TrainerController;
+import epam.gymcrm.controller.TrainerController;
+import epam.gymcrm.dto.trainer.request.SpecializationNameDto;
+import epam.gymcrm.dto.trainer.request.TrainerTrainingsRequestDto;
+import epam.gymcrm.dto.trainer.request.UpdateTrainerProfileRequestDto;
+import epam.gymcrm.dto.trainer.response.TrainerProfileResponseDto;
+import epam.gymcrm.dto.trainer.response.TrainerResponseDto;
+import epam.gymcrm.dto.trainer.response.TrainerTrainingsListResponseDto;
+import epam.gymcrm.dto.trainer.response.UpdateTrainerProfileResponseDto;
+import epam.gymcrm.dto.user.request.ActivateDeactivateRequestDto;
 import epam.gymcrm.service.TrainerService;
 import epam.gymcrm.service.TrainingService;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +20,6 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Date;

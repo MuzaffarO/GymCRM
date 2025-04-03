@@ -1,12 +1,13 @@
 package epam.gymcrm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import epam.gymcrm.dto.LoginRequest;
-import epam.gymcrm.dto.PasswordChangeRequest;
-import epam.gymcrm.dto.request.TraineeRegisterDto;
-import epam.gymcrm.dto.request.TrainerRegisterDto;
-import epam.gymcrm.dto.response.CredentialsInfoResponseDto;
-import epam.gymcrm.rest.UsersController;
+import epam.gymcrm.dto.trainingtype.TrainingTypeDto;
+import epam.gymcrm.dto.auth.LoginRequest;
+import epam.gymcrm.dto.auth.PasswordChangeRequest;
+import epam.gymcrm.dto.trainee.request.TraineeRegisterDto;
+import epam.gymcrm.dto.trainer.request.TrainerRegisterDto;
+import epam.gymcrm.dto.user.response.CredentialsInfoResponseDto;
+import epam.gymcrm.controller.UsersController;
 import epam.gymcrm.service.UsersService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.text.SimpleDateFormat;
@@ -41,7 +41,7 @@ class UsersControllerTest {
 
     @Test
     void testRegisterTrainer() throws Exception {
-        TrainerRegisterDto dto = new TrainerRegisterDto("John", "Doe", new epam.gymcrm.dto.TrainingTypeDto(1,"karate"));
+        TrainerRegisterDto dto = new TrainerRegisterDto("John", "Doe", new TrainingTypeDto(1,"karate"));
         CredentialsInfoResponseDto response = new CredentialsInfoResponseDto("john.doe", "generatedPassword");
 
         when(usersService.registerTrainer(any())).thenReturn(response);

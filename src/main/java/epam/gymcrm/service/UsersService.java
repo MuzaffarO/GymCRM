@@ -1,10 +1,10 @@
 package epam.gymcrm.service;
 
-import epam.gymcrm.dto.LoginRequest;
-import epam.gymcrm.dto.PasswordChangeRequest;
-import epam.gymcrm.dto.request.TraineeRegisterDto;
-import epam.gymcrm.dto.request.TrainerRegisterDto;
-import epam.gymcrm.dto.response.CredentialsInfoResponseDto;
+import epam.gymcrm.dto.auth.LoginRequest;
+import epam.gymcrm.dto.auth.PasswordChangeRequest;
+import epam.gymcrm.dto.trainee.request.TraineeRegisterDto;
+import epam.gymcrm.dto.trainer.request.TrainerRegisterDto;
+import epam.gymcrm.dto.user.response.CredentialsInfoResponseDto;
 import epam.gymcrm.model.User;
 
 import java.util.Optional;

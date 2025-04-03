@@ -1,9 +1,16 @@
 package epam.gymcrm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import epam.gymcrm.dto.request.*;
-import epam.gymcrm.dto.response.*;
-import epam.gymcrm.rest.TraineeController;
+import epam.gymcrm.controller.TraineeController;
+import epam.gymcrm.dto.trainee.request.TraineeTrainingsRequestDto;
+import epam.gymcrm.dto.trainee.request.UpdateTraineeProfileRequestDto;
+import epam.gymcrm.dto.trainee.request.UpdateTraineeTrainerListRequestDto;
+import epam.gymcrm.dto.trainee.response.TraineeProfileResponseDto;
+import epam.gymcrm.dto.trainee.response.TraineeTrainingsListResponseDto;
+import epam.gymcrm.dto.trainee.response.UpdateTraineeProfileResponseDto;
+import epam.gymcrm.dto.trainee.response.UpdateTraineeTrainersResponseDto;
+import epam.gymcrm.dto.trainer.request.TrainerUsernameRequestDto;
+import epam.gymcrm.dto.user.request.ActivateDeactivateRequestDto;
 import epam.gymcrm.service.TraineeService;
 import epam.gymcrm.service.TrainingService;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +21,6 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.beans.factory.annotation.Autowired;
 

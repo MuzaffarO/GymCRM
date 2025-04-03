@@ -1,15 +1,15 @@
 package epam.gymcrm;
 
 import epam.gymcrm.credentials.CredentialGenerator;
-import epam.gymcrm.dto.LoginRequest;
-import epam.gymcrm.dto.PasswordChangeRequest;
-import epam.gymcrm.dto.TrainingTypeDto;
-import epam.gymcrm.dto.request.TraineeRegisterDto;
-import epam.gymcrm.dto.request.TrainerRegisterDto;
-import epam.gymcrm.dto.response.CredentialsInfoResponseDto;
+import epam.gymcrm.dto.auth.LoginRequest;
+import epam.gymcrm.dto.auth.PasswordChangeRequest;
+import epam.gymcrm.dto.trainingtype.TrainingTypeDto;
+import epam.gymcrm.dto.trainee.request.TraineeRegisterDto;
+import epam.gymcrm.dto.trainer.request.TrainerRegisterDto;
+import epam.gymcrm.dto.user.response.CredentialsInfoResponseDto;
 import epam.gymcrm.model.*;
 import epam.gymcrm.repository.*;
-import epam.gymcrm.security.AuthServices;
+import epam.gymcrm.security.AuthService;
 import epam.gymcrm.service.impl.UsersServiceImpl;
 import epam.gymcrm.mapper.TrainingTypeMapper;
 import io.micrometer.core.instrument.Counter;
@@ -20,7 +20,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.ResponseEntity;
 
 import java.util.Date;
 import java.util.Optional;
@@ -36,7 +35,8 @@ class UsersServiceImplTest {
     @Mock TraineeRepository traineeRepository;
     @Mock TrainingTypeRepository trainingTypeRepository;
     @Mock CredentialGenerator credentialGenerator;
-    @Mock AuthServices authServices;
+    @Mock
+    AuthService authService;
     @Mock TrainingTypeMapper trainingTypeMapper;
     @Mock private MeterRegistry meterRegistry;
     @Mock private Counter mockCounter;
@@ -97,14 +97,14 @@ class UsersServiceImplTest {
     @Test
     void testLogin() {
         when(meterRegistry.counter(anyString())).thenReturn(mockCounter);
-        when(authServices.authenticate("user", "pass")).thenReturn(true);
+        when(authService.authenticate("user", "pass")).thenReturn(true);
         usersServices.login(new LoginRequest("user", "pass"));
-        verify(authServices).authenticate("user", "pass");
+        verify(authService).authenticate("user", "pass");
     }
 
     @Test
     void testChangeLogin() {
-        when(authServices.authenticate("user", "oldPass")).thenReturn(true);
+        when(authService.authenticate("user", "oldPass")).thenReturn(true);
 
         usersServices.changeLogin(new PasswordChangeRequest("user", "oldPass", "newPass"));
 

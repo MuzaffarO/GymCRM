@@ -1,10 +1,10 @@
 package epam.gymcrm.service.impl;
 
-import epam.gymcrm.dto.LoginRequest;
-import epam.gymcrm.dto.PasswordChangeRequest;
-import epam.gymcrm.dto.request.TraineeRegisterDto;
-import epam.gymcrm.dto.request.TrainerRegisterDto;
-import epam.gymcrm.dto.response.CredentialsInfoResponseDto;
+import epam.gymcrm.dto.auth.LoginRequest;
+import epam.gymcrm.dto.auth.PasswordChangeRequest;
+import epam.gymcrm.dto.trainee.request.TraineeRegisterDto;
+import epam.gymcrm.dto.trainer.request.TrainerRegisterDto;
+import epam.gymcrm.dto.user.response.CredentialsInfoResponseDto;
 import epam.gymcrm.exceptions.DatabaseException;
 import epam.gymcrm.exceptions.InvalidUsernameOrPasswordException;
 import epam.gymcrm.model.Trainee;
@@ -17,7 +17,7 @@ import epam.gymcrm.repository.TrainingTypeRepository;
 import epam.gymcrm.repository.UsersRepository;
 import epam.gymcrm.service.UsersService;
 import epam.gymcrm.mapper.TrainingTypeMapper;
-import epam.gymcrm.security.AuthServices;
+import epam.gymcrm.security.AuthService;
 import epam.gymcrm.credentials.CredentialGenerator;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +38,7 @@ public class UsersServiceImpl implements UsersService {
     private final TrainerRepository trainerRepository;
     private final TraineeRepository traineeRepository;
     private final CredentialGenerator credentialGenerator;
-    private final AuthServices authServices;
+    private final AuthService authService;
     private final TrainingTypeRepository trainingTypeRepository;
     private final MeterRegistry meterRegistry;
     private final PasswordEncoder passwordEncoder;
@@ -99,7 +99,7 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public void login(LoginRequest loginRequest) {
         try {
-            authServices.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
+            authService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
             meterRegistry.counter("gymcrm.login.success").increment();
         }catch (Exception e) {
             meterRegistry.counter("gymcrm.login.failed").increment();
@@ -109,7 +109,7 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public void changeLogin(PasswordChangeRequest passwordChangeRequest) {
-        authServices.authenticate(passwordChangeRequest.getUsername(), passwordChangeRequest.getOldPassword());
+        authService.authenticate(passwordChangeRequest.getUsername(), passwordChangeRequest.getOldPassword());
         try {
             String hashedNewPassword = passwordEncoder.encode(passwordChangeRequest.getNewPassword());
             userRepository.changePassword(passwordChangeRequest.getUsername(), hashedNewPassword);

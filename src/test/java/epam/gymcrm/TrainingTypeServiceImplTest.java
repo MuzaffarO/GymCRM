@@ -1,6 +1,6 @@
 package epam.gymcrm;
 
-import epam.gymcrm.dto.TrainingTypeDto;
+import epam.gymcrm.dto.trainingtype.TrainingTypeDto;
 import epam.gymcrm.model.TrainingType;
 import epam.gymcrm.repository.TrainingTypeRepository;
 import epam.gymcrm.service.impl.TrainingTypeServiceImpl;
@@ -12,7 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
 package epam.gymcrm.service;
 
-import epam.gymcrm.dto.TrainingDto;
-import epam.gymcrm.dto.request.ActivateDeactivateRequestDto;
-import epam.gymcrm.dto.request.UpdateTrainerProfileRequestDto;
-import epam.gymcrm.dto.response.TrainerProfileResponseDto;
-import epam.gymcrm.dto.response.TrainerResponseDto;
-import epam.gymcrm.dto.response.UpdateTrainerProfileResponseDto;
+import epam.gymcrm.dto.training.TrainingDto;
+import epam.gymcrm.dto.user.request.ActivateDeactivateRequestDto;
+import epam.gymcrm.dto.trainer.request.UpdateTrainerProfileRequestDto;
+import epam.gymcrm.dto.trainer.response.TrainerProfileResponseDto;
+import epam.gymcrm.dto.trainer.response.TrainerResponseDto;
+import epam.gymcrm.dto.trainer.response.UpdateTrainerProfileResponseDto;
 
 import java.util.List;
 

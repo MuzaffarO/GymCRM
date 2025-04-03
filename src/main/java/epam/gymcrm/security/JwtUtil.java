@@ -39,4 +39,12 @@ public class JwtUtil {
                 .parseClaimsJws(token).getBody().getExpiration();
         return expiration.before(new Date());
     }
+
+    public long getRemainingExpirationMillis(String token) {
+        Claims claims = Jwts.parserBuilder().setSigningKey(key).build()
+                .parseClaimsJws(token).getBody();
+
+        return claims.getExpiration().getTime() - System.currentTimeMillis();
+    }
+
 }

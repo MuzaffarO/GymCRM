@@ -4,6 +4,7 @@ import epam.gymcrm.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.*;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.*;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -21,9 +22,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable)
+        return http.cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/users/login", "/users/trainer/register", "/users/trainee/register").permitAll()
+                        .requestMatchers("/users/login", "/users/trainer/register", "/users/trainee/register","/users/logout").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

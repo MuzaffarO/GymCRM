@@ -1,9 +1,13 @@
 package epam.gymcrm.service.impl;
 
-import epam.gymcrm.dto.TrainingDto;
-import epam.gymcrm.dto.request.ActivateDeactivateRequestDto;
-import epam.gymcrm.dto.request.UpdateTrainerProfileRequestDto;
-import epam.gymcrm.dto.response.*;
+import epam.gymcrm.dto.training.TrainingDto;
+import epam.gymcrm.dto.user.request.ActivateDeactivateRequestDto;
+import epam.gymcrm.dto.trainer.request.SpecializationNameDto;
+import epam.gymcrm.dto.trainer.request.UpdateTrainerProfileRequestDto;
+import epam.gymcrm.dto.trainee.response.TraineeResponseDto;
+import epam.gymcrm.dto.trainer.response.TrainerProfileResponseDto;
+import epam.gymcrm.dto.trainer.response.TrainerResponseDto;
+import epam.gymcrm.dto.trainer.response.UpdateTrainerProfileResponseDto;
 import epam.gymcrm.exceptions.DatabaseException;
 import epam.gymcrm.exceptions.UserNotFoundException;
 import epam.gymcrm.model.Trainer;
