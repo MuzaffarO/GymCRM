@@ -21,9 +21,6 @@ import jakarta.servlet.http.HttpServletRequest;
 public class UserFacade {
 
     private final UserService userService;
-    private final UserDetailsService userDetailsService;
-    private final JwtUtil jwtUtil;
-    private final TokenBlacklistService tokenBlacklistService;
 
     public CredentialsInfoResponse registerTrainer(TrainerRegister dto) {
         return userService.registerTrainer(dto);
@@ -33,25 +30,9 @@ public class UserFacade {
         return userService.registerTrainee(dto);
     }
 
-    public JwtResponse login(LoginRequest request) {
-        userService.login(request);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
-        String jwt = jwtUtil.generateToken(userDetails);
-        return new JwtResponse(jwt);
-    }
+    public JwtResponse login(LoginRequest request) {return userService.login(request);}
 
-    public void changeLogin(PasswordChangeRequest request) {
-        userService.changeLogin(request);
-    }
+    public void changeLogin(PasswordChangeRequest request) {userService.changeLogin(request);}
 
-    public String logout(HttpServletRequest request) {
-        String authHeader = request.getHeader("Authorization");
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return "No token provided.";
-        }
-        String token = authHeader.substring(7);
-        long expiryMillis = jwtUtil.getRemainingExpirationMillis(token);
-        tokenBlacklistService.blacklistToken(token, expiryMillis);
-        return "Logged out and token blacklisted.";
-    }
+    public String logout(HttpServletRequest request) {return userService.logout(request);}
 }

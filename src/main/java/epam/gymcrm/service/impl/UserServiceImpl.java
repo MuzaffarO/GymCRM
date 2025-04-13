@@ -1,5 +1,6 @@
 package epam.gymcrm.service.impl;
 
+import epam.gymcrm.dto.auth.JwtResponse;
 import epam.gymcrm.dto.auth.LoginRequest;
 import epam.gymcrm.dto.auth.PasswordChangeRequest;
 import epam.gymcrm.dto.trainee.request.TraineeRegister;
@@ -15,14 +16,19 @@ import epam.gymcrm.repository.TrainerRepository;
 import epam.gymcrm.repository.TraineeRepository;
 import epam.gymcrm.repository.TrainingTypeRepository;
 import epam.gymcrm.repository.UserRepository;
+import epam.gymcrm.security.JwtUtil;
+import epam.gymcrm.security.TokenBlacklistService;
 import epam.gymcrm.service.UserService;
 import epam.gymcrm.mapper.TrainingTypeMapper;
 import epam.gymcrm.security.AuthService;
 import epam.gymcrm.credentials.CredentialGenerator;
 import io.micrometer.core.instrument.MeterRegistry;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +48,10 @@ public class UserServiceImpl implements UserService {
     private final TrainingTypeRepository trainingTypeRepository;
     private final MeterRegistry meterRegistry;
     private final PasswordEncoder passwordEncoder;
+    private final UserDetailsService userDetailsService;
+    private final JwtUtil jwtUtil;
+    private final TokenBlacklistService tokenBlacklistService;
+
 
     @Override
     public Optional<User> findByUsername(String username) {
@@ -97,10 +107,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void login(LoginRequest loginRequest) {
+    public JwtResponse login(LoginRequest loginRequest) {
         try {
             authService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
+            UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUsername());
+            String jwt = jwtUtil.generateToken(userDetails);
             meterRegistry.counter("gymcrm.login.success").increment();
+            return new JwtResponse(jwt);
         }catch (Exception e) {
             meterRegistry.counter("gymcrm.login.failed").increment();
             throw new InvalidUsernameOrPasswordException(e.getMessage());
@@ -116,6 +129,18 @@ public class UserServiceImpl implements UserService {
         } catch (DataAccessException e) {
             throw new DatabaseException(e.getMessage());
         }
+    }
+
+    @Override
+    public String logout(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return "No token provided.";
+        }
+        String token = authHeader.substring(7);
+        long expiryMillis = jwtUtil.getRemainingExpirationMillis(token);
+        tokenBlacklistService.blacklistToken(token, expiryMillis);
+        return "Logged out and token blacklisted.";
     }
 
     private User createUser(String firstName, String lastName, StringBuilder rawPasswordHolder) {

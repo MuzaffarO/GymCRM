@@ -32,12 +32,12 @@ public class TrainingTypeServiceImpl implements TrainingTypeService {
     }
 
     @Override
-    public TrainingType createTrainingType(String name) {
+    public TrainingTypeDTO createTrainingType(String name) {
         TrainingType newTrainingType = new TrainingType();
         newTrainingType.setTrainingTypeName(name);
 
         trainingTypeRepository.save(newTrainingType);
 
-        return newTrainingType;
+        return trainingTypeMapper.toDto(newTrainingType);
     }
 }

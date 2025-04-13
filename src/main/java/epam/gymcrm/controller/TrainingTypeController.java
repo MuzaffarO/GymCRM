@@ -46,7 +46,7 @@ public class TrainingTypeController {
             }
     )
     @PostMapping
-    public ResponseEntity<TrainingType> createTrainingType(@NotEmpty @RequestParam String name) {
+    public ResponseEntity<TrainingTypeDTO> createTrainingType(@NotEmpty @RequestParam String name) {
         return ResponseEntity.ok(trainingTypeFacade.createTrainingType(name));
     }
 }

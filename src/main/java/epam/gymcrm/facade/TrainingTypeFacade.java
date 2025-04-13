@@ -18,7 +18,7 @@ public class TrainingTypeFacade {
         return trainingTypeService.getTrainingType();
     }
 
-    public TrainingType createTrainingType(String name) {
+    public TrainingTypeDTO createTrainingType(String name) {
         return trainingTypeService.createTrainingType(name);
     }
 }

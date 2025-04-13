@@ -8,5 +8,5 @@ import java.util.List;
 public interface TrainingTypeService {
     List<TrainingTypeDTO> getTrainingType();
 
-    TrainingType createTrainingType(String name);
+    TrainingTypeDTO createTrainingType(String name);
 }
