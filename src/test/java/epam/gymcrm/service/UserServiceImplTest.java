@@ -1,4 +1,4 @@
-package epam.gymcrm;
+package epam.gymcrm.service;
 
 import epam.gymcrm.credentials.CredentialGenerator;
 import epam.gymcrm.dto.auth.LoginRequest;

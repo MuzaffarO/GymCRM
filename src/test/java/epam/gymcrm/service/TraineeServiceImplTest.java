@@ -1,4 +1,4 @@
-package epam.gymcrm;
+package epam.gymcrm.service;
 
 import epam.gymcrm.dto.trainee.request.UpdateTraineeProfileRequest;
 import epam.gymcrm.dto.trainee.request.UpdateTraineeTrainerListRequest;

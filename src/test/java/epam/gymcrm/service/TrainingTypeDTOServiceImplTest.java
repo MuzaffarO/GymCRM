@@ -1,12 +1,10 @@
-package epam.gymcrm;
+package epam.gymcrm.service;
 
 import epam.gymcrm.dto.trainingtype.TrainingTypeDTO;
 import epam.gymcrm.model.TrainingType;
 import epam.gymcrm.repository.TrainingTypeRepository;
 import epam.gymcrm.service.impl.TrainingTypeServiceImpl;
 import epam.gymcrm.mapper.TrainingTypeMapper;
-import io.micrometer.core.instrument.Counter;
-import io.micrometer.core.instrument.MeterRegistry;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

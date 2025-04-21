@@ -1,21 +1,18 @@
 package epam.gymcrm.health;
 
 import io.micrometer.core.instrument.MeterRegistry;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class DatabaseHealthIndicator implements HealthIndicator {
 
     private final JdbcTemplate jdbcTemplate;
     private final MeterRegistry meterRegistry;
-
-    public DatabaseHealthIndicator(JdbcTemplate jdbcTemplate, MeterRegistry meterRegistry) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.meterRegistry = meterRegistry;
-    }
 
     @Override
     public Health health() {

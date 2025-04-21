@@ -1,4 +1,4 @@
-package epam.gymcrm;
+package epam.gymcrm.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import epam.gymcrm.dto.trainer.request.SpecializationName;
@@ -9,7 +9,6 @@ import epam.gymcrm.dto.trainer.response.TrainerResponse;
 import epam.gymcrm.dto.trainer.response.TrainerTrainingsListResponse;
 import epam.gymcrm.dto.trainer.response.UpdateTrainerProfileResponse;
 import epam.gymcrm.dto.user.request.ActivateDeactivateRequest;
-import epam.gymcrm.controller.TrainerController;
 import epam.gymcrm.facade.TrainerFacade;
 import epam.gymcrm.facade.TrainingFacade;
 import org.junit.jupiter.api.BeforeEach;

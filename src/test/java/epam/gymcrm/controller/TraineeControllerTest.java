@@ -1,4 +1,4 @@
-package epam.gymcrm;
+package epam.gymcrm.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import epam.gymcrm.dto.trainee.request.TraineeTrainingsRequest;
@@ -10,7 +10,6 @@ import epam.gymcrm.dto.trainee.response.UpdateTraineeProfileResponse;
 import epam.gymcrm.dto.trainee.response.UpdateTraineeTrainersResponse;
 import epam.gymcrm.dto.trainer.request.TrainerUsernameRequest;
 import epam.gymcrm.dto.user.request.ActivateDeactivateRequest;
-import epam.gymcrm.controller.TraineeController;
 import epam.gymcrm.facade.TraineeFacade;
 import epam.gymcrm.facade.TrainingFacade;
 import epam.gymcrm.security.JwtAuthFilter;

@@ -1,4 +1,4 @@
-package epam.gymcrm;
+package epam.gymcrm.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import epam.gymcrm.dto.auth.PasswordChangeRequest;
@@ -6,7 +6,6 @@ import epam.gymcrm.dto.trainee.request.TraineeRegister;
 import epam.gymcrm.dto.trainer.request.TrainerRegister;
 import epam.gymcrm.dto.trainingtype.TrainingTypeDTO;
 import epam.gymcrm.dto.user.response.CredentialsInfoResponse;
-import epam.gymcrm.controller.UserController;
 import epam.gymcrm.facade.UserFacade;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

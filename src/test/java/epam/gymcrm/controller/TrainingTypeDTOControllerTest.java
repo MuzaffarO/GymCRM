@@ -1,8 +1,7 @@
-package epam.gymcrm;
+package epam.gymcrm.controller;
 
 import epam.gymcrm.dto.trainingtype.TrainingTypeDTO;
 import epam.gymcrm.facade.TrainingTypeFacade;
-import epam.gymcrm.controller.TrainingTypeController;
 import epam.gymcrm.model.TrainingType;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -19,7 +18,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;

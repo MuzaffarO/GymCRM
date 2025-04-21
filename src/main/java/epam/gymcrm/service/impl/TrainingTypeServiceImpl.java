@@ -5,21 +5,18 @@ import epam.gymcrm.model.TrainingType;
 import epam.gymcrm.repository.TrainingTypeRepository;
 import epam.gymcrm.service.TrainingTypeService;
 import epam.gymcrm.mapper.TrainingTypeMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class TrainingTypeServiceImpl implements TrainingTypeService {
 
     private final TrainingTypeRepository trainingTypeRepository;
     private final TrainingTypeMapper trainingTypeMapper;
-
-    public TrainingTypeServiceImpl(TrainingTypeRepository trainingTypeRepository, TrainingTypeMapper trainingTypeMapper) {
-        this.trainingTypeRepository = trainingTypeRepository;
-        this.trainingTypeMapper = trainingTypeMapper;
-    }
 
     @Override
     public List<TrainingTypeDTO> getTrainingType() {

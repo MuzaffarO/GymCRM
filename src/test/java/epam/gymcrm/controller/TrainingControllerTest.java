@@ -1,8 +1,7 @@
-package epam.gymcrm;
+package epam.gymcrm.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import epam.gymcrm.dto.training.request.TrainingRegister;
-import epam.gymcrm.controller.TrainingController;
 import epam.gymcrm.facade.TrainingFacade;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package epam.gymcrm;
+package epam.gymcrm.service;
 
 import epam.gymcrm.dto.trainer.request.SpecializationName;
 import epam.gymcrm.dto.training.TrainingDTO;

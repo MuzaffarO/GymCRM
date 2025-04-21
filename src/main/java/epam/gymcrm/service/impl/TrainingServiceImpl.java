@@ -22,11 +22,13 @@ import epam.gymcrm.service.TrainingService;
 import epam.gymcrm.mapper.TrainingMapper;
 import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TrainingServiceImpl implements TrainingService {
 
     private final TrainingRepository trainingRepository;
@@ -35,15 +37,6 @@ public class TrainingServiceImpl implements TrainingService {
     private final TraineeRepository traineeRepository;
     private final TrainingTypeRepository trainingTypeRepository;
     private final MeterRegistry meterRegistry;
-
-    public TrainingServiceImpl(TrainingRepository trainingRepository, TrainingMapper trainingMapper, TrainerRepository trainerRepository, TraineeRepository traineeRepository, TrainingTypeRepository trainingTypeRepository, MeterRegistry meterRegistry) {
-        this.trainingRepository = trainingRepository;
-        this.trainingMapper = trainingMapper;
-        this.trainerRepository = trainerRepository;
-        this.traineeRepository = traineeRepository;
-        this.trainingTypeRepository = trainingTypeRepository;
-        this.meterRegistry = meterRegistry;
-    }
 
     @Override
     public void createTraining(TrainingRegister trainingRegister) {

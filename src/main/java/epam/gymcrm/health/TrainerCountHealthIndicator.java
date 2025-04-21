@@ -1,18 +1,16 @@
 package epam.gymcrm.health;
 
 import epam.gymcrm.repository.TrainerRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class TrainerCountHealthIndicator implements HealthIndicator {
 
     private final TrainerRepository trainerRepository;
-
-    public TrainerCountHealthIndicator(TrainerRepository trainerRepository) {
-        this.trainerRepository = trainerRepository;
-    }
 
     @Override
     public Health health() {
