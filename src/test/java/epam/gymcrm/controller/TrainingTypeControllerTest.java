@@ -23,8 +23,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(TrainingTypeController.class)
-@Import({TrainingTypeDTOControllerTest.MockedBeansConfig.class, TrainingTypeDTOControllerTest.NoSecurityConfig.class})
-class TrainingTypeDTOControllerTest {
+@Import({TrainingTypeControllerTest.MockedBeansConfig.class, TrainingTypeControllerTest.NoSecurityConfig.class})
+class TrainingTypeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

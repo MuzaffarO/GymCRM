@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
-class TrainingTypeDTOServiceImplTest {
+class TrainingTypeServiceImplTest {
 
     @Mock
     private TrainingTypeRepository trainingTypeRepository;
