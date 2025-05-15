@@ -33,4 +33,8 @@ public class TraineeTrainingsRequest {
 
     @Schema(description = "Filter trainings by training type name (optional)", example = "soccer")
     private String trainingType;
+
+    public TraineeTrainingsRequest(String username) {
+        this.username = username;
+    }
 }
