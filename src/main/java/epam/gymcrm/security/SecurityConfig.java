@@ -20,18 +20,6 @@ public class SecurityConfig {
     private final JwtAuthFilter jwtAuthFilter;
     private final UserDetailsServiceImpl userDetailsService;
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        return http.cors(Customizer.withDefaults())
-//                .csrf(AbstractHttpConfigurer::disable)
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/users/login", "/users/trainer/register", "/users/trainee/register","/users/logout").permitAll()
-//                        .anyRequest().authenticated()
-//                )
-//                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-//                .build();
-//    }
 @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     return http.cors(Customizer.withDefaults())
@@ -39,6 +27,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers(
                             "/login",
+                            "/suggestions",
                             "/register/**",
                             "/change-password",
                             "/users/login",

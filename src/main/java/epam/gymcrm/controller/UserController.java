@@ -6,12 +6,16 @@ import epam.gymcrm.dto.auth.PasswordChangeRequest;
 import epam.gymcrm.dto.trainee.request.TraineeRegister;
 import epam.gymcrm.dto.trainer.request.TrainerRegister;
 import epam.gymcrm.dto.user.response.CredentialsInfoResponse;
+import epam.gymcrm.exceptions.UserNotFoundException;
 import epam.gymcrm.facade.UserFacade;
 
+import epam.gymcrm.model.User;
+import epam.gymcrm.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserFacade userFacade;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/trainer/register")
     public ResponseEntity<CredentialsInfoResponse> registerTrainer(
@@ -52,5 +58,16 @@ public class UserController {
         }
         return ResponseEntity.ok(message);
     }
+
+    @PostMapping("/admin/reset-password")
+    public ResponseEntity<Void> resetPassword(@RequestParam String username, @RequestParam String newPassword) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        return ResponseEntity.ok().build();
+    }
+
 }
 

@@ -30,4 +30,5 @@ public class PageController {
     public String homeRedirect() {
         return "redirect:/login";
     }
+
 }

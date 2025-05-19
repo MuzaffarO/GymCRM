@@ -51,7 +51,8 @@
 
         if (res.ok) {
             const result = await res.json();
-            document.getElementById("loginResult").innerText = "Login successful!";
+            // document.getElementById("loginResult").innerText = "Login successful!";
+            window.location.href = "/suggestions?username=" + encodeURIComponent(payload.username);
             document.getElementById("jwtToken").innerText = result.token;
             document.getElementById("tokenBox").classList.remove("d-none");
 
