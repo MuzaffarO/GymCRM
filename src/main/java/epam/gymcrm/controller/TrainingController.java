@@ -2,6 +2,7 @@ package epam.gymcrm.controller;
 
 import epam.gymcrm.dto.training.request.TrainingRegister;
 import epam.gymcrm.facade.TrainingFacade;
+import epam.gymcrm.service.TrainingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
@@ -33,6 +34,12 @@ public class TrainingController {
     @PostMapping("/create")
     public ResponseEntity<Void> createTraining(@RequestBody @Valid TrainingRegister trainingRegister) {
         trainingFacade.createTraining(trainingRegister);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/cancel/{trainingId}")
+    public ResponseEntity<Void> cancelTraining(@PathVariable Integer trainingId) {
+        trainingFacade.cancelTraining(trainingId);
         return ResponseEntity.ok().build();
     }
 }

@@ -5,9 +5,7 @@ import epam.gymcrm.dto.trainer.request.TrainerTrainingsRequest;
 import epam.gymcrm.dto.training.request.TrainingRegister;
 import epam.gymcrm.dto.trainee.response.TraineeTrainingsListResponse;
 import epam.gymcrm.dto.trainer.response.TrainerTrainingsListResponse;
-import epam.gymcrm.exceptions.DatabaseException;
-import epam.gymcrm.exceptions.TrainingTypeNotMatchingException;
-import epam.gymcrm.exceptions.UserNotFoundException;
+import epam.gymcrm.exceptions.*;
 import epam.gymcrm.model.Trainee;
 import epam.gymcrm.model.Trainer;
 import epam.gymcrm.model.Training;
@@ -24,7 +22,9 @@ import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -72,6 +72,39 @@ public class TrainingServiceImpl implements TrainingService {
         trainingRepository.save(training);
         meterRegistry.counter("gymcrm.training.created").increment();
     }
+    @Override
+    public void cancelTraining(Integer trainingId) {
+        Training training = trainingRepository.findById(trainingId)
+                .orElseThrow(() -> new TrainingNotFoundException("Training not found with id: " + trainingId));
+
+        Trainee trainee = training.getTrainee();
+        Trainer trainer = training.getTrainer();
+
+        // Remove from both sides
+        trainee.getTrainings().remove(training);
+        trainer.getTrainingList().remove(training);
+
+        trainingRepository.delete(training);
+
+        // Check if there are any remaining trainings between this trainee and trainer
+        boolean stillConnected = trainingRepository.existsByTraineeAndTrainer(trainee, trainer);
+
+        if (!stillConnected) {
+            trainee.getTrainers().remove(trainer);
+            trainer.getTrainees().remove(trainee);
+
+
+            traineeRepository.save(trainee);
+            trainerRepository.save(trainer);
+        }
+
+
+        meterRegistry.counter("gymcrm.training.cancelled").increment();
+
+        // TODO: Send DELETE action to trainer workload microservice
+    }
+
+
 
     @Override
     @Timed(value = "gymcrm.trainee.trainings.get", description = "Time to fetch trainee trainings")

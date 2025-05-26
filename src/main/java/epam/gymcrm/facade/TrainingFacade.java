@@ -28,5 +28,8 @@ public class TrainingFacade {
     public List<TrainerTrainingsListResponse> getTrainerTrainings(TrainerTrainingsRequest dto) {
         return trainingService.getTrainerTrainings(dto);
     }
+    public void cancelTraining(Integer trainingId){
+        trainingService.cancelTraining(trainingId);
+    }
 
 }

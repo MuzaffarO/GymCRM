@@ -1,5 +1,6 @@
 package epam.gymcrm.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,8 +25,11 @@ public class Trainee {
             name = "trainee_trainer",
             joinColumns = @JoinColumn(name = "trainee_id"),
             inverseJoinColumns = @JoinColumn(name = "trainer_id"))
+    @JsonManagedReference
+    @ToString.Exclude
     private List<Trainer> trainers;
     @OneToMany(mappedBy = "trainee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @ToString.Exclude
     private List<Training> trainings;
 
 }

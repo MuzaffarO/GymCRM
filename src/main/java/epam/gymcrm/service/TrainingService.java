@@ -13,4 +13,6 @@ public interface TrainingService {
     List<TrainerTrainingsListResponse> getTrainerTrainings(TrainerTrainingsRequest trainerTrainingsRequest);
 
     void createTraining(TrainingRegister trainingRegister);
+    void cancelTraining(Integer trainingId);
+
 }
