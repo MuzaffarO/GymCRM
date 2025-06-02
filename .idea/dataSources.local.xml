@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal" created-in="IU-243.26053.27">
+    <data-source name="gymcrm@dev-host" uuid="a4dd1422-0316-45e7-9da6-2d17aec03bdb">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
+      <user-name>dev_user</user-name>
+      <schema-mapping />
+    </data-source>
+    <data-source name="gymcrm@prod-host" uuid="5a024a4b-92ee-47eb-8160-778318cb4cb2">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
+      <user-name>prod_user</user-name>
+      <schema-mapping />
+    </data-source>
+    <data-source name="gymcrm@stg-host" uuid="7a58ff79-7cb2-47b4-a4aa-a2c8d452038a">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
+      <user-name>stg_user</user-name>
+      <schema-mapping />
+    </data-source>
+    <data-source name="postgres@localhost" uuid="b723e103-639f-45c4-9ddd-0d56980c9671">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
+      <schema-mapping />
+    </data-source>
+    <data-source name="gymcrm@localhost" uuid="8d697115-c5ec-4ebd-b41b-aa31d8143ae5">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
+      <user-name>postgres</user-name>
+      <schema-mapping />
+    </data-source>
+  </component>
+</project>
