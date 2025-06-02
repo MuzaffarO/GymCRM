@@ -9,7 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6e8d8e47-6b45-4484-a2f5-f9bdbdae0c4c" name="Changes" comment="" />
+    <list default="true" id="6e8d8e47-6b45-4484-a2f5-f9bdbdae0c4c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -70,82 +72,83 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2ufaQCSNPvncua25l05uAvSWIUV" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.GymCRMApplication.executor&quot;: &quot;Run&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;JUnit.TraineeControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TraineeControllerTest.testGetByUsername.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TraineeControllerTest.testUpdateProfile.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TraineeServiceImplTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TraineeServicesImplTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainerControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainerControllerTest.testGetTrainerTrainings.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainerControllerTest.testUpdateProfile.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainerServicesImplTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingServiceImplTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingServiceImplTest.testCreateTraining_Success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingServicesImplTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingServicesImplTest.testGetTraineeTrainings.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingTypeControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingTypeControllerTest.testCreateTrainingType.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingTypeDTOControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingTypeDTOControllerTest.testCreateTrainingType.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingTypeDTOServiceImplTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingTypeDTOServiceImplTest.testCreateTrainingType.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingTypeServiceImplTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingTypeServiceImplTest.testCreateTrainingType.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingTypeServicesImplTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceImplTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UsersControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UsersServiceImplTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UsersServicesImplTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UsersServicesImplTest.testChangeLogin.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.gymcrm in GymCRMLevel1.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.java in GymCRMLevel1.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.GymCRMLevel1 [clean,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.GymCRMLevel1 [clean,package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.GymCRMLevel1 [clean].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Spring Boot.GymCRMApplication (1).executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.GymCRMApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.TrainerWorkloadServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Tomcat Server.Tomcat 10.executor&quot;: &quot;Run&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/muzaf/Downloads/GymCRM/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.GymCRMApplication.executor": "Run",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "JUnit.TraineeControllerTest.executor": "Run",
+    "JUnit.TraineeControllerTest.testGetByUsername.executor": "Run",
+    "JUnit.TraineeControllerTest.testUpdateProfile.executor": "Run",
+    "JUnit.TraineeServiceImplTest.executor": "Run",
+    "JUnit.TraineeServicesImplTest.executor": "Run",
+    "JUnit.TrainerControllerTest.executor": "Run",
+    "JUnit.TrainerControllerTest.testGetTrainerTrainings.executor": "Run",
+    "JUnit.TrainerControllerTest.testUpdateProfile.executor": "Run",
+    "JUnit.TrainerServicesImplTest.executor": "Run",
+    "JUnit.TrainingControllerTest.executor": "Run",
+    "JUnit.TrainingServiceImplTest.executor": "Run",
+    "JUnit.TrainingServiceImplTest.testCreateTraining_Success.executor": "Run",
+    "JUnit.TrainingServicesImplTest.executor": "Run",
+    "JUnit.TrainingServicesImplTest.testGetTraineeTrainings.executor": "Run",
+    "JUnit.TrainingTypeControllerTest.executor": "Run",
+    "JUnit.TrainingTypeControllerTest.testCreateTrainingType.executor": "Run",
+    "JUnit.TrainingTypeDTOControllerTest.executor": "Run",
+    "JUnit.TrainingTypeDTOControllerTest.testCreateTrainingType.executor": "Run",
+    "JUnit.TrainingTypeDTOServiceImplTest.executor": "Run",
+    "JUnit.TrainingTypeDTOServiceImplTest.testCreateTrainingType.executor": "Run",
+    "JUnit.TrainingTypeServiceImplTest.executor": "Run",
+    "JUnit.TrainingTypeServiceImplTest.testCreateTrainingType.executor": "Run",
+    "JUnit.TrainingTypeServicesImplTest.executor": "Run",
+    "JUnit.UserControllerTest.executor": "Run",
+    "JUnit.UserServiceImplTest.executor": "Run",
+    "JUnit.UsersControllerTest.executor": "Run",
+    "JUnit.UsersServiceImplTest.executor": "Run",
+    "JUnit.UsersServicesImplTest.executor": "Run",
+    "JUnit.UsersServicesImplTest.testChangeLogin.executor": "Run",
+    "JUnit.gymcrm in GymCRMLevel1.executor": "Run",
+    "JUnit.java in GymCRMLevel1.executor": "Run",
+    "Maven.GymCRMLevel1 [clean,install].executor": "Run",
+    "Maven.GymCRMLevel1 [clean,package].executor": "Run",
+    "Maven.GymCRMLevel1 [clean].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.GymCRMApplication (1).executor": "Run",
+    "Spring Boot.GymCRMApplication.executor": "Run",
+    "Spring Boot.TrainerWorkloadServiceApplication.executor": "Run",
+    "Tomcat Server.Tomcat 10.executor": "Run",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/muzaf/Downloads/GymCRM",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;h2&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "h2"
     ]
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -409,7 +412,7 @@
       <workItem from="1748493363577" duration="624000" />
       <workItem from="1748495754489" duration="11223000" />
       <workItem from="1748844458673" duration="74000" />
-      <workItem from="1748844549773" duration="3143000" />
+      <workItem from="1748844549773" duration="3858000" />
     </task>
     <servers />
   </component>
