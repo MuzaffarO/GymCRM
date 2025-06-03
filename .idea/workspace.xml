@@ -10,11 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6e8d8e47-6b45-4484-a2f5-f9bdbdae0c4c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/JwtUtilTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/TrainerWorkloadControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/TrainerWorkloadServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/8d697115-c5ec-4ebd-b41b-aa31d8143ae5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/8d697115-c5ec-4ebd-b41b-aa31d8143ae5.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/controller/WorkloadClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/controller/WorkloadClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/resources/application-local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/resources/application-local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,6 +88,7 @@
   "keyToString": {
     "Application.GymCRMApplication.executor": "Run",
     "DefaultHtmlFileTemplate": "HTML File",
+    "JUnit.JwtUtilTest.executor": "Run",
     "JUnit.TraineeControllerTest.executor": "Run",
     "JUnit.TraineeControllerTest.testGetByUsername.executor": "Run",
     "JUnit.TraineeControllerTest.testUpdateProfile.executor": "Run",
@@ -96,6 +98,9 @@
     "JUnit.TrainerControllerTest.testGetTrainerTrainings.executor": "Run",
     "JUnit.TrainerControllerTest.testUpdateProfile.executor": "Run",
     "JUnit.TrainerServicesImplTest.executor": "Run",
+    "JUnit.TrainerWorkloadControllerTest.executor": "Run",
+    "JUnit.TrainerWorkloadControllerTest.testRecordWorkload.executor": "Run",
+    "JUnit.TrainerWorkloadServiceTest.executor": "Run",
     "JUnit.TrainingControllerTest.executor": "Run",
     "JUnit.TrainingServiceImplTest.executor": "Run",
     "JUnit.TrainingServiceImplTest.testCreateTraining_Success.executor": "Run",
@@ -132,7 +137,7 @@
     "Spring Boot.GymCRMApplication.executor": "Run",
     "Spring Boot.TrainerWorkloadServiceApplication.executor": "Run",
     "Tomcat Server.Tomcat 10.executor": "Run",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "microservice",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/muzaf/Downloads/GymCRM",
@@ -195,45 +200,78 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.GymCRMApplication">
-    <configuration name="GymCRMApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="epam.gymcrm.GymCRMApplication" />
-      <module name="GymCRMLevel1" />
+  <component name="RunManager" selected="JUnit.TrainerWorkloadControllerTest">
+    <configuration name="JwtUtilTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="trainer-workload-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="epam.gymcrm.*" />
+          <option name="PATTERN" value="epam.uz.trainerworkloadservice.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TrainingTypeControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GymCRMLevel1" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="epam.gymcrm.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="epam.gymcrm.controller" />
-      <option name="MAIN_CLASS_NAME" value="epam.gymcrm.controller.TrainingTypeControllerTest" />
+      <option name="PACKAGE_NAME" value="epam.uz.trainerworkloadservice" />
+      <option name="MAIN_CLASS_NAME" value="epam.uz.trainerworkloadservice.JwtUtilTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TrainingTypeServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GymCRMLevel1" />
+    <configuration name="TrainerWorkloadControllerTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="trainer-workload-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="epam.gymcrm.controller.*" />
+          <option name="PATTERN" value="epam.uz.trainerworkloadservice.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="epam.gymcrm.service" />
-      <option name="MAIN_CLASS_NAME" value="epam.gymcrm.service.TrainingTypeServiceImplTest" />
+      <option name="PACKAGE_NAME" value="epam.uz.trainerworkloadservice.controller" />
+      <option name="MAIN_CLASS_NAME" value="epam.uz.trainerworkloadservice.controller.TrainerWorkloadControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TrainerWorkloadControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="trainer-workload-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="epam.uz.trainerworkloadservice.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="epam.uz.trainerworkloadservice" />
+      <option name="MAIN_CLASS_NAME" value="epam.uz.trainerworkloadservice.TrainerWorkloadControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TrainerWorkloadControllerTest.testRecordWorkload" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="trainer-workload-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="epam.uz.trainerworkloadservice.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="epam.uz.trainerworkloadservice" />
+      <option name="MAIN_CLASS_NAME" value="epam.uz.trainerworkloadservice.TrainerWorkloadControllerTest" />
+      <option name="METHOD_NAME" value="testRecordWorkload" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TrainerWorkloadServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="trainer-workload-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="epam.uz.trainerworkloadservice.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="epam.uz.trainerworkloadservice" />
+      <option name="MAIN_CLASS_NAME" value="epam.uz.trainerworkloadservice.TrainerWorkloadServiceTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -242,19 +280,6 @@
     <configuration name="EurekaServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="eureka-server" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="epam.uz.eurekaserver.EurekaServerApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GymCRMApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <module name="main-app" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="epam.gymcrm.GymCRMApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="epam.gymcrm.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -357,10 +382,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.GymCRMApplication" />
-        <item itemvalue="Application.GymCRMApplication" />
-        <item itemvalue="JUnit.TrainingTypeServiceImplTest" />
-        <item itemvalue="JUnit.TrainingTypeControllerTest" />
+        <item itemvalue="JUnit.TrainerWorkloadControllerTest" />
+        <item itemvalue="JUnit.TrainerWorkloadControllerTest (1)" />
+        <item itemvalue="JUnit.TrainerWorkloadControllerTest.testRecordWorkload" />
+        <item itemvalue="JUnit.JwtUtilTest" />
+        <item itemvalue="JUnit.TrainerWorkloadServiceTest" />
       </list>
     </recent_temporary>
   </component>
