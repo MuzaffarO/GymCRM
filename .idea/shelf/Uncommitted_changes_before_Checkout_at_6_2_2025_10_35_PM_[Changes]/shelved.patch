@@ -1,0 +1,179 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ArtifactsWorkspaceSettings\">\r\n    <artifacts-to-build>\r\n      <artifact name=\"GymCRMLevel1:war\" />\r\n    </artifacts-to-build>\r\n  </component>\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"6e8d8e47-6b45-4484-a2f5-f9bdbdae0c4c\" name=\"Changes\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/vcs.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/vcs.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Record\" />\r\n        <option value=\"Interface\" />\r\n        <option value=\"package-info\" />\r\n        <option value=\"HTML File\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <favorite-branches>\r\n      <branch-storage>\r\n        <map>\r\n          <entry type=\"LOCAL\">\r\n            <value>\r\n              <list>\r\n                <branch-info repo=\"$PROJECT_DIR$\" source=\"security\" />\r\n              </list>\r\n            </value>\r\n          </entry>\r\n        </map>\r\n      </branch-storage>\r\n    </favorite-branches>\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"security\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;MuzaffarO&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/MuzaffarO/GymCRM.git&quot;,\r\n    &quot;accountId&quot;: &quot;1276b737-0b01-4bd8-8b30-8dcd6d2dd62c&quot;\r\n  }\r\n}</component>\r\n  <component name=\"LogFilters\">\r\n    <option name=\"FILTER_ERRORS\" value=\"false\" />\r\n    <option name=\"FILTER_WARNINGS\" value=\"false\" />\r\n    <option name=\"FILTER_INFO\" value=\"true\" />\r\n    <option name=\"FILTER_DEBUG\" value=\"true\" />\r\n    <option name=\"CUSTOM_FILTER\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 8\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2ufaQCSNPvncua25l05uAvSWIUV\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Application.GymCRMApplication.executor\": \"Run\",\r\n    \"DefaultHtmlFileTemplate\": \"HTML File\",\r\n    \"JUnit.TraineeControllerTest.executor\": \"Run\",\r\n    \"JUnit.TraineeControllerTest.testGetByUsername.executor\": \"Run\",\r\n    \"JUnit.TraineeControllerTest.testUpdateProfile.executor\": \"Run\",\r\n    \"JUnit.TraineeServiceImplTest.executor\": \"Run\",\r\n    \"JUnit.TraineeServicesImplTest.executor\": \"Run\",\r\n    \"JUnit.TrainerControllerTest.executor\": \"Run\",\r\n    \"JUnit.TrainerControllerTest.testGetTrainerTrainings.executor\": \"Run\",\r\n    \"JUnit.TrainerControllerTest.testUpdateProfile.executor\": \"Run\",\r\n    \"JUnit.TrainerServicesImplTest.executor\": \"Run\",\r\n    \"JUnit.TrainingControllerTest.executor\": \"Run\",\r\n    \"JUnit.TrainingServiceImplTest.executor\": \"Run\",\r\n    \"JUnit.TrainingServiceImplTest.testCreateTraining_Success.executor\": \"Run\",\r\n    \"JUnit.TrainingServicesImplTest.executor\": \"Run\",\r\n    \"JUnit.TrainingServicesImplTest.testGetTraineeTrainings.executor\": \"Run\",\r\n    \"JUnit.TrainingTypeControllerTest.executor\": \"Run\",\r\n    \"JUnit.TrainingTypeControllerTest.testCreateTrainingType.executor\": \"Run\",\r\n    \"JUnit.TrainingTypeDTOControllerTest.executor\": \"Run\",\r\n    \"JUnit.TrainingTypeDTOControllerTest.testCreateTrainingType.executor\": \"Run\",\r\n    \"JUnit.TrainingTypeDTOServiceImplTest.executor\": \"Run\",\r\n    \"JUnit.TrainingTypeDTOServiceImplTest.testCreateTrainingType.executor\": \"Run\",\r\n    \"JUnit.TrainingTypeServiceImplTest.executor\": \"Run\",\r\n    \"JUnit.TrainingTypeServiceImplTest.testCreateTrainingType.executor\": \"Run\",\r\n    \"JUnit.TrainingTypeServicesImplTest.executor\": \"Run\",\r\n    \"JUnit.UserControllerTest.executor\": \"Run\",\r\n    \"JUnit.UserServiceImplTest.executor\": \"Run\",\r\n    \"JUnit.UsersControllerTest.executor\": \"Run\",\r\n    \"JUnit.UsersServiceImplTest.executor\": \"Run\",\r\n    \"JUnit.UsersServicesImplTest.executor\": \"Run\",\r\n    \"JUnit.UsersServicesImplTest.testChangeLogin.executor\": \"Run\",\r\n    \"JUnit.gymcrm in GymCRMLevel1.executor\": \"Run\",\r\n    \"JUnit.java in GymCRMLevel1.executor\": \"Run\",\r\n    \"Maven.GymCRMLevel1 [clean,install].executor\": \"Run\",\r\n    \"Maven.GymCRMLevel1 [clean,package].executor\": \"Run\",\r\n    \"Maven.GymCRMLevel1 [clean].executor\": \"Run\",\r\n    \"RequestMappingsPanelOrder0\": \"0\",\r\n    \"RequestMappingsPanelOrder1\": \"1\",\r\n    \"RequestMappingsPanelWidth0\": \"75\",\r\n    \"RequestMappingsPanelWidth1\": \"75\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.git.unshallow\": \"true\",\r\n    \"Spring Boot.GymCRMApplication (1).executor\": \"Run\",\r\n    \"Spring Boot.GymCRMApplication.executor\": \"Run\",\r\n    \"Spring Boot.TrainerWorkloadServiceApplication.executor\": \"Run\",\r\n    \"Tomcat Server.Tomcat 10.executor\": \"Run\",\r\n    \"git-widget-placeholder\": \"master\",\r\n    \"ignore.virus.scanning.warn.message\": \"true\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Users/muzaf/Downloads/GymCRM\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"project.structure.last.edited\": \"Artifacts\",\r\n    \"project.structure.proportion\": \"0.15\",\r\n    \"project.structure.side.proportion\": \"0.2\",\r\n    \"run.configurations.included.in.services\": \"true\",\r\n    \"settings.editor.selected.configurable\": \"preferences.lookFeel\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  },\r\n  \"keyToStringList\": {\r\n    \"DatabaseDriversLRU\": [\r\n      \"h2\"\r\n    ]\r\n  }\r\n}]]></component>\r\n  <component name=\"ReactorSettings\">\r\n    <option name=\"notificationShown\" value=\"true\" />\r\n  </component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CreateClassDialog.RecentsKey\">\r\n      <recent name=\"epam.gymcrm.service.impl\" />\r\n    </key>\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\muzaf\\Downloads\\GymCRM\\trainer-workload-service\\src\\main\\java\\epam\\uz\\trainerworkloadservice\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\EPAM\\GymCRM\\main-app\" />\r\n      <recent name=\"D:\\EPAM\\GymCRM\\src\\main\" />\r\n    </key>\r\n    <key name=\"MoveClassesOrPackagesDialog.RECENTS_KEY\">\r\n      <recent name=\"epam.gymcrm.service\" />\r\n      <recent name=\"epam.gymcrm.controller\" />\r\n      <recent name=\"epam.gymcrm\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunAnythingCache\">\r\n    <option name=\"myCommands\">\r\n      <command value=\"mvn clean package\" />\r\n      <command value=\"mvn clean\" />\r\n      <command value=\"mvn clean install\" />\r\n    </option>\r\n  </component>\r\n  <component name=\"RunDashboard\">\r\n    <option name=\"configurationTypes\">\r\n      <set>\r\n        <option value=\"KtorApplicationConfigurationType\" />\r\n        <option value=\"MicronautRunConfigurationType\" />\r\n        <option value=\"QuarkusRunConfigurationType\" />\r\n        <option value=\"SpringBootApplicationConfigurationType\" />\r\n      </set>\r\n    </option>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Spring Boot.TrainerWorkloadServiceApplication\">\r\n    <configuration name=\"GymCRMApplication\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"epam.gymcrm.GymCRMApplication\" />\r\n      <module name=\"GymCRMLevel1\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"epam.gymcrm.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"TrainingTypeControllerTest\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"GymCRMLevel1\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"epam.gymcrm.controller.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"epam.gymcrm.controller\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"epam.gymcrm.controller.TrainingTypeControllerTest\" />\r\n      <option name=\"TEST_OBJECT\" value=\"class\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"TrainingTypeServiceImplTest\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"GymCRMLevel1\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"epam.gymcrm.controller.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"epam.gymcrm.service\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"epam.gymcrm.service.TrainingTypeServiceImplTest\" />\r\n      <option name=\"TEST_OBJECT\" value=\"class\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration default=\"true\" type=\"JetRunConfigurationType\">\r\n      <module name=\"GymCRMLevel1\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration default=\"true\" type=\"KotlinStandaloneScriptRunConfigurationType\">\r\n      <module name=\"GymCRMLevel1\" />\r\n      <option name=\"filePath\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"GymCRMApplication (1)\" type=\"SpringBootApplicationConfigurationType\" factoryName=\"Spring Boot\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"main-app\" />\r\n      <option name=\"SPRING_BOOT_MAIN_CLASS\" value=\"epam.gymcrm.GymCRMApplication\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"epam.gymcrm.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"TrainerWorkloadServiceApplication\" type=\"SpringBootApplicationConfigurationType\" factoryName=\"Spring Boot\" nameIsGenerated=\"true\">\r\n      <option name=\"FRAME_DEACTIVATION_UPDATE_POLICY\" value=\"UpdateClassesAndResources\" />\r\n      <module name=\"trainer-workload-service\" />\r\n      <option name=\"SPRING_BOOT_MAIN_CLASS\" value=\"epam.uz.trainerworkloadservice.TrainerWorkloadServiceApplication\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"Tomcat 10\" type=\"#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory\" factoryName=\"Local\" APPLICATION_SERVER_NAME=\"Tomcat 10\" ALTERNATIVE_JRE_ENABLED=\"false\" nameIsGenerated=\"true\">\r\n      <option name=\"OPEN_IN_BROWSER\" value=\"false\" />\r\n      <option name=\"UPDATING_POLICY\" value=\"restart-server\" />\r\n      <deployment>\r\n        <artifact name=\"GymCRMLevel1:war\">\r\n          <settings>\r\n            <option name=\"CONTEXT_PATH\" value=\"/GymCRMLevel1_war\" />\r\n          </settings>\r\n        </artifact>\r\n      </deployment>\r\n      <server-settings>\r\n        <option name=\"BASE_DIRECTORY_NAME\" value=\"9049c87a-c968-40c6-bb5d-33d67285c348\" />\r\n      </server-settings>\r\n      <predefined_log_file enabled=\"true\" id=\"Tomcat\" />\r\n      <predefined_log_file enabled=\"true\" id=\"Tomcat Catalina\" />\r\n      <predefined_log_file id=\"Tomcat Manager\" />\r\n      <predefined_log_file id=\"Tomcat Host Manager\" />\r\n      <predefined_log_file id=\"Tomcat Localhost Access\" />\r\n      <RunnerSettings RunnerId=\"Debug\">\r\n        <option name=\"DEBUG_PORT\" value=\"13762\" />\r\n      </RunnerSettings>\r\n      <ConfigurationWrapper VM_VAR=\"JAVA_OPTS\" RunnerId=\"Cover\">\r\n        <option name=\"USE_ENV_VARIABLES\" value=\"true\" />\r\n        <STARTUP>\r\n          <option name=\"USE_DEFAULT\" value=\"true\" />\r\n          <option name=\"SCRIPT\" value=\"\" />\r\n          <option name=\"VM_PARAMETERS\" value=\"\" />\r\n          <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\r\n        </STARTUP>\r\n        <SHUTDOWN>\r\n          <option name=\"USE_DEFAULT\" value=\"true\" />\r\n          <option name=\"SCRIPT\" value=\"\" />\r\n          <option name=\"VM_PARAMETERS\" value=\"\" />\r\n          <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\r\n        </SHUTDOWN>\r\n      </ConfigurationWrapper>\r\n      <ConfigurationWrapper VM_VAR=\"JAVA_OPTS\" RunnerId=\"Debug\">\r\n        <option name=\"USE_ENV_VARIABLES\" value=\"true\" />\r\n        <STARTUP>\r\n          <option name=\"USE_DEFAULT\" value=\"true\" />\r\n          <option name=\"SCRIPT\" value=\"\" />\r\n          <option name=\"VM_PARAMETERS\" value=\"\" />\r\n          <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\r\n        </STARTUP>\r\n        <SHUTDOWN>\r\n          <option name=\"USE_DEFAULT\" value=\"true\" />\r\n          <option name=\"SCRIPT\" value=\"\" />\r\n          <option name=\"VM_PARAMETERS\" value=\"\" />\r\n          <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\r\n        </SHUTDOWN>\r\n      </ConfigurationWrapper>\r\n      <ConfigurationWrapper VM_VAR=\"JAVA_OPTS\" RunnerId=\"Profile\">\r\n        <option name=\"USE_ENV_VARIABLES\" value=\"true\" />\r\n        <STARTUP>\r\n          <option name=\"USE_DEFAULT\" value=\"true\" />\r\n          <option name=\"SCRIPT\" value=\"\" />\r\n          <option name=\"VM_PARAMETERS\" value=\"\" />\r\n          <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\r\n        </STARTUP>\r\n        <SHUTDOWN>\r\n          <option name=\"USE_DEFAULT\" value=\"true\" />\r\n          <option name=\"SCRIPT\" value=\"\" />\r\n          <option name=\"VM_PARAMETERS\" value=\"\" />\r\n          <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\r\n        </SHUTDOWN>\r\n      </ConfigurationWrapper>\r\n      <ConfigurationWrapper VM_VAR=\"JAVA_OPTS\" RunnerId=\"Run\">\r\n        <option name=\"USE_ENV_VARIABLES\" value=\"true\" />\r\n        <STARTUP>\r\n          <option name=\"USE_DEFAULT\" value=\"true\" />\r\n          <option name=\"SCRIPT\" value=\"\" />\r\n          <option name=\"VM_PARAMETERS\" value=\"\" />\r\n          <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\r\n        </STARTUP>\r\n        <SHUTDOWN>\r\n          <option name=\"USE_DEFAULT\" value=\"true\" />\r\n          <option name=\"SCRIPT\" value=\"\" />\r\n          <option name=\"VM_PARAMETERS\" value=\"\" />\r\n          <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\r\n        </SHUTDOWN>\r\n      </ConfigurationWrapper>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n        <option name=\"BuildArtifacts\" enabled=\"true\">\r\n          <artifact name=\"GymCRMLevel1:war\" />\r\n        </option>\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Spring Boot.GymCRMApplication (1)\" />\r\n        <item itemvalue=\"Application.GymCRMApplication\" />\r\n        <item itemvalue=\"JUnit.TrainingTypeServiceImplTest\" />\r\n        <item itemvalue=\"JUnit.TrainingTypeControllerTest\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27\" />\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"StructureViewState\">\r\n    <option name=\"selectedTab\" value=\"Logical\" />\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"6e8d8e47-6b45-4484-a2f5-f9bdbdae0c4c\" name=\"Changes\" comment=\"\" />\r\n      <created>1742642065129</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1742642065129</updated>\r\n      <workItem from=\"1742642066291\" duration=\"148000\" />\r\n      <workItem from=\"1742826744707\" duration=\"5003000\" />\r\n      <workItem from=\"1742832656348\" duration=\"21000\" />\r\n      <workItem from=\"1742987512147\" duration=\"1548000\" />\r\n      <workItem from=\"1743064542200\" duration=\"10513000\" />\r\n      <workItem from=\"1743235508669\" duration=\"12171000\" />\r\n      <workItem from=\"1743566094170\" duration=\"1533000\" />\r\n      <workItem from=\"1743583951234\" duration=\"25813000\" />\r\n      <workItem from=\"1743949379135\" duration=\"652000\" />\r\n      <workItem from=\"1744196577515\" duration=\"309000\" />\r\n      <workItem from=\"1744275808309\" duration=\"1198000\" />\r\n      <workItem from=\"1744380379057\" duration=\"1161000\" />\r\n      <workItem from=\"1744529379536\" duration=\"1655000\" />\r\n      <workItem from=\"1744544119859\" duration=\"961000\" />\r\n      <workItem from=\"1744571723461\" duration=\"3668000\" />\r\n      <workItem from=\"1744575426624\" duration=\"767000\" />\r\n      <workItem from=\"1744722767922\" duration=\"3009000\" />\r\n      <workItem from=\"1744900204851\" duration=\"1962000\" />\r\n      <workItem from=\"1745237167503\" duration=\"1303000\" />\r\n      <workItem from=\"1746009827787\" duration=\"3658000\" />\r\n      <workItem from=\"1746033134896\" duration=\"38000\" />\r\n      <workItem from=\"1746424403517\" duration=\"2057000\" />\r\n      <workItem from=\"1747139964133\" duration=\"2501000\" />\r\n      <workItem from=\"1747216990570\" duration=\"6577000\" />\r\n      <workItem from=\"1747239823749\" duration=\"2733000\" />\r\n      <workItem from=\"1747391449914\" duration=\"2292000\" />\r\n      <workItem from=\"1747463983003\" duration=\"3453000\" />\r\n      <workItem from=\"1747575342286\" duration=\"289000\" />\r\n      <workItem from=\"1747637204584\" duration=\"5626000\" />\r\n      <workItem from=\"1748247165843\" duration=\"4802000\" />\r\n      <workItem from=\"1748303308799\" duration=\"2851000\" />\r\n      <workItem from=\"1748493363577\" duration=\"624000\" />\r\n      <workItem from=\"1748495754489\" duration=\"11223000\" />\r\n      <workItem from=\"1748844458673\" duration=\"74000\" />\r\n      <workItem from=\"1748844549773\" duration=\"3858000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"GROUP_MULTIFILE_MERGE_BY_DIRECTORY\" value=\"true\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" type=\"java-method\">\r\n          <url>file://$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/service/TrainerWorkloadService.java</url>\r\n          <line>24</line>\r\n          <properties class=\"epam.uz.trainerworkloadservice.service.TrainerWorkloadService\" method=\"processWorkload\">\r\n            <option name=\"EMULATED\" value=\"true\" />\r\n            <option name=\"WATCH_EXIT\" value=\"false\" />\r\n          </properties>\r\n          <option name=\"timeStamp\" value=\"2\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-method\">\r\n          <url>file://$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/TrainerWorkloadController.java</url>\r\n          <line>29</line>\r\n          <properties class=\"epam.uz.trainerworkloadservice.controller.TrainerWorkloadController\" method=\"recordWorkload\">\r\n            <option name=\"EMULATED\" value=\"true\" />\r\n            <option name=\"WATCH_EXIT\" value=\"false\" />\r\n          </properties>\r\n          <option name=\"timeStamp\" value=\"6\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-method\">\r\n          <url>file://$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/security/JwtUtil.java</url>\r\n          <line>13</line>\r\n          <properties class=\"epam.uz.trainerworkloadservice.security.JwtUtil\" method=\"validateToken\">\r\n            <option name=\"EMULATED\" value=\"true\" />\r\n            <option name=\"WATCH_EXIT\" value=\"false\" />\r\n          </properties>\r\n          <option name=\"timeStamp\" value=\"7\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/service/impl/TrainingServiceImpl.java</url>\r\n          <line>82</line>\r\n          <option name=\"timeStamp\" value=\"4\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/service/impl/TrainingServiceImpl.java</url>\r\n          <line>84</line>\r\n          <option name=\"timeStamp\" value=\"5\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/security/JwtUtil.java</url>\r\n          <line>19</line>\r\n          <option name=\"timeStamp\" value=\"9\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n</project>
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 36caf9e123a05d7be242696c356ec681eff670d9)
++++ b/.idea/workspace.xml	(date 1748921648021)
+@@ -79,76 +79,76 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "Application.GymCRMApplication.executor": "Run",
+-    "DefaultHtmlFileTemplate": "HTML File",
+-    "JUnit.TraineeControllerTest.executor": "Run",
+-    "JUnit.TraineeControllerTest.testGetByUsername.executor": "Run",
+-    "JUnit.TraineeControllerTest.testUpdateProfile.executor": "Run",
+-    "JUnit.TraineeServiceImplTest.executor": "Run",
+-    "JUnit.TraineeServicesImplTest.executor": "Run",
+-    "JUnit.TrainerControllerTest.executor": "Run",
+-    "JUnit.TrainerControllerTest.testGetTrainerTrainings.executor": "Run",
+-    "JUnit.TrainerControllerTest.testUpdateProfile.executor": "Run",
+-    "JUnit.TrainerServicesImplTest.executor": "Run",
+-    "JUnit.TrainingControllerTest.executor": "Run",
+-    "JUnit.TrainingServiceImplTest.executor": "Run",
+-    "JUnit.TrainingServiceImplTest.testCreateTraining_Success.executor": "Run",
+-    "JUnit.TrainingServicesImplTest.executor": "Run",
+-    "JUnit.TrainingServicesImplTest.testGetTraineeTrainings.executor": "Run",
+-    "JUnit.TrainingTypeControllerTest.executor": "Run",
+-    "JUnit.TrainingTypeControllerTest.testCreateTrainingType.executor": "Run",
+-    "JUnit.TrainingTypeDTOControllerTest.executor": "Run",
+-    "JUnit.TrainingTypeDTOControllerTest.testCreateTrainingType.executor": "Run",
+-    "JUnit.TrainingTypeDTOServiceImplTest.executor": "Run",
+-    "JUnit.TrainingTypeDTOServiceImplTest.testCreateTrainingType.executor": "Run",
+-    "JUnit.TrainingTypeServiceImplTest.executor": "Run",
+-    "JUnit.TrainingTypeServiceImplTest.testCreateTrainingType.executor": "Run",
+-    "JUnit.TrainingTypeServicesImplTest.executor": "Run",
+-    "JUnit.UserControllerTest.executor": "Run",
+-    "JUnit.UserServiceImplTest.executor": "Run",
+-    "JUnit.UsersControllerTest.executor": "Run",
+-    "JUnit.UsersServiceImplTest.executor": "Run",
+-    "JUnit.UsersServicesImplTest.executor": "Run",
+-    "JUnit.UsersServicesImplTest.testChangeLogin.executor": "Run",
+-    "JUnit.gymcrm in GymCRMLevel1.executor": "Run",
+-    "JUnit.java in GymCRMLevel1.executor": "Run",
+-    "Maven.GymCRMLevel1 [clean,install].executor": "Run",
+-    "Maven.GymCRMLevel1 [clean,package].executor": "Run",
+-    "Maven.GymCRMLevel1 [clean].executor": "Run",
+-    "RequestMappingsPanelOrder0": "0",
+-    "RequestMappingsPanelOrder1": "1",
+-    "RequestMappingsPanelWidth0": "75",
+-    "RequestMappingsPanelWidth1": "75",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "RunOnceActivity.git.unshallow": "true",
+-    "Spring Boot.GymCRMApplication (1).executor": "Run",
+-    "Spring Boot.GymCRMApplication.executor": "Run",
+-    "Spring Boot.TrainerWorkloadServiceApplication.executor": "Run",
+-    "Tomcat Server.Tomcat 10.executor": "Run",
+-    "git-widget-placeholder": "master",
+-    "ignore.virus.scanning.warn.message": "true",
+-    "kotlin-language-version-configured": "true",
+-    "last_opened_file_path": "C:/Users/muzaf/Downloads/GymCRM",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "project.structure.last.edited": "Artifacts",
+-    "project.structure.proportion": "0.15",
+-    "project.structure.side.proportion": "0.2",
+-    "run.configurations.included.in.services": "true",
+-    "settings.editor.selected.configurable": "preferences.lookFeel",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;Application.GymCRMApplication.executor&quot;: &quot;Run&quot;,
++    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
++    &quot;JUnit.TraineeControllerTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TraineeControllerTest.testGetByUsername.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TraineeControllerTest.testUpdateProfile.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TraineeServiceImplTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TraineeServicesImplTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TrainerControllerTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TrainerControllerTest.testGetTrainerTrainings.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TrainerControllerTest.testUpdateProfile.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TrainerServicesImplTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TrainingControllerTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TrainingServiceImplTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TrainingServiceImplTest.testCreateTraining_Success.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TrainingServicesImplTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TrainingServicesImplTest.testGetTraineeTrainings.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TrainingTypeControllerTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TrainingTypeControllerTest.testCreateTrainingType.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TrainingTypeDTOControllerTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TrainingTypeDTOControllerTest.testCreateTrainingType.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TrainingTypeDTOServiceImplTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TrainingTypeDTOServiceImplTest.testCreateTrainingType.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TrainingTypeServiceImplTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TrainingTypeServiceImplTest.testCreateTrainingType.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.TrainingTypeServicesImplTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.UserControllerTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.UserServiceImplTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.UsersControllerTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.UsersServiceImplTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.UsersServicesImplTest.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.UsersServicesImplTest.testChangeLogin.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.gymcrm in GymCRMLevel1.executor&quot;: &quot;Run&quot;,
++    &quot;JUnit.java in GymCRMLevel1.executor&quot;: &quot;Run&quot;,
++    &quot;Maven.GymCRMLevel1 [clean,install].executor&quot;: &quot;Run&quot;,
++    &quot;Maven.GymCRMLevel1 [clean,package].executor&quot;: &quot;Run&quot;,
++    &quot;Maven.GymCRMLevel1 [clean].executor&quot;: &quot;Run&quot;,
++    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
++    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
++    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
++    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
++    &quot;Spring Boot.GymCRMApplication (1).executor&quot;: &quot;Run&quot;,
++    &quot;Spring Boot.GymCRMApplication.executor&quot;: &quot;Run&quot;,
++    &quot;Spring Boot.TrainerWorkloadServiceApplication.executor&quot;: &quot;Run&quot;,
++    &quot;Tomcat Server.Tomcat 10.executor&quot;: &quot;Run&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
++    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
++    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/Users/muzaf/Downloads/GymCRM&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
++    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   },
+-  "keyToStringList": {
+-    "DatabaseDriversLRU": [
+-      "h2"
++  &quot;keyToStringList&quot;: {
++    &quot;DatabaseDriversLRU&quot;: [
++      &quot;h2&quot;
+     ]
+   }
+-}]]></component>
++}</component>
+   <component name="ReactorSettings">
+     <option name="notificationShown" value="true" />
+   </component>
+@@ -186,7 +186,7 @@
+       </set>
+     </option>
+   </component>
+-  <component name="RunManager" selected="Spring Boot.TrainerWorkloadServiceApplication">
++  <component name="RunManager" selected="Spring Boot.GymCRMApplication (1)">
+     <configuration name="GymCRMApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+       <option name="MAIN_CLASS_NAME" value="epam.gymcrm.GymCRMApplication" />
+       <module name="GymCRMLevel1" />
+@@ -229,17 +229,6 @@
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+-    </configuration>
+-    <configuration default="true" type="JetRunConfigurationType">
+-      <module name="GymCRMLevel1" />
+-      <method v="2">
+-        <option name="Make" enabled="true" />
+-      </method>
+-    </configuration>
+-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+-      <module name="GymCRMLevel1" />
+-      <option name="filePath" />
+-      <method v="2" />
+     </configuration>
+     <configuration name="GymCRMApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+       <module name="main-app" />
