@@ -23,9 +23,6 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/api/workload/test").permitAll() // Allow test endpoint without auth
-                                .requestMatchers("/api/workload").permitAll()
-//                                .requestMatchers("/api/workload/**").hasRole("MICROSERVICE") // Require MICROSERVICE role for other endpoints
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
