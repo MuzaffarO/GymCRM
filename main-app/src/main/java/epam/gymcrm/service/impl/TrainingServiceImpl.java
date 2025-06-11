@@ -1,6 +1,6 @@
 package epam.gymcrm.service.impl;
 
-import epam.gymcrm.controller.WorkloadClient;
+import epam.gymcrm.config.TrainerWorkloadProducer;
 import epam.gymcrm.dto.microservice.ActionType;
 import epam.gymcrm.dto.microservice.TrainerWorkloadRequest;
 import epam.gymcrm.dto.trainee.request.TraineeTrainingsRequest;
@@ -44,7 +44,7 @@ public class TrainingServiceImpl implements TrainingService {
     private final TraineeRepository traineeRepository;
     private final TrainingTypeRepository trainingTypeRepository;
     private final MeterRegistry meterRegistry;
-    private final WorkloadClient workloadClient;
+    private final TrainerWorkloadProducer trainerWorkloadProducer;
 
     @Override
     public void createTraining(TrainingRegister trainingRegister) {
@@ -80,9 +80,7 @@ public class TrainingServiceImpl implements TrainingService {
         trainingRepository.save(training);
         meterRegistry.counter("gymcrm.training.created").increment();
 
-        String jwtToken = extractJwtFromSecurityContext();
-
-        workloadClient.sendWorkloadUpdate(
+        trainerWorkloadProducer.sendTrainerWorkload(
                 TrainerWorkloadRequest.builder()
                         .trainerUsername(trainer.getUser().getUsername())
                         .trainerFirstName(trainer.getUser().getFirstName())
@@ -91,9 +89,9 @@ public class TrainingServiceImpl implements TrainingService {
                         .trainingDate(trainingRegister.getTrainingDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
                         .trainingDuration(trainingRegister.getTrainingDuration())
                         .actionType(ActionType.ADD)
-                        .build(),
-                jwtToken  // You can extract this from context or inject it in another way
+                        .build()
         );
+
 
     }
     @Override
@@ -122,11 +120,9 @@ public class TrainingServiceImpl implements TrainingService {
             trainerRepository.save(trainer);
         }
 
-        String jwtToken = extractJwtFromSecurityContext();
-
         meterRegistry.counter("gymcrm.training.cancelled").increment();
 
-        workloadClient.sendWorkloadUpdate(
+        trainerWorkloadProducer.sendTrainerWorkload(
                 TrainerWorkloadRequest.builder()
                         .trainerUsername(trainer.getUser().getUsername())
                         .trainerFirstName(trainer.getUser().getFirstName())
@@ -135,9 +131,9 @@ public class TrainingServiceImpl implements TrainingService {
                         .trainingDate(training.getTrainingDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
                         .trainingDuration(training.getTrainingDuration())
                         .actionType(ActionType.DELETE)
-                        .build(),
-                jwtToken  // You can extract this from context or inject it in another way
+                        .build()
         );
+
     }
 
     public String extractJwtFromSecurityContext() {
