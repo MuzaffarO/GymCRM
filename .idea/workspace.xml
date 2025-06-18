@@ -10,23 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6e8d8e47-6b45-4484-a2f5-f9bdbdae0c4c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/model/TrainerTrainingSummary.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/repository/TrainerTrainingSummaryRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/service/TrainerMongoWorkloadService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/TrainerMongoWorkloadServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/TrainerWorkloadControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/DlqRetryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/DlqRetryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/TrainerWorkloadController.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/TrainerWorkloadController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/TrainerWorkloadListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/TrainerWorkloadListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/model/MonthlySummary.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/model/TrainerSummary.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/repository/MonthlySummaryRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/repository/TrainerSummaryRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/service/TrainerWorkloadService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/JwtUtilTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/TrainerWorkloadControllerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/TrainerWorkloadServiceTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,6 +94,7 @@
     "JUnit.TrainerControllerTest.executor": "Run",
     "JUnit.TrainerControllerTest.testGetTrainerTrainings.executor": "Run",
     "JUnit.TrainerControllerTest.testUpdateProfile.executor": "Run",
+    "JUnit.TrainerMongoWorkloadServiceTest.executor": "Run",
     "JUnit.TrainerServicesImplTest.executor": "Run",
     "JUnit.TrainerWorkloadControllerTest (1).executor": "Run",
     "JUnit.TrainerWorkloadControllerTest.executor": "Run",
@@ -212,8 +199,8 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.TrainerWorkloadServiceApplication">
-    <configuration name="JwtUtilTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.TrainerWorkloadControllerTest">
+    <configuration name="TrainerMongoWorkloadServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="trainer-workload-service" />
       <extension name="coverage">
         <pattern>
@@ -222,7 +209,7 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="epam.uz.trainerworkloadservice" />
-      <option name="MAIN_CLASS_NAME" value="epam.uz.trainerworkloadservice.JwtUtilTest" />
+      <option name="MAIN_CLASS_NAME" value="epam.uz.trainerworkloadservice.TrainerMongoWorkloadServiceTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -392,11 +379,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.GymCRMApplication" />
         <item itemvalue="JUnit.TrainerWorkloadControllerTest" />
+        <item itemvalue="JUnit.TrainerMongoWorkloadServiceTest" />
+        <item itemvalue="Spring Boot.GymCRMApplication" />
         <item itemvalue="JUnit.TrainerWorkloadControllerTest (1)" />
         <item itemvalue="JUnit.TrainerWorkloadControllerTest.testRecordWorkload" />
-        <item itemvalue="JUnit.JwtUtilTest" />
       </list>
     </recent_temporary>
   </component>
@@ -456,7 +443,7 @@
       <workItem from="1748844549773" duration="3858000" />
       <workItem from="1749633267725" duration="7386000" />
       <workItem from="1749821927851" duration="2000" />
-      <workItem from="1750220714603" duration="3775000" />
+      <workItem from="1750220714603" duration="4505000" />
     </task>
     <servers />
   </component>
