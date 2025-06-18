@@ -1,7 +1,7 @@
-//package epam.gymcrm.exceptions.handler;
+//package epam.gymcrm.exception.handler;
 //
-//import epam.gymcrm.exceptions.InvalidUsernameOrPasswordException;
-//import epam.gymcrm.exceptions.UserNotFoundException;
+//import epam.gymcrm.exception.InvalidUsernameOrPasswordException;
+//import epam.gymcrm.exception.UserNotFoundException;
 //import org.springframework.http.HttpStatus;
 //import org.springframework.http.ResponseEntity;
 //import org.springframework.web.bind.annotation.ExceptionHandler;

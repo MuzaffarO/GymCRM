@@ -10,16 +10,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6e8d8e47-6b45-4484-a2f5-f9bdbdae0c4c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/config/TrainerWorkloadProducer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/DlqRetryController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/TrainerWorkloadListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/service/DlqMessageStore.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/model/TrainerTrainingSummary.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/repository/TrainerTrainingSummaryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/service/TrainerMongoWorkloadService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/service/impl/TrainingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/service/impl/TrainingServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/resources/application-local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/resources/application-local.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/trainer-workload-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/DlqRetryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/DlqRetryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/TrainerWorkloadController.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/TrainerWorkloadController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/TrainerWorkloadListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/TrainerWorkloadListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/model/MonthlySummary.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/model/TrainerSummary.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/repository/MonthlySummaryRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/repository/TrainerSummaryRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/service/TrainerWorkloadService.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/JwtUtilTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/TrainerWorkloadControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/TrainerWorkloadServiceTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +149,7 @@
     "Spring Boot.GymCRMApplication.executor": "Run",
     "Spring Boot.TrainerWorkloadServiceApplication.executor": "Run",
     "Tomcat Server.Tomcat 10.executor": "Run",
-    "git-widget-placeholder": "messaging",
+    "git-widget-placeholder": "nosql",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/muzaf/Downloads/GymCRM",
@@ -447,7 +454,9 @@
       <workItem from="1748495754489" duration="11223000" />
       <workItem from="1748844458673" duration="74000" />
       <workItem from="1748844549773" duration="3858000" />
-      <workItem from="1749633267725" duration="6405000" />
+      <workItem from="1749633267725" duration="7386000" />
+      <workItem from="1749821927851" duration="2000" />
+      <workItem from="1750220714603" duration="3775000" />
     </task>
     <servers />
   </component>
@@ -461,24 +470,6 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/service/TrainerWorkloadService.java</url>
-          <line>24</line>
-          <properties class="epam.uz.trainerworkloadservice.service.TrainerWorkloadService">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/TrainerWorkloadController.java</url>
-          <line>29</line>
-          <properties class="epam.uz.trainerworkloadservice.controller.TrainerWorkloadController">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/security/JwtUtil.java</url>
           <line>13</line>
           <properties class="epam.uz.trainerworkloadservice.security.JwtUtil">
@@ -486,16 +477,6 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/service/impl/TrainingServiceImpl.java</url>
-          <line>84</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/service/impl/TrainingServiceImpl.java</url>
-          <line>86</line>
-          <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/security/JwtUtil.java</url>
