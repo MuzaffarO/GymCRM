@@ -22,7 +22,7 @@ public class TrainerMongoWorkloadService {
     private final TrainerTrainingSummaryRepository repository;
 
     public void processWorkload(TrainerWorkloadRequest request) {
-        String txnId = "TXN-" + System.currentTimeMillis(); // In real case, get from header
+        String txnId = "TXN-" + System.currentTimeMillis();
         log.info("[{}] Processing workload for trainer: {}", txnId, request.getTrainerUsername());
 
         TrainerTrainingSummary summary = repository.findByTrainerUsername(request.getTrainerUsername())

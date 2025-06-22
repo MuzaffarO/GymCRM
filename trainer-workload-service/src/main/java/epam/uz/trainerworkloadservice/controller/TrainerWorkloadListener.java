@@ -41,7 +41,6 @@ public class TrainerWorkloadListener {
 
             jwt = jwt.substring(7); // Strip "Bearer "
 
-            // Key must be at least 256 bits (32 bytes)
             String secret = "vR7xP9m$Jk3!qW@fYzL2bNcT#H8sAe4D";
             Key hmacKey = Keys.hmacShaKeyFor(secret.getBytes());
 
