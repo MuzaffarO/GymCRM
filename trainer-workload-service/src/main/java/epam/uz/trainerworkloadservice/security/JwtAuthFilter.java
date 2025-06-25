@@ -30,23 +30,32 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
+            System.out.println("[JWT FILTER] Missing or invalid header: " + authHeader);
+            // No token at all – pass to security exception handling
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Missing or invalid Authorization header");
             return;
         }
 
         String token = authHeader.substring(7);
-        if (jwtUtil.validateToken(token)) {
-            UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(
-                            jwtUtil.getUsernameFromToken(token),
-                            null,
-                            Collections.singletonList(new SimpleGrantedAuthority("ROLE_MICROSERVICE"))
-                    );
-
-            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        if (!jwtUtil.validateToken(token)) {
+            System.out.println("[JWT FILTER] Invalid token detected: " + token);
+            // Token is malformed or expired – block the request
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid or expired JWT");
+            return;
         }
+
+        // Token is valid
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(
+                        jwtUtil.getUsernameFromToken(token),
+                        null,
+                        Collections.singletonList(new SimpleGrantedAuthority("ROLE_MICROSERVICE"))
+                );
+
+        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         filterChain.doFilter(request, response);
     }
+
 }

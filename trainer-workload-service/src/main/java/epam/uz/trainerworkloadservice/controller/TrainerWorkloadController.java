@@ -3,6 +3,7 @@ package epam.uz.trainerworkloadservice.controller;
 import epam.uz.trainerworkloadservice.dto.TrainerMonthlySummaryDTO;
 import epam.uz.trainerworkloadservice.dto.TrainerWorkloadRequest;
 import epam.uz.trainerworkloadservice.service.TrainerMongoWorkloadService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -24,7 +25,7 @@ public class TrainerWorkloadController {
     }
 
     @PostMapping
-    public ResponseEntity<String> recordWorkload(@RequestBody TrainerWorkloadRequest request,
+    public ResponseEntity<String> recordWorkload(@Valid @RequestBody TrainerWorkloadRequest request,
                                                  @RequestHeader(value = "X-Transaction-Id", required = false) String txnId) {
         workloadService.processWorkload(request); // txnId could be passed into service if needed
         return ResponseEntity.ok("Trainer workload processed successfully.");
