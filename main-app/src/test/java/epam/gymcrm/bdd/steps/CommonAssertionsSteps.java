@@ -2,9 +2,7 @@ package epam.gymcrm.bdd.steps;
 
 import io.cucumber.java.en.Then;
 import org.junit.jupiter.api.Assertions;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 public class CommonAssertionsSteps {
 

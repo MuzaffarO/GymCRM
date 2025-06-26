@@ -5,6 +5,7 @@ import epam.gymcrm.model.TrainingType;
 import epam.gymcrm.repository.TrainingTypeRepository;
 import epam.gymcrm.service.TrainingTypeService;
 import epam.gymcrm.mapper.TrainingTypeMapper;
+import jakarta.ws.rs.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +31,13 @@ public class TrainingTypeServiceImpl implements TrainingTypeService {
 
     @Override
     public TrainingType createTrainingType(String name) {
+        trainingTypeRepository.findByTrainingTypeName(name).ifPresent(t -> {
+            throw new BadRequestException("Training type already exists: " + name);
+        });
+
         TrainingType newTrainingType = new TrainingType();
         newTrainingType.setTrainingTypeName(name);
-
-        trainingTypeRepository.save(newTrainingType);
-
-        return newTrainingType;
+        return trainingTypeRepository.save(newTrainingType);
     }
+
 }

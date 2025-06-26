@@ -2,6 +2,7 @@ package epam.gymcrm.exceptions.handler;
 
 import epam.gymcrm.exceptions.InvalidUsernameOrPasswordException;
 import epam.gymcrm.exceptions.UserNotFoundException;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -65,5 +66,13 @@ public class GlobalExceptionHandler {
 
         return buildErrorResponse(ex, HttpStatus.BAD_REQUEST, errorMsg);
     }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ApiErrorResponse> handleBadRequest(BadRequestException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ApiErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), "Bad Request"));
+    }
+
 
 }
