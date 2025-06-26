@@ -1,8 +1,8 @@
 Feature: Trainer Management
 
   Background:
-    Given a registered trainer with username "trainer.one"
-    And a valid JWT token for "trainer.one"
+    Given a registered trainer
+    And a valid JWT token for that trainer
 
   Scenario: Get trainer profile (positive)
     When the client requests trainer profile for "trainer.one"
@@ -27,9 +27,9 @@ Feature: Trainer Management
     Then the response status should be 200
 
   Scenario: Change status of trainer (positive)
-    When the client changes trainer status of "trainer.one" to false
+    When the client changes trainer status of "trainer.one" to "false"
     Then the response status should be 200
 
   Scenario: Change status (negative - trainer not found)
-    When the client changes trainer status of "ghost.trainer" to true
+    When the client changes trainer status of "ghost.trainer" to "true"
     Then the response status should be 404

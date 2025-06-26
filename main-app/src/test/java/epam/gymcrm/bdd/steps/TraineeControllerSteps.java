@@ -18,7 +18,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -27,7 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @SpringBootTest
 @RequiredArgsConstructor
-public class TraineeControllerSteps extends CommonSteps{
+public class TraineeControllerSteps {
 
     @Autowired private MockMvc mockMvc;
     @Autowired private ObjectMapper objectMapper;
@@ -35,113 +34,19 @@ public class TraineeControllerSteps extends CommonSteps{
     @Autowired private TraineeRepository traineeRepo;
     @Autowired private UserRepository userRepo;
     @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired private SharedContext sharedContext;
+    @Autowired private AuthSteps authSteps;
 
-    private MvcResult result;
-    private String jwt;
     private final String BASE_URL = "/trainees";
 
-    @Given("a valid JWT token for {string}")
-    public void a_valid_jwt_token(String username) {
-        UserDetails userDetails = org.springframework.security.core.userdetails.User
-                .withUsername(username)
-                .password("dummy")
-                .roles("TRAINEE")
-                .build();
-
-        jwt = "Bearer " + jwtUtil.generateToken(userDetails);
-    }
-
-    @When("the client requests trainee profile for {string}")
-    public void the_client_requests_trainee_profile_for(String username) throws Exception {
-        result = mockMvc.perform(get(BASE_URL + "/by-username")
-                        .param("username", username)
-                        .header("Authorization", jwt))
-                .andReturn();
-    }
-
-    @When("the client updates trainee profile for {string} with new first name {string}")
-    public void update_profile(String username, String firstName) throws Exception {
-        UpdateTraineeProfileRequest request = new UpdateTraineeProfileRequest(
-                username, firstName, "Last",
-                new SimpleDateFormat("dd/MM/yyyy").parse("15/08/2000"),
-                "Test Street", true);
-
-        result = mockMvc.perform(put(BASE_URL + "/update-profile")
-                        .header("Authorization", jwt)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                .andReturn();
-    }
-
-    @When("the client updates trainee profile with missing required fields")
-    public void update_profile_with_missing_fields() throws Exception {
-        UpdateTraineeProfileRequest request = new UpdateTraineeProfileRequest();
-
-        result = mockMvc.perform(put(BASE_URL + "/update-profile")
-                        .header("Authorization", jwt)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                .andReturn();
-    }
-
-    @When("the client deletes trainee with username {string}")
-    public void the_client_deletes_trainee(String username) throws Exception {
-        result = mockMvc.perform(delete(BASE_URL + "/delete")
-                        .param("username", username)
-                        .header("Authorization", jwt))
-                .andReturn();
-    }
-
-    @When("the client assigns trainers {string} to trainee {string}")
-    public void the_client_assigns_trainers_to_trainee(String trainerListStr, String username) throws Exception {
-        List<TrainerUsernameRequest> trainerList = Arrays.stream(trainerListStr.split(","))
-                .map(String::trim)
-                .map(TrainerUsernameRequest::new)
-                .toList();
-
-        UpdateTraineeTrainerListRequest request = new UpdateTraineeTrainerListRequest(username, trainerList);
-
-        result = mockMvc.perform(put(BASE_URL + "/update-trainers-list")
-                        .header("Authorization", jwt)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                .andReturn();
-    }
-
-    @When("the client changes status of trainee {string} to {string}")
-    public void the_client_changes_status(String username, String active) throws Exception {
-        boolean isActive = Boolean.parseBoolean(active);
-        ActivateDeactivateRequest request = new ActivateDeactivateRequest(username, isActive);
-
-        result = mockMvc.perform(patch(BASE_URL + "/change-status")
-                        .header("Authorization", jwt)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                .andReturn();
-    }
-
-
-    @Then("the response should contain trainee first name {string}")
-    public void the_response_should_contain_trainee_first_name(String expectedName) throws Exception {
-        String content = result.getResponse().getContentAsString();
-        Assertions.assertTrue(content.contains(expectedName));
-    }
-
-    @Then("the response should contain {string}")
-    public void the_response_should_contain(String message) throws Exception {
-        String content = result.getResponse().getContentAsString();
-        Assertions.assertTrue(content.contains(message));
-    }
-
-    @Given("a registered trainee with username {string}")
-    public void a_registered_trainee_with_username(String username) {
-        traineeRepo.findByUserUsername(username).ifPresent(traineeRepo::delete);
-        userRepo.findByUsername(username).ifPresent(userRepo::delete);
+    @Given("a registered trainee")
+    public void a_registered_trainee() {
+        String uniqueUsername = "trainee_" + UUID.randomUUID();
 
         User user = User.builder()
                 .firstName("John")
                 .lastName("Doe")
-                .username(username)
+                .username(uniqueUsername)
                 .password("pass")
                 .isActive(true)
                 .build();
@@ -153,5 +58,144 @@ public class TraineeControllerSteps extends CommonSteps{
                 .build();
 
         traineeRepo.save(trainee);
+        sharedContext.set("username", uniqueUsername);
     }
+
+    @Given("a valid JWT token for that trainee")
+    public void jwt_for_registered_trainee() {
+        String username = sharedContext.get("username", String.class);
+
+        // Create Spring Security UserDetails (not your JPA User entity)
+        UserDetails userDetails = org.springframework.security.core.userdetails.User
+                .withUsername(username)
+                .password("dummy") // password irrelevant for JWT
+                .roles("USER") // Adjust role if needed
+                .build();
+
+        String token = jwtUtil.generateToken(userDetails);
+        authSteps.setJwt("Bearer " + token);
+    }
+
+    @When("the client requests trainee profile")
+    public void the_client_requests_trainee_profile() throws Exception {
+        String username = sharedContext.get("username", String.class);
+        sharedContext.setResult(
+                mockMvc.perform(get(BASE_URL + "/by-username")
+                                .param("username", username)
+                                .header("Authorization", authSteps.getJwt()))
+                        .andReturn()
+        );
+    }
+
+    @When("the client requests trainee profile for {string}")
+    public void the_client_requests_trainee_profile_for(String username) throws Exception {
+        sharedContext.setResult(
+                mockMvc.perform(get(BASE_URL + "/by-username")
+                                .param("username", username)
+                                .header("Authorization", authSteps.getJwt()))
+                        .andReturn()
+        );
+    }
+
+    @When("the client updates trainee profile with new first name {string}")
+    public void update_profile_with_new_first_name(String firstName) throws Exception {
+        String username = sharedContext.get("username", String.class);
+        UpdateTraineeProfileRequest request = new UpdateTraineeProfileRequest(
+                username, firstName, "Last",
+                new SimpleDateFormat("dd/MM/yyyy").parse("15/08/2000"),
+                "Test Street", true);
+
+        sharedContext.setResult(
+                mockMvc.perform(put(BASE_URL + "/update-profile")
+                                .header("Authorization", authSteps.getJwt())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(request)))
+                        .andReturn()
+        );
+    }
+
+    @When("the client updates trainee profile with missing required fields")
+    public void update_profile_with_missing_fields() throws Exception {
+        UpdateTraineeProfileRequest request = new UpdateTraineeProfileRequest();
+
+        sharedContext.setResult(
+                mockMvc.perform(put(BASE_URL + "/update-profile")
+                                .header("Authorization", authSteps.getJwt())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(request)))
+                        .andReturn()
+        );
+    }
+
+    @When("the client deletes the trainee")
+    public void delete_the_trainee() throws Exception {
+        String username = sharedContext.get("username", String.class);
+        sharedContext.setResult(
+                mockMvc.perform(delete(BASE_URL + "/delete")
+                                .param("username", username)
+                                .header("Authorization", authSteps.getJwt()))
+                        .andReturn()
+        );
+    }
+
+    @When("the client deletes trainee with username {string}")
+    public void the_client_deletes_trainee(String username) throws Exception {
+        sharedContext.setResult(
+                mockMvc.perform(delete(BASE_URL + "/delete")
+                                .param("username", username)
+                                .header("Authorization", authSteps.getJwt()))
+                        .andReturn()
+        );
+    }
+
+    @When("the client assigns trainers {string} to that trainee")
+    public void assign_trainers_to_that_trainee(String trainers) throws Exception {
+        String username = sharedContext.get("username", String.class);
+        the_client_assigns_trainers_to_trainee(trainers, username);
+    }
+
+    @When("the client assigns trainers {string} to trainee {string}")
+    public void the_client_assigns_trainers_to_trainee(String trainerListStr, String username) throws Exception {
+        List<TrainerUsernameRequest> trainerList = Arrays.stream(trainerListStr.split(","))
+                .map(String::trim)
+                .map(TrainerUsernameRequest::new)
+                .toList();
+
+        UpdateTraineeTrainerListRequest request = new UpdateTraineeTrainerListRequest(username, trainerList);
+
+        sharedContext.setResult(
+                mockMvc.perform(put(BASE_URL + "/update-trainers-list")
+                                .header("Authorization", authSteps.getJwt())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(request)))
+                        .andReturn()
+        );
+    }
+
+    @When("the client changes status of the trainee to {string}")
+    public void change_status_of_that_trainee(String active) throws Exception {
+        String username = sharedContext.get("username", String.class);
+        the_client_changes_status(username, active);
+    }
+
+    @When("the client changes status of trainee {string} to {string}")
+    public void the_client_changes_status(String username, String active) throws Exception {
+        boolean isActive = Boolean.parseBoolean(active);
+        ActivateDeactivateRequest request = new ActivateDeactivateRequest(username, isActive);
+
+        sharedContext.setResult(
+                mockMvc.perform(patch(BASE_URL + "/change-status")
+                                .header("Authorization", authSteps.getJwt())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(request)))
+                        .andReturn()
+        );
+    }
+
+    @Then("the response should contain trainee first name {string}")
+    public void the_response_should_contain_trainee_first_name(String expectedName) throws Exception {
+        String content = sharedContext.getResult().getResponse().getContentAsString();
+        Assertions.assertTrue(content.contains(expectedName));
+    }
+
 }

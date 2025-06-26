@@ -1,11 +1,11 @@
 Feature: Trainee Management
 
   Background:
-    Given a registered trainee with username "john.doe"
-    And a valid JWT token for "john.doe"
+    Given a registered trainee
+    And a valid JWT token for that trainee
 
   Scenario: Get trainee profile (positive)
-    When the client requests trainee profile for "john.doe"
+    When the client requests trainee profile
     Then the response status should be 200
     And the response should contain trainee first name "John"
 
@@ -14,7 +14,7 @@ Feature: Trainee Management
     Then the response status should be 404
 
   Scenario: Update trainee profile (positive)
-    When the client updates trainee profile for "john.doe" with new first name "Johnny"
+    When the client updates trainee profile with new first name "Johnny"
     Then the response status should be 200
     And the response should contain trainee first name "Johnny"
 
@@ -23,7 +23,7 @@ Feature: Trainee Management
     Then the response status should be 400
 
   Scenario: Delete trainee (positive)
-    When the client deletes trainee with username "john.doe"
+    When the client deletes the trainee
     Then the response status should be 200
 
   Scenario: Delete trainee (negative - not found)
@@ -31,7 +31,7 @@ Feature: Trainee Management
     Then the response status should be 404
 
   Scenario: Update trainer list for trainee (positive)
-    When the client assigns trainers "trainer.one,trainer.two" to trainee "john.doe"
+    When the client assigns trainers "trainer.one,trainer.two" to that trainee
     Then the response status should be 200
 
   Scenario: Update trainer list (negative - trainee not found)
@@ -39,7 +39,7 @@ Feature: Trainee Management
     Then the response status should be 404
 
   Scenario: Change status of trainee (positive)
-    When the client changes status of trainee "john.doe" to "false"
+    When the client changes status of the trainee to "false"
     Then the response status should be 200
 
   Scenario: Change status (negative - user not found)

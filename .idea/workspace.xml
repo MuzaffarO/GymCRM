@@ -10,27 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6e8d8e47-6b45-4484-a2f5-f9bdbdae0c4c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/CucumberTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/CucumberSpringConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/CustomParameterTypes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/MongoCleanupHook.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/TraineeControllerSteps.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main-app/src/test/resources/features/trainee_controller.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main-app/src/test/resources/test-data.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/AuthSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/CommonAssertionsSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/SharedContext.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/exceptions/handler/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/exceptions/handler/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/model/Training.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/model/Training.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/controller/TraineeControllerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/controller/TrainerControllerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/controller/TrainingControllerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/controller/TrainingTypeControllerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/controller/UserControllerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/service/TraineeServiceImplTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/service/TrainerServiceImplTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/service/TrainingServiceImplTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/service/TrainingTypeServiceImplTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/service/UserServiceImplTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/CommonSteps.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/TraineeControllerSteps.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/TraineeControllerSteps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/TrainerControllerSteps.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/TrainerControllerSteps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/src/test/resources/features/trainee_controller.feature" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/test/resources/features/trainee_controller.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/src/test/resources/features/trainer_controller.feature" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/test/resources/features/trainer_controller.feature" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -467,7 +455,7 @@
       <workItem from="1750220714603" duration="6929000" />
       <workItem from="1750428862863" duration="831000" />
       <workItem from="1750565926495" duration="2264000" />
-      <workItem from="1750848883273" duration="14598000" />
+      <workItem from="1750848883273" duration="17102000" />
     </task>
     <servers />
   </component>
