@@ -1,4 +1,4 @@
-Feature: UserController operations
+Feature: User Management
   Covers all core functionality of user registration, login, password changes, and logout.
 
   Scenario: Successfully register a trainer
@@ -12,8 +12,8 @@ Feature: UserController operations
     And the response should contain "Jane"
 
   Scenario: Login with valid credentials
-    Given a registered user with username "Test.User" and password "password123"
-    When the client attempts to log in with username "Test.User" and password "password123"
+    Given a registered user with username "login.user" and password "secret123"
+    When the client attempts to log in with username "login.user" and password "secret123"
     Then the response status should be 200
     And the response should contain "token"
 
@@ -22,8 +22,8 @@ Feature: UserController operations
     Then the response status should be 401
 
   Scenario: Change password with valid old password
-    Given a registered user with username "Reset.User" and password "oldpass"
-    When the client changes password with old password "oldpass" and new password "newpass"
+    Given a registered user with username "old.user" and password "password123"
+    When the client changes password with old password "password123" and new password "password456"
     Then the response status should be 200
 
   Scenario: Change password with wrong old password

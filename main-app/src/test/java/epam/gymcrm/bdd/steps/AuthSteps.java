@@ -40,9 +40,12 @@ public class AuthSteps {
 
 
     public void generateTokenFor(String username) {
+        User user = userRepository.findByUsername(username.toLowerCase())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         UserDetails userDetails = org.springframework.security.core.userdetails.User
-                .withUsername(username)
-                .password("dummy")
+                .withUsername(user.getUsername())
+                .password(user.getPassword())
                 .roles("USER")
                 .build();
 
@@ -50,19 +53,17 @@ public class AuthSteps {
     }
 
     public void createTestUser(String username, String password) {
-        if (userRepository.findByUsername(username).isEmpty()) {
-            User user = User.builder()
-                    .username(username)
-                    .password(passwordEncoder.encode(password))
-                    .firstName("Test")
-                    .lastName("User")
-                    .isActive(true)
-                    .build();
-            userRepository.save(user);
-            System.out.println("Encoded password stored: " + user.getPassword());
-        }
+        User user = userRepository.findByUsername(username)
+                .orElseGet(() -> User.builder().username(username).build());
 
+        user.setPassword(passwordEncoder.encode(password));
+        user.setFirstName("Test");
+        user.setLastName("User");
+        user.setActive(true);
+
+        userRepository.save(user);
         sharedContext.set("username", username);
     }
+
 
 }

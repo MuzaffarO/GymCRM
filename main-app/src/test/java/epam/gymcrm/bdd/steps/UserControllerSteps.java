@@ -69,7 +69,7 @@ public class UserControllerSteps {
     @Given("a registered user with username {string} and password {string}")
     public void create_test_user(String username, String password) {
         authSteps.createTestUser(username, password);
-        authSteps.generateTokenFor(username); // <-- Add this line
+        authSteps.generateTokenFor(username);
     }
 
 
@@ -88,15 +88,18 @@ public class UserControllerSteps {
     @When("the client changes password with old password {string} and new password {string}")
     public void change_password(String oldPass, String newPass) throws Exception {
         String username = sharedContext.get("username", String.class);
+
+        authSteps.generateTokenFor(username);
+
         PasswordChangeRequest req = new PasswordChangeRequest(username, oldPass, newPass);
+        System.out.println("Changing " + oldPass + " " + newPass);
 
         sharedContext.setResult(mockMvc.perform(put(BASE_URL + "/change-login")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", authSteps.getJwt())  // <- this is what was missing
+                        .header("Authorization", authSteps.getJwt())
                         .content(objectMapper.writeValueAsString(req)))
                 .andReturn());
     }
-
 
     @When("the client logs out")
     public void logout_user() throws Exception {
