@@ -21,17 +21,6 @@ public class AuthSteps {
     @Setter
     private String jwt;
 
-//    @Given("a valid JWT token for {string}")
-//    public void a_valid_jwt_token(String username) {
-//        UserDetails userDetails = org.springframework.security.core.userdetails.User
-//                .withUsername(username)
-//                .password("dummy")
-//                .roles("USER") // or "ADMIN"
-//                .build();
-//
-//        jwt = "Bearer " + jwtUtil.generateToken(userDetails);
-//    }
-
     @Given("a valid JWT token for {string}")
     public void a_valid_jwt_token(String username) {
         createTestUser(username, "dummy"); // ensure user is saved to DB

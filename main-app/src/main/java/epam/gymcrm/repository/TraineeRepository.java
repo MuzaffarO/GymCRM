@@ -2,6 +2,7 @@ package epam.gymcrm.repository;
 
 import epam.gymcrm.model.Trainee;
 import epam.gymcrm.model.Training;
+import epam.gymcrm.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -16,6 +17,8 @@ public interface TraineeRepository extends JpaRepository<Trainee, Integer> {
 
     @Query(value = "SELECT t FROM Training t JOIN t.trainee usr WHERE usr.user.username = :username")
     List<Training> getTraineeTrainingsByUsername(String username);
+    Optional<Trainee> findByUser(User user);
+
 
 }
 

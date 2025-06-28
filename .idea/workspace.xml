@@ -10,10 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6e8d8e47-6b45-4484-a2f5-f9bdbdae0c4c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/TrainingIntegrationSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/TrainingServiceImplTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/TrainingStepDefinitions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main-app/src/test/resources/features/training.feature" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/repository/TraineeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/repository/TraineeRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/AuthSteps.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/AuthSteps.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/UserControllerSteps.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/UserControllerSteps.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/test/resources/features/user_controller.feature" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/test/resources/features/user_controller.feature" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,6 +106,7 @@
     "JUnit.TrainerWorkloadControllerTest.testRecordWorkload.executor": "Run",
     "JUnit.TrainerWorkloadServiceTest.executor": "Run",
     "JUnit.TrainerWorkloadTestRunner.executor": "Run",
+    "JUnit.TrainingControllerIntegrationTest.executor": "Run",
     "JUnit.TrainingControllerTest.executor": "Run",
     "JUnit.TrainingServiceImplTest.executor": "Run",
     "JUnit.TrainingServiceImplTest.testCreateTraining_Success.executor": "Run",
@@ -265,22 +269,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="EurekaServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="eureka-server" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="epam.uz.eurekaserver.EurekaServerApplication" />
+    <configuration name="TrainingControllerIntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="main-app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="epam.gymcrm.bdd.steps.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="epam.gymcrm.bdd.steps" />
+      <option name="MAIN_CLASS_NAME" value="epam.gymcrm.bdd.steps.TrainingControllerIntegrationTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GymCRMApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <module name="main-app" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="epam.gymcrm.GymCRMApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="epam.gymcrm.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+    <configuration name="EurekaServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="eureka-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="epam.uz.eurekaserver.EurekaServerApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -384,10 +390,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.CucumberTest" />
+        <item itemvalue="JUnit.TrainingControllerIntegrationTest" />
         <item itemvalue="JUnit.TrainerWorkloadTestRunner" />
         <item itemvalue="JUnit.TrainerWorkloadControllerTest" />
         <item itemvalue="JUnit.TrainerMongoWorkloadServiceTest" />
-        <item itemvalue="Spring Boot.GymCRMApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -450,7 +456,7 @@
       <workItem from="1750220714603" duration="6929000" />
       <workItem from="1750428862863" duration="831000" />
       <workItem from="1750565926495" duration="2264000" />
-      <workItem from="1750848883273" duration="29267000" />
+      <workItem from="1750848883273" duration="38615000" />
     </task>
     <servers />
   </component>
@@ -459,5 +465,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="GROUP_MULTIFILE_MERGE_BY_DIRECTORY" value="true" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Microservices$CucumberTest.ic" NAME="CucumberTest Coverage Results" MODIFIED="1751034975744" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>epam.gymcrm.bdd.*</FILTER>
+    </SUITE>
   </component>
 </project>
