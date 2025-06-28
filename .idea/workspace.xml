@@ -10,13 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6e8d8e47-6b45-4484-a2f5-f9bdbdae0c4c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/TrainingIntegrationSteps.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/TrainingServiceImplTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/TrainingStepDefinitions.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main-app/src/test/resources/features/training.feature" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/repository/TraineeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/repository/TraineeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/AuthSteps.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/AuthSteps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/TrainingStepDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/TrainingStepDefinitions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/src/test/resources/features/training.feature" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/test/resources/features/training.feature" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -456,7 +452,7 @@
       <workItem from="1750220714603" duration="6929000" />
       <workItem from="1750428862863" duration="831000" />
       <workItem from="1750565926495" duration="2264000" />
-      <workItem from="1750848883273" duration="38615000" />
+      <workItem from="1750848883273" duration="39722000" />
     </task>
     <servers />
   </component>

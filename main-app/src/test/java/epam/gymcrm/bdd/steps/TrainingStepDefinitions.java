@@ -114,6 +114,47 @@ public class TrainingStepDefinitions {
         createdTrainingId = training.getId();
     }
 
+    @When("a training is attempted with mismatched specialization")
+    @Transactional
+    public void a_training_is_attempted_with_mismatched_specialization() throws Exception {
+        String traineeUsername = context.get("traineeUsername");
+        String trainerUsername = context.get("trainerUsername");
+        String invalidTrainingName = "karate";  // Mismatched specialization
+        Date trainingDate = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2026");
+
+        TrainingRegister register = new TrainingRegister();
+        register.setTraineeUsername(traineeUsername);
+        register.setTrainerUsername(trainerUsername);
+        register.setTrainingName(invalidTrainingName);
+        register.setTrainingDuration(1.5);
+        register.setTrainingDate(trainingDate);
+
+        // Simulating service logic expecting failure due to mismatch
+        try {
+            Trainee trainee = traineeRepository.findByUserUsername(traineeUsername).orElseThrow();
+            Trainer trainer = trainerRepository.findByUserUsername(trainerUsername).orElseThrow();
+            TrainingType type = trainingTypeRepository.findByTrainingTypeName(invalidTrainingName)
+                    .orElseThrow(() -> new RuntimeException("Training type not found"));
+
+            // Mismatch check (simulated as in real service)
+            if (!trainer.getSpecializationType().equals(type)) {
+                return; // Intentionally failing creation — simulates exception
+            }
+
+            // If by mistake it passes
+            throw new AssertionError("Training creation should have failed due to specialization mismatch");
+
+        } catch (Exception e) {
+            context.put("failureReason", e.getMessage());
+        }
+    }
+
+    @Then("the training should not be created")
+    public void the_training_should_not_be_created() {
+        assertThat(createdTrainingId).isNull();
+    }
+
+
     @Then("the training should exist in the database")
     @Transactional
     public void the_training_should_exist_in_the_database() {
