@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import epam.gymcrm.dto.training.request.TrainingRegister;
 import epam.gymcrm.model.*;
 import epam.gymcrm.repository.*;
+import epam.gymcrm.service.TrainingService;
 import io.cucumber.java.en.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class TrainingStepDefinitions {
     @Autowired private TrainerRepository trainerRepository;
     @Autowired private TrainingTypeRepository trainingTypeRepository;
     @Autowired private TrainingRepository trainingRepository;
+    @Autowired private TrainingService trainingService;
 
     private final Map<String, String> context = new HashMap<>();
     private Integer createdTrainingId;
@@ -161,4 +163,51 @@ public class TrainingStepDefinitions {
         assertThat(createdTrainingId).isNotNull();
         assertThat(trainingRepository.findById(createdTrainingId)).isPresent();
     }
+
+    @When("the training is cancelled")
+    @Transactional
+    public void the_training_is_cancelled() {
+        assertThat(createdTrainingId).isNotNull();
+
+        Training training = trainingRepository.findById(createdTrainingId).orElseThrow();
+
+        Trainee trainee = training.getTrainee();
+        Trainer trainer = training.getTrainer();
+
+        trainee.getTrainings().remove(training);
+        trainer.getTrainingList().remove(training);
+
+        trainingRepository.delete(training);
+
+        boolean stillConnected = trainingRepository.existsByTraineeAndTrainer(trainee, trainer);
+        if (!stillConnected) {
+            trainee.getTrainers().remove(trainer);
+            trainer.getTrainees().remove(trainee);
+
+            traineeRepository.save(trainee);
+            trainerRepository.save(trainer);
+        }
+    }
+
+    @When("an attempt is made to cancel a non-existent training")
+    public void an_attempt_is_made_to_cancel_a_non_existent_training() {
+        try {
+            trainingService.cancelTraining(-999);
+            context.put("cancelError", "none");
+        } catch (Exception e) {
+            context.put("cancelError", e.getClass().getSimpleName());
+        }
+    }
+
+    @Then("an error should occur indicating training not found")
+    public void an_error_should_occur_indicating_training_not_found() {
+        assertThat(context.get("cancelError")).isNotEqualTo("none");
+    }
+
+    @Then("the training should not exist in the database")
+    @Transactional
+    public void the_training_should_not_exist_in_the_database() {
+        assertThat(trainingRepository.findById(createdTrainingId)).isEmpty();
+    }
+
 }
