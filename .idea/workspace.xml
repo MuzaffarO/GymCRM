@@ -11,11 +11,13 @@
   <component name="ChangeListManager">
     <list default="true" id="6e8d8e47-6b45-4484-a2f5-f9bdbdae0c4c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/repository/TrainingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/repository/TrainingRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/service/TrainingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/service/TrainingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/service/impl/TrainingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/service/impl/TrainingServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/TrainingStepDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/steps/TrainingStepDefinitions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/test/resources/features/training.feature" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/test/resources/features/training.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/GymCRMApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/GymCRMApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/CucumberTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/test/java/epam/gymcrm/bdd/CucumberTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/TrainerWorkloadServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/TrainerWorkloadServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/TrainerWorkloadTestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/CucumberTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,6 +133,9 @@
     &quot;Maven.GymCRMLevel1 [clean,install].executor&quot;: &quot;Run&quot;,
     &quot;Maven.GymCRMLevel1 [clean,package].executor&quot;: &quot;Run&quot;,
     &quot;Maven.GymCRMLevel1 [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.GymCRMLevel1 [test,-Dtest=CucumberTest].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.GymCRMLevel1 [test...].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.GymCRMLevel1 [test].executor&quot;: &quot;Run&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
     &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
@@ -155,7 +160,7 @@
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -188,9 +193,12 @@
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
-      <command value="mvn clean package" />
-      <command value="mvn clean" />
       <command value="mvn clean install" />
+      <command value="mvn test -Dcucumber.options=&quot;src/test/resources/features/training.feature&quot; " />
+      <command value="mvn clean" />
+      <command value="mvn clean package" />
+      <command value="mvn test" />
+      <command value="mvn test -Dtest=CucumberTest" />
     </option>
   </component>
   <component name="RunDashboard">
@@ -207,7 +215,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.CucumberTest">
+  <component name="RunManager" selected="Spring Boot.GymCRMApplication">
     <configuration name="CucumberTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="main-app" />
       <extension name="coverage">
@@ -218,6 +226,21 @@
       </extension>
       <option name="PACKAGE_NAME" value="epam.gymcrm.bdd" />
       <option name="MAIN_CLASS_NAME" value="epam.gymcrm.bdd.CucumberTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CucumberTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="trainer-workload-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="epam.uz.trainerworkloadservice.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="epam.uz.trainerworkloadservice" />
+      <option name="MAIN_CLASS_NAME" value="epam.uz.trainerworkloadservice.CucumberTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -253,21 +276,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TrainerWorkloadTestRunner" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="trainer-workload-service" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="epam.uz.trainerworkloadservice.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="epam.uz.trainerworkloadservice" />
-      <option name="MAIN_CLASS_NAME" value="epam.uz.trainerworkloadservice.TrainerWorkloadTestRunner" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="TrainingControllerIntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="main-app" />
       <extension name="coverage">
@@ -286,6 +294,19 @@
     <configuration name="EurekaServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="eureka-server" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="epam.uz.eurekaserver.EurekaServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GymCRMApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="main-app" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="epam.gymcrm.GymCRMApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="epam.gymcrm.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -388,11 +409,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.GymCRMApplication" />
         <item itemvalue="JUnit.CucumberTest" />
         <item itemvalue="JUnit.TrainingControllerIntegrationTest" />
-        <item itemvalue="JUnit.TrainerWorkloadTestRunner" />
+        <item itemvalue="JUnit.CucumberTest" />
         <item itemvalue="JUnit.TrainerWorkloadControllerTest" />
-        <item itemvalue="JUnit.TrainerMongoWorkloadServiceTest" />
       </list>
     </recent_temporary>
   </component>

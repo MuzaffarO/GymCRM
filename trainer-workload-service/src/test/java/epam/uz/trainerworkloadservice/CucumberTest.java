@@ -11,6 +11,6 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         glue = "epam.uz.trainerworkloadservice.steps"
 )
-public class TrainerWorkloadTestRunner {
+public class CucumberTest {
 }
 
