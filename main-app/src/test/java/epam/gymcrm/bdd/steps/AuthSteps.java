@@ -23,7 +23,7 @@ public class AuthSteps {
 
     @Given("a valid JWT token for {string}")
     public void a_valid_jwt_token(String username) {
-        createTestUser(username, "dummy"); // ensure user is saved to DB
+        createTestUser(username, "dummy");
         generateTokenFor(username);
     }
 

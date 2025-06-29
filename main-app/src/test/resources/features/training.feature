@@ -25,3 +25,19 @@ Scenario: Cancel an existing training
   Scenario: Attempt to cancel a non-existent training
     When an attempt is made to cancel a non-existent training
     Then an error should occur indicating training not found
+
+
+    Scenario: Workload microservice reflects created training
+      Given a trainee is registered
+      And a trainer is registered with specialization "boxing"
+      And a training type "boxing" exists
+      When a training is created
+      Then the workload microservice should reflect the training for the trainer
+
+    Scenario: Workload microservice reflects cancelled training
+      Given a trainee is registered
+      And a trainer is registered with specialization "boxing"
+      And a training type "boxing" exists
+      When a training is created
+      And the training is cancelled
+      Then the workload microservice should reflect cancellation for the trainer

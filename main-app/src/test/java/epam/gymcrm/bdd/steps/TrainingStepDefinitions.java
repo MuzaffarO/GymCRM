@@ -4,11 +4,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import epam.gymcrm.dto.training.request.TrainingRegister;
 import epam.gymcrm.model.*;
 import epam.gymcrm.repository.*;
+import epam.gymcrm.security.JwtUtil;
 import epam.gymcrm.service.TrainingService;
 import io.cucumber.java.en.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.*;
+import org.springframework.web.client.RestTemplate;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import java.security.Key;
+import java.time.ZoneId;
+
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -24,6 +35,13 @@ public class TrainingStepDefinitions {
     @Autowired private TrainingTypeRepository trainingTypeRepository;
     @Autowired private TrainingRepository trainingRepository;
     @Autowired private TrainingService trainingService;
+    @Autowired private JwtUtil jwtUtil;
+
+
+    private final RestTemplate restTemplate = new RestTemplate();
+    private final String jwtSecret = "vR7xP9m$Jk3!qW@fYzL2bNcT#H8sAe4D";
+    private final String workloadServiceBaseUrl = "http://localhost:8081";
+
 
     private final Map<String, String> context = new HashMap<>();
     private Integer createdTrainingId;
@@ -83,6 +101,19 @@ public class TrainingStepDefinitions {
     @When("a training is created")
     @Transactional
     public void a_training_is_created() throws Exception {
+        String username = "testuser";
+        UserDetails dummyUser = org.springframework.security.core.userdetails.User
+                .withUsername(username)
+                .password("password")
+                .roles("USER")
+                .build();
+
+        String jwt = jwtUtil.generateToken(dummyUser);
+
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                dummyUser, jwt, dummyUser.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
         String traineeUsername = context.get("traineeUsername");
         String trainerUsername = context.get("trainerUsername");
         String trainingName = "boxing";
@@ -95,26 +126,11 @@ public class TrainingStepDefinitions {
         register.setTrainingDuration(1.5);
         register.setTrainingDate(trainingDate);
 
-        // Manual service simulation
-        Trainee trainee = traineeRepository.findByUserUsername(traineeUsername).orElseThrow();
-        Trainer trainer = trainerRepository.findByUserUsername(trainerUsername).orElseThrow();
-        TrainingType type = trainingTypeRepository.findByTrainingTypeName(trainingName).orElseThrow();
-
-        trainee.getTrainers().add(trainer);
-        trainer.getTrainees().add(trainee);
-
-        Training training = Training.builder()
-                .trainee(trainee)
-                .trainer(trainer)
-                .trainingType(type)
-                .trainingName(trainingName)
-                .trainingDate(trainingDate)
-                .trainingDuration(1.5)
-                .build();
-
-        trainingRepository.save(training);
+        Training training = trainingService.createTraining(register);
         createdTrainingId = training.getId();
+
     }
+
 
     @When("a training is attempted with mismatched specialization")
     @Transactional
@@ -131,19 +147,16 @@ public class TrainingStepDefinitions {
         register.setTrainingDuration(1.5);
         register.setTrainingDate(trainingDate);
 
-        // Simulating service logic expecting failure due to mismatch
         try {
             Trainee trainee = traineeRepository.findByUserUsername(traineeUsername).orElseThrow();
             Trainer trainer = trainerRepository.findByUserUsername(trainerUsername).orElseThrow();
             TrainingType type = trainingTypeRepository.findByTrainingTypeName(invalidTrainingName)
                     .orElseThrow(() -> new RuntimeException("Training type not found"));
 
-            // Mismatch check (simulated as in real service)
             if (!trainer.getSpecializationType().equals(type)) {
-                return; // Intentionally failing creation — simulates exception
+                return;
             }
 
-            // If by mistake it passes
             throw new AssertionError("Training creation should have failed due to specialization mismatch");
 
         } catch (Exception e) {
@@ -168,26 +181,10 @@ public class TrainingStepDefinitions {
     @Transactional
     public void the_training_is_cancelled() {
         assertThat(createdTrainingId).isNotNull();
-
-        Training training = trainingRepository.findById(createdTrainingId).orElseThrow();
-
-        Trainee trainee = training.getTrainee();
-        Trainer trainer = training.getTrainer();
-
-        trainee.getTrainings().remove(training);
-        trainer.getTrainingList().remove(training);
-
-        trainingRepository.delete(training);
-
-        boolean stillConnected = trainingRepository.existsByTraineeAndTrainer(trainee, trainer);
-        if (!stillConnected) {
-            trainee.getTrainers().remove(trainer);
-            trainer.getTrainees().remove(trainee);
-
-            traineeRepository.save(trainee);
-            trainerRepository.save(trainer);
-        }
+        Training deleted = trainingService.cancelTraining(createdTrainingId);
+        assertThat(deleted).isNotNull();
     }
+
 
     @When("an attempt is made to cancel a non-existent training")
     public void an_attempt_is_made_to_cancel_a_non_existent_training() {
@@ -209,5 +206,79 @@ public class TrainingStepDefinitions {
     public void the_training_should_not_exist_in_the_database() {
         assertThat(trainingRepository.findById(createdTrainingId)).isEmpty();
     }
+
+    @Then("the workload microservice should reflect the training for the trainer")
+    public void the_workload_microservice_should_reflect_the_training_for_the_trainer() throws Exception {
+        String trainerUsername = context.get("trainerUsername");
+
+        Date trainingDate = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2026");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(trainingDate);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+
+        String url = String.format("http://localhost:8081/api/workload/%s/%d/%d", trainerUsername, year, month);
+        String token = generateToken(trainerUsername);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token);
+
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+        double expectedHours = 1.5;
+        boolean success = false;
+        int attempts = 0;
+
+        while (attempts++ < 5) {
+            try {
+                ResponseEntity<Double> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Double.class);
+                if (response.getStatusCode().is2xxSuccessful() && response.getBody() == expectedHours) {
+                    success = true;
+                    break;
+                }
+            } catch (Exception e) {
+            }
+            Thread.sleep(1000); // wait 1 second before retry
+        }
+
+        assertThat(success).as("Workload microservice should reflect training hours").isTrue();
+    }
+
+
+    @Then("the workload microservice should reflect cancellation for the trainer")
+    public void the_workload_microservice_should_reflect_cancellation_for_the_trainer() throws Exception {
+        String trainerUsername = context.get("trainerUsername");
+
+        Date trainingDate = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2026");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(trainingDate);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+
+        String url = String.format("%s/api/workload/%s/%d/%d", workloadServiceBaseUrl, trainerUsername, year, month);
+        String token = generateToken(trainerUsername);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token);
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<Double> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Double.class);
+
+        assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
+        assertThat(response.getBody()).isEqualTo(0.0);
+    }
+
+    private String generateToken(String username) {
+        Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+                .signWith(key)
+                .compact();
+    }
+
+
+
 
 }

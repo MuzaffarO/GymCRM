@@ -21,17 +21,14 @@ import epam.gymcrm.repository.specifications.TrainerSpecification;
 import epam.gymcrm.repository.specifications.TrainingSpecification;
 import epam.gymcrm.service.TrainingService;
 import epam.gymcrm.mapper.TrainingMapper;
-import io.jsonwebtoken.Jwt;
 import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -47,7 +44,7 @@ public class TrainingServiceImpl implements TrainingService {
     private final TrainerWorkloadProducer trainerWorkloadProducer;
 
     @Override
-    public void createTraining(TrainingRegister trainingRegister) {
+    public Training createTraining(TrainingRegister trainingRegister) {
         Trainee trainee = traineeRepository.findByUserUsername(trainingRegister.getTraineeUsername())
                 .orElseThrow(() -> new UserNotFoundException("Trainee not found with username: " + trainingRegister.getTraineeUsername()));
 
@@ -77,7 +74,7 @@ public class TrainingServiceImpl implements TrainingService {
         training.setTrainingDate(trainingRegister.getTrainingDate());
         training.setTrainingDuration(trainingRegister.getTrainingDuration());
 
-        trainingRepository.save(training);
+        Training save = trainingRepository.save(training);
         meterRegistry.counter("gymcrm.training.created").increment();
 
         trainerWorkloadProducer.sendTrainerWorkload(
@@ -91,11 +88,10 @@ public class TrainingServiceImpl implements TrainingService {
                         .actionType(ActionType.ADD)
                         .build()
         );
-
-
+        return save;
     }
     @Override
-    public void cancelTraining(Integer trainingId) {
+    public Training cancelTraining(Integer trainingId) {
         Training training = trainingRepository.findById(trainingId)
                 .orElseThrow(() -> new TrainingNotFoundException("Training not found with id: " + trainingId));
 
@@ -133,6 +129,7 @@ public class TrainingServiceImpl implements TrainingService {
                         .actionType(ActionType.DELETE)
                         .build()
         );
+        return training;
 
     }
 

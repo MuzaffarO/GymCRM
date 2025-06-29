@@ -54,7 +54,7 @@ public class UserControllerSteps {
         trainee.setFirstName(firstName);
         trainee.setLastName(lastName);
 
-        LocalDate localDate = LocalDate.parse(dob); // dob should be in ISO format: yyyy-MM-dd
+        LocalDate localDate = LocalDate.parse(dob);
         Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         trainee.setDateOfBirth(date);
 

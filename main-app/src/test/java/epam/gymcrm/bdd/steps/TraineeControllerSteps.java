@@ -68,8 +68,8 @@ public class TraineeControllerSteps {
         // Create Spring Security UserDetails (not your JPA User entity)
         UserDetails userDetails = org.springframework.security.core.userdetails.User
                 .withUsername(username)
-                .password("dummy") // password irrelevant for JWT
-                .roles("USER") // Adjust role if needed
+                .password("dummy")
+                .roles("USER")
                 .build();
 
         String token = jwtUtil.generateToken(userDetails);
