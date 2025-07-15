@@ -203,7 +203,7 @@
 
 
     <build>
-        <finalName>GymCRMLevel1</finalName>
+        <finalName>main-app</finalName>
         <plugins>
             <!-- JaCoCo Plugin -->
             <plugin>
@@ -259,6 +259,10 @@
                         <version>5.10.2</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
