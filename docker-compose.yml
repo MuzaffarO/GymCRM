@@ -24,6 +24,7 @@ services:
     depends_on:
       - eureka-server
 
+
   trainer-workload-service:
     build:
       context: ./trainer-workload-service

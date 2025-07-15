@@ -1,11 +1,13 @@
 FROM openjdk:17-jdk-slim
+
 WORKDIR /app
+
+# Install curl
+RUN apt-get update && apt-get install -y curl
+
 COPY target/trainer-workload-service.jar app.jar
+COPY wait-for-eureka.sh wait-for-eureka.sh
 
-ENV REDIS_ENABLED=false
-ENV ACTIVEMQ_ENABLED=false
-ENV POSTGRES_ENABLED=false
-ENV EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+RUN chmod +x wait-for-eureka.sh
 
-EXPOSE 8081
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["./wait-for-eureka.sh"]
