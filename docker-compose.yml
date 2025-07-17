@@ -1,41 +1,149 @@
-#version: '3.8'
+##version: '3.8'
+#
+#services:
+#
+#  eureka-server:
+#    build:
+#      context: ./eureka-server
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8761:8761"
+#
+#  main-app:
+#    build:
+#      context: ./main-app
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+#      REDIS_ENABLED: false
+#      ACTIVEMQ_ENABLED: false
+#      POSTGRES_ENABLED: false
+#    restart: always
+#    depends_on:
+#      - eureka-server
+#
+#
+#  trainer-workload-service:
+#    build:
+#      context: ./trainer-workload-service
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8081:8080"
+#    environment:
+#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+#      REDIS_ENABLED: false
+#      ACTIVEMQ_ENABLED: false
+#      POSTGRES_ENABLED: false
+#    restart: always
+#    depends_on:
+#      - eureka-server
+
+
+
+version: "3.8"
 
 services:
+
+  postgres:
+    image: postgres:17
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1
+      POSTGRES_DB: gymcrm
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - gymcrm-net
+
+  mongo:
+    image: mongo:7.0
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - gymcrm-net
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - gymcrm-net
+
+  activemq:
+    image: rmohr/activemq:5.15.9
+    container_name: activemq
+    ports:
+      - "61616:61616"
+      - "8161:8161"
+    environment:
+      ACTIVEMQ_ADMIN_LOGIN: admin
+      ACTIVEMQ_ADMIN_PASSWORD: admin
+    networks:
+      - gymcrm-net
 
   eureka-server:
     build:
       context: ./eureka-server
-      dockerfile: Dockerfile
+    container_name: eureka-server
     ports:
       - "8761:8761"
+    networks:
+      - gymcrm-net
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8761/eureka"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   main-app:
     build:
       context: ./main-app
-      dockerfile: Dockerfile
+    container_name: main-app
+    depends_on:
+      postgres:
+        condition: service_started
+      redis:
+        condition: service_started
+      activemq:
+        condition: service_started
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
     ports:
       - "8080:8080"
-    environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
-      REDIS_ENABLED: false
-      ACTIVEMQ_ENABLED: false
-      POSTGRES_ENABLED: false
-    restart: always
-    depends_on:
-      - eureka-server
-
+    networks:
+      - gymcrm-net
 
   trainer-workload-service:
     build:
       context: ./trainer-workload-service
-      dockerfile: Dockerfile
-    ports:
-      - "8081:8080"
-    environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
-      REDIS_ENABLED: false
-      ACTIVEMQ_ENABLED: false
-      POSTGRES_ENABLED: false
-    restart: always
+    container_name: trainer-workload-service
     depends_on:
-      - eureka-server
+      postgres:
+        condition: service_started
+      mongo:
+        condition: service_started
+      activemq:
+        condition: service_started
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8081:8081"
+    networks:
+      - gymcrm-net
+
+networks:
+  gymcrm-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  mongo_data:

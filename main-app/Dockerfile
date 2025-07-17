@@ -2,7 +2,6 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-# Install curl
 RUN apt-get update && apt-get install -y curl
 
 COPY target/main-app.jar app.jar
