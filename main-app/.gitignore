@@ -11,6 +11,8 @@ target/
 *.iws
 *.iml
 *.ipr
+main-app.tar
+ssh.pem
 
 ### Eclipse ###
 .apt_generated
