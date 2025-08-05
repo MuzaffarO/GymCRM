@@ -29,6 +29,7 @@ public class SecurityConfig {
                                 "/users/trainer/register",
                                 "/users/trainee/register",
                                 "/users/admin/**",
+                                "/actuator/**",
                                 "/users/logout").permitAll()
                         .requestMatchers(
                                 "/swagger-ui.html",

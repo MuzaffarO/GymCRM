@@ -10,23 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6e8d8e47-6b45-4484-a2f5-f9bdbdae0c4c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/resources/application-minimal.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-server/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-server/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/resources/application-dev.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/resources/application-docker.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/resources/application-local.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/resources/application-prod.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/resources/application-stg.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/resources/logback.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/resources/application-docker.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application-local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/resources/application-local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/src/main/resources/application-minimal.properties" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/resources/application-minimal.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/resources/application-local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application-local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/resources/application-minimal.properties" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application-minimal.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,7 +150,7 @@
     "git-widget-placeholder": "aws-ec2",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/EPAM/Microservices/trainer-workload-service",
+    "last_opened_file_path": "D:/EPAM/Microservices/main-app",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -187,10 +177,11 @@
       <recent name="epam.gymcrm.service.impl" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\EPAM\Microservices\main-app" />
+      <recent name="D:\EPAM\Microservices\main-app\src\main" />
       <recent name="D:\EPAM\Microservices\trainer-workload-service" />
       <recent name="D:\EPAM\Microservices\trainer-workload-service\src\main\java" />
       <recent name="D:\EPAM\Microservices\trainer-workload-service\src\main" />
-      <recent name="C:\Users\muzaf\Downloads\GymCRM\trainer-workload-service\src\main\java\epam\uz\trainerworkloadservice" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\EPAM\Microservices\trainer-workload-service\src\test\resources" />
@@ -229,7 +220,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.TrainerWorkloadServiceApplication">
+  <component name="RunManager" selected="Spring Boot.GymCRMApplication">
     <configuration name="CucumberTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="main-app" />
       <extension name="coverage">
