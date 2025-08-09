@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.MessageAttributeValue;
+import software.amazon.awssdk.services.sqs.model.QueueAttributeName;
 import software.amazon.awssdk.services.sqs.model.SendMessageRequest;
 
 import java.util.HashMap;
@@ -48,7 +49,12 @@ public class TrainerWorkloadProducer {
 
             var resp = sqsClient.sendMessage(sendMsgRequest);
             log.info("SQS sent to {} messageId={}", queueUrl, resp.messageId());
-            // log or trace resp.messageId() if you want
+            var attrs1 = sqsClient.getQueueAttributes(b -> b
+                    .queueUrl(queueUrl)
+                    .attributeNamesWithStrings("ApproximateNumberOfMessages","ApproximateNumberOfMessagesNotVisible"));
+            log.info("Queue attrs after send: visible={}, inflight={}",
+                    attrs1.attributes().get(QueueAttributeName.APPROXIMATE_NUMBER_OF_MESSAGES),
+                    attrs1.attributes().get(QueueAttributeName.APPROXIMATE_NUMBER_OF_MESSAGES_NOT_VISIBLE));
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Failed to serialize TrainerWorkloadRequest", e);
         }

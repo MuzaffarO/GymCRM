@@ -2,7 +2,6 @@ package epam.uz.trainerworkloadservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import epam.uz.trainerworkloadservice.dto.TrainerWorkloadRequest;
-import epam.uz.trainerworkloadservice.service.DlqMessageStore;
 import epam.uz.trainerworkloadservice.service.TrainerMongoWorkloadService;
 import io.awspring.cloud.sqs.annotation.SqsListener;
 import lombok.RequiredArgsConstructor;
@@ -24,14 +23,10 @@ public class TrainerWorkloadListener {
 
     private final TrainerMongoWorkloadService workloadService;
     private final ObjectMapper objectMapper;
-    private final DlqMessageStore dlqMessageStore;
     private final Key hmacKey;
 
     @SqsListener("${app.sqs.main-queue-url}")
-    public void receiveMessage(
-            @Payload String body,
-            @org.springframework.messaging.handler.annotation.Header(name = "Authorization", required = false) String jwtAttr,
-            @Headers Map<String, String> headers) {
+    public void receiveMessage(@Payload String body, @org.springframework.messaging.handler.annotation.Header(name = "Authorization", required = false) String jwtAttr, @Headers Map<String, String> headers) {
 
         String txnId = "TXN-" + System.currentTimeMillis();
         try {
@@ -42,11 +37,8 @@ public class TrainerWorkloadListener {
             }
             String jwt = jwtAttr.substring(7);
 
-            Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(hmacKey) // injected bean, see below
-                    .build()
-                    .parseClaimsJws(jwt)
-                    .getBody();
+            Claims claims = Jwts.parserBuilder().setSigningKey(hmacKey) // injected bean, see below
+                    .build().parseClaimsJws(jwt).getBody();
 
             String user = claims.getSubject();
             log.info("[{}] JWT verified for user: {}", txnId, user);
@@ -56,29 +48,16 @@ public class TrainerWorkloadListener {
             log.info("[{}] Processing workload for trainer: {}", txnId, request.getTrainerUsername());
             workloadService.processWorkload(request);
             log.info("[{}] Successfully processed workload", txnId);
-            log.info("[{}] DTO -> user='{}', first='{}', last='{}', date={}, dur={}, action={}",
-                    txnId,
-                    request.getTrainerUsername(),
-                    request.getTrainerFirstName(),
-                    request.getTrainerLastName(),
-                    request.getTrainingDate(),
-                    request.getTrainingDuration(),
-                    request.getActionType());
-
-
-            // NOTE: with @SqsListener you do NOT manually delete on success.
-            // Spring Cloud AWS acknowledges (deletes) automatically when the method returns without throwing.
+            log.info("[{}] DTO -> user='{}', first='{}', last='{}', date={}, dur={}, action={}", txnId, request.getTrainerUsername(), request.getTrainerFirstName(), request.getTrainerLastName(), request.getTrainingDate(), request.getTrainingDuration(), request.getActionType());
 
         } catch (Exception e) {
             log.error("[{}] Error handling SQS message: {}", txnId, e.getMessage(), e);
-            // Throwing re-queues and eventually redrives to the DLQ (based on redrive policy)
             throw new RuntimeException("Unauthorized or invalid message", e);
         }
     }
 
-    //    @SqsListener("https://sqs.us-east-1.amazonaws.com/663264486623/MyApp-Queue-DLQ")
+    @SqsListener("https://sqs.us-east-1.amazonaws.com/663264486623/MyApp-Queue-DLQ")
     public void handleDLQ(@Payload String message) {
         log.warn("Message sent to DLQ: {}", message);
-        dlqMessageStore.add(message);
     }
 }

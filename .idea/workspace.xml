@@ -9,7 +9,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6e8d8e47-6b45-4484-a2f5-f9bdbdae0c4c" name="Changes" comment="" />
+    <list default="true" id="6e8d8e47-6b45-4484-a2f5-f9bdbdae0c4c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/config/QueueDepthLogger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/config/SqsDiagnosticsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/config/TrainerWorkloadProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/config/TrainerWorkloadProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/src/main/resources/application-minimal.properties" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/resources/application-minimal.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/TrainerWorkloadListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/TrainerWorkloadListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/service/DlqMessageStore.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application-minimal.properties" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application-minimal.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -219,7 +229,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.GymCRMApplication">
+  <component name="RunManager" selected="Spring Boot.TrainerWorkloadServiceApplication">
     <configuration name="CucumberTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="main-app" />
       <extension name="coverage">
@@ -484,7 +494,7 @@
       <workItem from="1752551552816" duration="12169000" />
       <workItem from="1752723683741" duration="6097000" />
       <workItem from="1754462691458" duration="4341000" />
-      <workItem from="1754545121244" duration="24183000" />
+      <workItem from="1754545121244" duration="30982000" />
     </task>
     <servers />
   </component>
