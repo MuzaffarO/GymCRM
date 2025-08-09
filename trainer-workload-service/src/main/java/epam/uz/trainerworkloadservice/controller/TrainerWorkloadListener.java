@@ -4,17 +4,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import epam.uz.trainerworkloadservice.dto.TrainerWorkloadRequest;
 import epam.uz.trainerworkloadservice.service.DlqMessageStore;
 import epam.uz.trainerworkloadservice.service.TrainerMongoWorkloadService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
-import jakarta.jms.Message;
-import jakarta.jms.TextMessage;
+import io.awspring.cloud.sqs.annotation.SqsListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.jms.annotation.JmsListener;
+import org.springframework.messaging.handler.annotation.Headers;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.util.Map;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 
 @Slf4j
 @Component
@@ -24,28 +25,25 @@ public class TrainerWorkloadListener {
     private final TrainerMongoWorkloadService workloadService;
     private final ObjectMapper objectMapper;
     private final DlqMessageStore dlqMessageStore;
+    private final Key hmacKey;
 
-    @JmsListener(destination = "trainer.workload.queue")
-    public void receiveMessage(Message message) {
+    @SqsListener("${app.sqs.main-queue-url}")
+    public void receiveMessage(
+            @Payload String body,
+            @org.springframework.messaging.handler.annotation.Header(name = "Authorization", required = false) String jwtAttr,
+            @Headers Map<String, String> headers) {
+
         String txnId = "TXN-" + System.currentTimeMillis();
-
         try {
-            if (!(message instanceof TextMessage textMessage)) {
-                throw new IllegalArgumentException("Unsupported message type");
+            log.info("[{}] Raw SQS Message: {}", txnId, body);
+
+            if (jwtAttr == null || !jwtAttr.startsWith("Bearer ")) {
+                throw new SecurityException("Missing or invalid Authorization attribute");
             }
-
-            String jwt = message.getStringProperty("Authorization");
-            if (jwt == null || !jwt.startsWith("Bearer ")) {
-                throw new SecurityException("Missing or invalid Authorization header");
-            }
-
-            jwt = jwt.substring(7); // Strip "Bearer "
-
-            String secret = "vR7xP9m$Jk3!qW@fYzL2bNcT#H8sAe4D";
-            Key hmacKey = Keys.hmacShaKeyFor(secret.getBytes());
+            String jwt = jwtAttr.substring(7);
 
             Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(hmacKey)
+                    .setSigningKey(hmacKey) // injected bean, see below
                     .build()
                     .parseClaimsJws(jwt)
                     .getBody();
@@ -53,29 +51,25 @@ public class TrainerWorkloadListener {
             String user = claims.getSubject();
             log.info("[{}] JWT verified for user: {}", txnId, user);
 
-            TrainerWorkloadRequest request = objectMapper.readValue(textMessage.getText(), TrainerWorkloadRequest.class);
+            TrainerWorkloadRequest request = objectMapper.readValue(body, TrainerWorkloadRequest.class);
 
-            log.info("[{}] Received workload for trainer: {}", txnId, request.getTrainerUsername());
+            log.info("[{}] Processing workload for trainer: {}", txnId, request.getTrainerUsername());
+            workloadService.processWorkload(request);
+            log.info("[{}] Successfully processed workload", txnId);
 
-            workloadService.processWorkload(request); // You can also pass txnId if needed
-
-            log.info("[{}] Successfully processed workload for trainer: {}", txnId, request.getTrainerUsername());
+            // NOTE: with @SqsListener you do NOT manually delete on success.
+            // Spring Cloud AWS acknowledges (deletes) automatically when the method returns without throwing.
 
         } catch (Exception e) {
-            log.error("[{}] Failed to process JMS message: {}", txnId, e.getMessage(), e);
-            throw new RuntimeException("Unauthorized or invalid message", e); // triggers DLQ
+            log.error("[{}] Error handling SQS message: {}", txnId, e.getMessage(), e);
+            // Throwing re-queues and eventually redrives to the DLQ (based on redrive policy)
+            throw new RuntimeException("Unauthorized or invalid message", e);
         }
     }
 
-    @JmsListener(destination = "ActiveMQ.DLQ")
-    public void listenToDeadLetterQueue(String message) {
-        log.warn("Message sent to Dead Letter Queue: {}", message);
+    //    @SqsListener("https://sqs.us-east-1.amazonaws.com/663264486623/MyApp-Queue-DLQ")
+    public void handleDLQ(@Payload String message) {
+        log.warn("Message sent to DLQ: {}", message);
         dlqMessageStore.add(message);
     }
-
-    // For testing:
-    // @JmsListener(destination = "trainer.workload.queue")
-    // public void simulateFailure(Message message) {
-    //     throw new RuntimeException("Simulated failure");
-    // }
 }

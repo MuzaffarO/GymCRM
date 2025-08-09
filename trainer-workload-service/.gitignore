@@ -19,6 +19,7 @@ target/
 *.iml
 *.ipr
 trainer-workload-service-updated.tar
+trainer-workload-service-v2.tar
 
 ### NetBeans ###
 /nbproject/private/

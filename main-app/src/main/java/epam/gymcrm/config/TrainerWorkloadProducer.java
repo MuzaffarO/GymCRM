@@ -3,41 +3,61 @@ package epam.gymcrm.config;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import epam.gymcrm.dto.microservice.TrainerWorkloadRequest;
-import jakarta.jms.Message;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jms.core.JmsTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import software.amazon.awssdk.services.sqs.SqsClient;
+import software.amazon.awssdk.services.sqs.model.MessageAttributeValue;
+import software.amazon.awssdk.services.sqs.model.SendMessageRequest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
 public class TrainerWorkloadProducer {
 
-    private final JmsTemplate jmsTemplate;
+    private final SqsClient sqsClient;
     private final ObjectMapper objectMapper;
-    private static final String QUEUE_NAME = "trainer.workload.queue";
+
+    @Value("${aws.sqs.queueUrl}")
+    private String queueUrl;
 
     public void sendTrainerWorkload(TrainerWorkloadRequest request) {
-//        jmsTemplate.convertAndSend(QUEUE_NAME, request);
-        String jwtToken = extractJwtFromSecurityContext();
-        jmsTemplate.send("trainer.workload.queue", session -> {
-            Message message = null;
-            try {
-                message = session.createTextMessage(objectMapper.writeValueAsString(request));
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-            message.setStringProperty("Authorization", "Bearer " + jwtToken);
-            return message;
-        });
+        String jwtToken = extractJwtFromSecurityContextOrNull();
 
+        try {
+            String messageBody = objectMapper.writeValueAsString(request);
+
+            Map<String, MessageAttributeValue> attrs = new HashMap<>();
+            if (jwtToken != null && !jwtToken.isBlank()) {
+                attrs.put("Authorization", MessageAttributeValue.builder()
+                        .dataType("String")
+                        .stringValue("Bearer " + jwtToken)
+                        .build());
+            }
+
+            SendMessageRequest sendMsgRequest = SendMessageRequest.builder()
+                    .queueUrl(queueUrl)
+                    .messageBody(messageBody)
+                    .messageAttributes(attrs)
+                    .build();
+
+            var resp = sqsClient.sendMessage(sendMsgRequest);
+            // log or trace resp.messageId() if you want
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Failed to serialize TrainerWorkloadRequest", e);
+        }
     }
-    public String extractJwtFromSecurityContext() {
+
+    private String extractJwtFromSecurityContextOrNull() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || auth.getCredentials() == null) {
-            throw new IllegalStateException("JWT Token not available in security context");
+            return null;
         }
-        return auth.getCredentials().toString(); // credentials hold the raw JWT
+        return String.valueOf(auth.getCredentials());
     }
 }
+

@@ -2,13 +2,16 @@ package epam.uz.trainerworkloadservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import epam.uz.trainerworkloadservice.dto.TrainerWorkloadRequest;
-import epam.uz.trainerworkloadservice.service.DlqMessageStore;
 import epam.uz.trainerworkloadservice.service.TrainerMongoWorkloadService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.Iterator;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.*;
+import software.amazon.awssdk.services.sqs.SqsClient;
+import software.amazon.awssdk.services.sqs.model.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -16,31 +19,53 @@ import java.util.Iterator;
 @RequiredArgsConstructor
 public class DlqRetryController {
 
-    private final DlqMessageStore dlqMessageStore;
+    private final SqsClient sqsClient;
     private final TrainerMongoWorkloadService workloadService;
     private final ObjectMapper objectMapper;
 
+    @Value("${aws.sqs.dlqUrl}")
+    private String dlqUrl;
+
     @PostMapping("/retry")
-    public String retryFailedMessages(@RequestHeader(value = "X-Transaction-Id", required = false) String txnId) {
-        int success = 0;
-        int failed = 0;
+    public String retryDlqMessages(@RequestHeader(value = "X-Transaction-Id", required = false) String txnId) {
+        int success = 0, failed = 0;
+        log.info("[{}] 🟡 Starting DLQ message retry", txnId);
 
-        Iterator<String> iterator = dlqMessageStore.getFailedMessages().iterator();
+        while (true) {
+            var receiveRequest = ReceiveMessageRequest.builder()
+                    .queueUrl(dlqUrl)
+                    .maxNumberOfMessages(10)
+                    .waitTimeSeconds(10)         // long poll
+                    .visibilityTimeout(60)       // give us time to process
+                    .build();
 
-        while (iterator.hasNext()) {
-            String message = iterator.next();
-            try {
-                TrainerWorkloadRequest request = objectMapper.readValue(message, TrainerWorkloadRequest.class);
-                log.info("[{}] Retrying DLQ message for trainer: {}", txnId, request.getTrainerUsername());
-                workloadService.processWorkload(request); // txnId can be added to the method if needed
-                success++;
-                iterator.remove();
-            } catch (Exception e) {
-                log.error("[{}] Failed to reprocess DLQ message: {}", txnId, message, e);
-                failed++;
+            List<Message> messages = sqsClient.receiveMessage(receiveRequest).messages();
+            if (messages.isEmpty()) break;
+
+            for (Message msg : messages) {
+                try {
+                    TrainerWorkloadRequest request = objectMapper.readValue(msg.body(), TrainerWorkloadRequest.class);
+                    log.info("[{}] 🟢 Retrying workload for trainer: {}", txnId, request.getTrainerUsername());
+
+                    workloadService.processWorkload(request);
+
+                    sqsClient.deleteMessage(DeleteMessageRequest.builder()
+                            .queueUrl(dlqUrl)
+                            .receiptHandle(msg.receiptHandle())
+                            .build());
+                    success++;
+                } catch (Exception e) {
+                    log.error("[{}] 🔴 Failed to reprocess DLQ message: {}", txnId, msg.body(), e);
+                    failed++;
+                    // Optionally: shorten visibility so another consumer can pick it up sooner
+                    // sqsClient.changeMessageVisibility(ChangeMessageVisibilityRequest.builder()
+                    //     .queueUrl(dlqUrl).receiptHandle(msg.receiptHandle()).visibilityTimeout(0).build());
+                }
             }
         }
 
+        log.info("[{}] ✅ Retry complete. Success: {}, Failed: {}", txnId, success, failed);
         return "✅ Retried messages: " + success + ", ❌ Failed: " + failed;
     }
+
 }

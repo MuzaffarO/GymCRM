@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Data
 public class TrainerWorkloadRequest {
     @NotBlank
     private String trainerUsername;

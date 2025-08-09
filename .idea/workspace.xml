@@ -10,13 +10,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6e8d8e47-6b45-4484-a2f5-f9bdbdae0c4c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/config/AwsClientsConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/config/AwsClientsConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/config/JwtConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/config/TrainerWorkloadProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/config/TrainerWorkloadProducer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main-app/src/main/resources/application-minimal.properties" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/resources/application-minimal.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application-docker.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/resources/application-local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application-local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/resources/application-minimal.properties" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application-minimal.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/TrainerWorkloadServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/TrainerWorkloadServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/DlqRetryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/DlqRetryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/TrainerWorkloadListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/TrainerWorkloadListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/dto/TrainerWorkloadRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/dto/TrainerWorkloadRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/security/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/security/JwtUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application-minimal.properties" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application-minimal.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +79,10 @@
     &quot;url&quot;: &quot;https://github.com/MuzaffarO/GymCRM.git&quot;,
     &quot;accountId&quot;: &quot;1276b737-0b01-4bd8-8b30-8dcd6d2dd62c&quot;
   }
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
 }</component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
@@ -133,6 +150,7 @@
     "Maven.GymCRMLevel1 [clean,package,-DskipTests].executor": "Run",
     "Maven.GymCRMLevel1 [clean,package].executor": "Run",
     "Maven.GymCRMLevel1 [clean].executor": "Run",
+    "Maven.GymCRMLevel1 [dependency:purge-local-repository].executor": "Run",
     "Maven.GymCRMLevel1 [test,-Dtest=CucumberTest].executor": "Run",
     "Maven.GymCRMLevel1 [test...].executor": "Run",
     "Maven.GymCRMLevel1 [test].executor": "Run",
@@ -160,7 +178,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -197,12 +215,13 @@
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
-      <command value="mvn clean install" />
       <command value="mvn test -Dcucumber.options=&quot;src/test/resources/features/training.feature&quot; " />
-      <command value="mvn clean" />
-      <command value="mvn clean package" />
       <command value="mvn test" />
       <command value="mvn test -Dtest=CucumberTest" />
+      <command value="mvn dependency:purge-local-repository " />
+      <command value="mvn clean" />
+      <command value="mvn clean install" />
+      <command value="mvn clean package" />
       <command value="mvn clean package -DskipTests " />
     </option>
   </component>
@@ -220,7 +239,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.GymCRMApplication">
+  <component name="RunManager" selected="Spring Boot.TrainerWorkloadServiceApplication">
     <configuration name="CucumberTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="main-app" />
       <extension name="coverage">
@@ -484,6 +503,8 @@
       <workItem from="1750848883273" duration="39722000" />
       <workItem from="1752551552816" duration="12169000" />
       <workItem from="1752723683741" duration="6097000" />
+      <workItem from="1754462691458" duration="4341000" />
+      <workItem from="1754545121244" duration="15879000" />
     </task>
     <servers />
   </component>

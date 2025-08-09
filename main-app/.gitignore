@@ -13,6 +13,8 @@ target/
 *.ipr
 main-app.tar
 ssh.pem
+main-app-v2.tar
+main-app-v3.tar
 
 ### Eclipse ###
 .apt_generated
