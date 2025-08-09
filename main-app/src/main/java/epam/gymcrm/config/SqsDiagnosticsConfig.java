@@ -24,7 +24,6 @@
 //    @Value("${spring.cloud.aws.region.static}")
 //    private String region;
 //
-//    // Producer or consumer queue URLs (set these in application.properties/yml)
 //    @Value("${aws.sqs.queueUrl:}")
 //    private String prodUrl;
 //

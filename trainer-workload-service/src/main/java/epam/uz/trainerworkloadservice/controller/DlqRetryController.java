@@ -35,8 +35,8 @@ public class DlqRetryController {
             var receiveRequest = ReceiveMessageRequest.builder()
                     .queueUrl(dlqUrl)
                     .maxNumberOfMessages(10)
-                    .waitTimeSeconds(10)         // long poll
-                    .visibilityTimeout(60)       // give us time to process
+                    .waitTimeSeconds(10)
+                    .visibilityTimeout(60)
                     .build();
 
             List<Message> messages = sqsClient.receiveMessage(receiveRequest).messages();
@@ -57,9 +57,6 @@ public class DlqRetryController {
                 } catch (Exception e) {
                     log.error("[{}] 🔴 Failed to reprocess DLQ message: {}", txnId, msg.body(), e);
                     failed++;
-                    // Optionally: shorten visibility so another consumer can pick it up sooner
-                    // sqsClient.changeMessageVisibility(ChangeMessageVisibilityRequest.builder()
-                    //     .queueUrl(dlqUrl).receiptHandle(msg.receiptHandle()).visibilityTimeout(0).build());
                 }
             }
         }

@@ -51,7 +51,6 @@ public class AppConfig {
         return source;
     }
 
-    // AppConfig.java or similar
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();

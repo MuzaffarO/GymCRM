@@ -1,4 +1,5 @@
 package epam.uz.trainerworkloadservice.service;
+
 import epam.uz.trainerworkloadservice.dto.TrainerMonthlySummaryDTO;
 import epam.uz.trainerworkloadservice.dto.TrainerWorkloadRequest;
 import epam.uz.trainerworkloadservice.exception.SummaryNotFoundException;
