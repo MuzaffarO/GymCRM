@@ -162,7 +162,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
-                    <!-- optional but nice: -->
                     <release>17</release>
                     <annotationProcessorPaths>
                         <path>
@@ -183,7 +182,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
-                    <useModulePath>false</useModulePath> <!-- Important for JDK 9+ -->
+                    <useModulePath>false</useModulePath>
                 </configuration>
                 <dependencies>
                     <dependency>
