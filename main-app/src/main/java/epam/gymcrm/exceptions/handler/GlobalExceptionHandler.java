@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 
-// DTO for consistent error responses
 class ApiErrorResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timestamp;

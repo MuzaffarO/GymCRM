@@ -56,6 +56,15 @@ public class TrainerWorkloadListener {
             log.info("[{}] Processing workload for trainer: {}", txnId, request.getTrainerUsername());
             workloadService.processWorkload(request);
             log.info("[{}] Successfully processed workload", txnId);
+            log.info("[{}] DTO -> user='{}', first='{}', last='{}', date={}, dur={}, action={}",
+                    txnId,
+                    request.getTrainerUsername(),
+                    request.getTrainerFirstName(),
+                    request.getTrainerLastName(),
+                    request.getTrainingDate(),
+                    request.getTrainingDuration(),
+                    request.getActionType());
+
 
             // NOTE: with @SqsListener you do NOT manually delete on success.
             // Spring Cloud AWS acknowledges (deletes) automatically when the method returns without throwing.

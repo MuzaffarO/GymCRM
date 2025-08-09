@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import epam.gymcrm.dto.microservice.TrainerWorkloadRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,7 +15,7 @@ import software.amazon.awssdk.services.sqs.model.SendMessageRequest;
 
 import java.util.HashMap;
 import java.util.Map;
-
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class TrainerWorkloadProducer {
@@ -46,6 +47,7 @@ public class TrainerWorkloadProducer {
                     .build();
 
             var resp = sqsClient.sendMessage(sendMsgRequest);
+            log.info("SQS sent to {} messageId={}", queueUrl, resp.messageId());
             // log or trace resp.messageId() if you want
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Failed to serialize TrainerWorkloadRequest", e);

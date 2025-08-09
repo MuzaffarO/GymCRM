@@ -72,7 +72,10 @@ public class TrainerMongoWorkloadService {
         };
 
         monthSummary.setTrainingsSummaryDuration(updatedDuration);
+        log.info("[{}] count(before)={}", txnId, repository.count());
         repository.save(summary);
+        log.info("[{}] count(after)={}", txnId, repository.count());
+
 
         log.info("[{}] Updated duration: {} {} | Year: {} Month: {} New Total: {}",
                 txnId, summary.getFirstName(), summary.getLastName(), year, month, monthSummary.getTrainingsSummaryDuration());

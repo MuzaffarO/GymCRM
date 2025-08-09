@@ -3,8 +3,7 @@ package epam.gymcrm.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
-import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.*;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sqs.SqsClient;
 
@@ -12,8 +11,11 @@ import software.amazon.awssdk.services.sqs.SqsClient;
 public class AwsClientsConfig {
 
   @Bean
-  AwsCredentialsProvider awsCredentialsProvider(@Value("${aws.profile}") String profile) {
-    return ProfileCredentialsProvider.create(profile);
+  AwsCredentialsProvider awsCredentialsProvider(
+          @Value("${aws.profile:}") String profile) {
+    return (profile == null || profile.isBlank())
+            ? DefaultCredentialsProvider.create()          // EC2/ECS role, env, system props
+            : ProfileCredentialsProvider.create(profile);  // local dev
   }
 
   @Bean
@@ -26,3 +28,4 @@ public class AwsClientsConfig {
     return SqsClient.builder().region(region).credentialsProvider(creds).build();
   }
 }
+
