@@ -2,7 +2,7 @@ package epam.uz.trainerworkloadservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import epam.uz.trainerworkloadservice.dto.TrainerWorkloadRequest;
-import epam.uz.trainerworkloadservice.service.TrainerMongoWorkloadService;
+import epam.uz.trainerworkloadservice.service.TrainerDynamoWorkloadService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,7 +20,7 @@ import java.util.List;
 public class DlqRetryController {
 
     private final SqsClient sqsClient;
-    private final TrainerMongoWorkloadService workloadService;
+    private final TrainerDynamoWorkloadService workloadService;
     private final ObjectMapper objectMapper;
 
     @Value("${aws.sqs.dlqUrl}")

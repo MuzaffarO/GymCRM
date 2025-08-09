@@ -10,15 +10,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6e8d8e47-6b45-4484-a2f5-f9bdbdae0c4c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/config/QueueDepthLogger.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/config/SqsDiagnosticsConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/config/DynamoConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/model/TrainerReportDdb.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/repository/TrainerReportDdbRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/repository/TrainerReportMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/service/TrainerDynamoWorkloadService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/config/TrainerWorkloadProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/config/TrainerWorkloadProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-app/src/main/resources/application-minimal.properties" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/resources/application-minimal.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/GymCRMApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-app/src/main/java/epam/gymcrm/GymCRMApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/TrainerWorkloadServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/TrainerWorkloadServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/DlqRetryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/DlqRetryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/TrainerWorkloadController.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/TrainerWorkloadController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/TrainerWorkloadListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/controller/TrainerWorkloadListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/service/DlqMessageStore.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/model/TrainerTrainingSummary.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/repository/TrainerTrainingSummaryRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/java/epam/uz/trainerworkloadservice/service/TrainerMongoWorkloadService.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application-minimal.properties" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/main/resources/application-minimal.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/CucumberTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/CucumberTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/steps/CucumberSpringConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/steps/CucumberSpringConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/steps/CustomParameterTypes.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/steps/CustomParameterTypes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/steps/MongoCleanupHook.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/steps/MongoCleanupHook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/steps/SecuritySteps.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/steps/SecuritySteps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/steps/TrainerWorkloadNegativeSteps.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/steps/TrainerWorkloadNegativeSteps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/steps/TrainerWorkloadSteps.java" beforeDir="false" afterPath="$PROJECT_DIR$/trainer-workload-service/src/test/java/epam/uz/trainerworkloadservice/steps/TrainerWorkloadSteps.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,9 +168,9 @@
     "Spring Boot.EurekaServerApplication.executor": "Run",
     "Spring Boot.GymCRMApplication (1).executor": "Run",
     "Spring Boot.GymCRMApplication.executor": "Run",
-    "Spring Boot.TrainerWorkloadServiceApplication.executor": "Debug",
+    "Spring Boot.TrainerWorkloadServiceApplication.executor": "Run",
     "Tomcat Server.Tomcat 10.executor": "Run",
-    "git-widget-placeholder": "aws-ec2",
+    "git-widget-placeholder": "aws-dynamodb",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/EPAM/Microservices/main-app",
@@ -494,7 +509,7 @@
       <workItem from="1752551552816" duration="12169000" />
       <workItem from="1752723683741" duration="6097000" />
       <workItem from="1754462691458" duration="4341000" />
-      <workItem from="1754545121244" duration="30982000" />
+      <workItem from="1754545121244" duration="37409000" />
     </task>
     <servers />
   </component>

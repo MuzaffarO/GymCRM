@@ -43,10 +43,4 @@ public class SecurityConfig {
                 username, "", new ArrayList<>()); // No roles
     }
 
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-//        return configuration.getAuthenticationManager();
-//    }
-
-
 }

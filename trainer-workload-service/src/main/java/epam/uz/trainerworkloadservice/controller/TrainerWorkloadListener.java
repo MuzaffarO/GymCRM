@@ -2,7 +2,7 @@ package epam.uz.trainerworkloadservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import epam.uz.trainerworkloadservice.dto.TrainerWorkloadRequest;
-import epam.uz.trainerworkloadservice.service.TrainerMongoWorkloadService;
+import epam.uz.trainerworkloadservice.service.TrainerDynamoWorkloadService;
 import io.awspring.cloud.sqs.annotation.SqsListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,8 @@ import io.jsonwebtoken.Jwts;
 @RequiredArgsConstructor
 public class TrainerWorkloadListener {
 
-    private final TrainerMongoWorkloadService workloadService;
+    private final TrainerDynamoWorkloadService workloadService;
+
     private final ObjectMapper objectMapper;
     private final Key hmacKey;
 

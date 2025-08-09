@@ -2,7 +2,7 @@ package epam.uz.trainerworkloadservice.controller;
 
 import epam.uz.trainerworkloadservice.dto.TrainerMonthlySummaryDTO;
 import epam.uz.trainerworkloadservice.dto.TrainerWorkloadRequest;
-import epam.uz.trainerworkloadservice.service.TrainerMongoWorkloadService;
+import epam.uz.trainerworkloadservice.service.TrainerDynamoWorkloadService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class TrainerWorkloadController {
 
-    private final TrainerMongoWorkloadService workloadService;
+    private final TrainerDynamoWorkloadService workloadService;
+
 
     @GetMapping("/test")
     public ResponseEntity<String> test() {
@@ -35,14 +36,16 @@ public class TrainerWorkloadController {
     public ResponseEntity<Double> getMonthlySummary(
             @PathVariable String username,
             @PathVariable int year,
-            @PathVariable int month) {
-        double hours = workloadService.getMonthlyHours(username, year, month);
+            @PathVariable int month,
+            @RequestParam boolean active
+    ) {
+        double hours = workloadService.getMonthlyHours(username, active, year, month);
         return ResponseEntity.ok(hours);
     }
 
     @GetMapping(value = "{username}/summary", produces = "application/json")
-    public ResponseEntity<TrainerMonthlySummaryDTO> getMonthlySummary(@PathVariable String username) {
-        TrainerMonthlySummaryDTO summary = workloadService.getTrainerMonthlySummary(username);
+    public ResponseEntity<TrainerMonthlySummaryDTO> getMonthlySummary(@PathVariable String username, @RequestParam boolean active) {
+        TrainerMonthlySummaryDTO summary = workloadService.getTrainerMonthlySummary(username, active);
         return ResponseEntity.ok(summary);
     }
 }
