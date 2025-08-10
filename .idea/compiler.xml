@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="main-app" />
         <module name="eureka-server" />
+        <module name="csv-report-lambda" />
       </profile>
       <profile name="Annotation profile for GymCRMLevel1" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -24,6 +25,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="GymCRMLevel1" options="" />
+      <module name="csv-report-lambda" options="" />
       <module name="eureka-server" options="-parameters" />
       <module name="main-app" options="-parameters" />
       <module name="trainer-workload-service" options="-parameters" />
